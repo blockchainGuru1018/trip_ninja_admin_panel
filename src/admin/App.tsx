@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from '@material-ui/core/styles';
 
-import { BasicInfo } from "./pages";
+import { BasicInfo, GeneralInfo, ContentSources } from "./pages";
 import { Header, SideMenu } from './components';
 
 import "./styles.css";
@@ -26,6 +26,8 @@ const App: React.FC = () => {
           <Container maxWidth="lg" className={classes.container}>
             <Switch>
               <Route path="/" exact component={BasicInfo} />
+              <Route path="/general-info" exact component={GeneralInfo} />
+              <Route path="/content-sources" exact component={ContentSources} />
             </Switch>
           </Container>
         </div>
@@ -57,6 +59,6 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
   },
-}))
+}));
 
 export default App;
