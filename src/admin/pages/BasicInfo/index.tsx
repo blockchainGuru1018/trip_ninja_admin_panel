@@ -14,7 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { UsernameField } from "../../components";
 
 const BasicInfo: React.FC = () => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <>
@@ -51,7 +51,6 @@ const BasicInfo: React.FC = () => {
         <Grid item sm={6} xs={12}>
           <FormLabel className={classes.label}>Default Currency</FormLabel>
           <FormControl>
-
           </FormControl>
         </Grid>
         <Grid item sm={6} xs={12}>
@@ -76,9 +75,9 @@ const BasicInfo: React.FC = () => {
       </Grid>
     </>
   )
-}
+};
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   title: {
     fontSize: 24,
     color: '#45565E',
@@ -140,6 +139,6 @@ const useStyles = makeStyles(theme => ({
       color: '#45565E',
     }
   }
-}))
+});
 
 export default BasicInfo
