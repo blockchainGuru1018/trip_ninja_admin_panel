@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap");
+@font-face {
+  font-family: 'NeuzitGrotesk';
+  font-style: normal;
+  font-weight: 400;
+  src: url(assets/fonts/NeuzeitGro/NeuzeitGro-Reg.otf);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #fff;
+  font-family: NeuzitGrotesk, sans-serif;
+  height: auto;
+}
+
+body .MuiOutlinedInput-input {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
