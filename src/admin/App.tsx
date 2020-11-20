@@ -3,7 +3,13 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from '@material-ui/core/styles';
 
-import { BasicInfo, GeneralInfo, ContentSources, SearchBookingDetail } from "./pages";
+import {
+  BasicInfo,
+  GeneralInfo,
+  ContentSources,
+  SearchBookingDetail,
+  BillingAccountManagement,
+} from "./pages";
 import { Header, SideMenu } from './components';
 
 import "./styles.css";
@@ -29,6 +35,7 @@ const App: React.FC = () => {
               <Route path="/general-info" exact component={GeneralInfo} />
               <Route path="/content-sources" exact component={ContentSources} />
               <Route path="/search-booking-detail" exact component={SearchBookingDetail} />
+              <Route path="/billing-account-management" exact component={BillingAccountManagement} />
             </Switch>
           </Container>
         </div>
