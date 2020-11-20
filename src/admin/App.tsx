@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   pageHeader: {
     display: 'flex',
     alignItems: 'center',
-    padding: '0 30px',
+    padding: '0 47px',
     height: 90,
     fontSize: 40,
     fontFamily: 'NeuzitGrotesk',
@@ -56,8 +56,9 @@ const useStyles = makeStyles((theme) => ({
     borderTop: '1px solid #ABB3B7',
   },
   container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
+    paddingTop: theme.spacing(3),
+    paddingLeft: theme.spacing(6),
+    maxWidth: '100%',
   },
 }));
 

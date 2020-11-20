@@ -50,7 +50,7 @@ const useStyles = makeStyles(theme =>
       color: '#fff',
     },
     menuContainer: {
-      padding: '0px 25px'
+      padding: '0px 34px'
     },
     menuList: {
       paddingBottom: 10,
@@ -64,7 +64,7 @@ const useStyles = makeStyles(theme =>
       fontSize: 16,
       fontFamily: 'NeuzitGrotesk',
       fontWeight: 'bold',
-      paddingTop: 20,
+      padding: '24px 0 10px',
     },
     subMenuList: {
       width: '100%',
@@ -83,7 +83,7 @@ const useStyles = makeStyles(theme =>
       fontSize: '16px',
       fontFamily: 'NeuzitGrotesk',
       fontWeight: 'lighter',
-      padding: '10px 5px',
+      padding: '10px 0',
       whiteSpace: 'pre-line',
       margin:0
     }

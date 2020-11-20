@@ -41,7 +41,7 @@ const BasicInfo: React.FC = () => {
           </FormControl>
         </Grid>
         <Grid item sm={6} xs={12}>
-          <Typography className={classes.label}>Email Address</Typography>
+          <FormLabel className={classes.label}>Email Address</FormLabel>
           <FormControl>
             <TextField type="email" placeholder="email@email.com" variant="outlined" />
           </FormControl>

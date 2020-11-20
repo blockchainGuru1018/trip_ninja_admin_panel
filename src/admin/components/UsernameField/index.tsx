@@ -48,7 +48,7 @@ const useStyles = makeStyles(() => ({
     marginLeft: 13,
     marginTop: 5,
     cursor: 'pointer',
-    width: '24px'
+    width: '18px'
   }
 }));
 
