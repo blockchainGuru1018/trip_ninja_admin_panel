@@ -9,9 +9,11 @@ import {
   ContentSources,
   SearchBookingDetail,
   BillingAccountManagement,
+  Teams,
 } from "./pages";
 import { Header, SideMenu } from './components';
 
+import 'react-perfect-scrollbar/dist/css/styles.css';
 import "./styles.css";
 
 const App: React.FC = () => {
@@ -36,6 +38,7 @@ const App: React.FC = () => {
               <Route path="/content-sources" exact component={ContentSources} />
               <Route path="/search-booking-detail" exact component={SearchBookingDetail} />
               <Route path="/billing-account-management" exact component={BillingAccountManagement} />
+              <Route path="/teams" exact component={Teams} />
             </Switch>
           </Container>
         </div>

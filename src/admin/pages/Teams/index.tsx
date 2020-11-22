@@ -1,0 +1,56 @@
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { Button, TextField, InputAdornment, Typography } from '@material-ui/core';
+import { SearchOutlined } from "@material-ui/icons";
+
+import { DataTable } from '../../components';
+import useSharedStyles from '../../globalStyles';
+
+const columns = [
+  { field: 'team', headerName: 'Team' },
+  { field: 'members', headerName: 'Members' },
+  { field: 'lead', headerName: 'Team Lead' },
+  { field: 'action', headerName: '' },
+];
+
+const rows = [
+  { team: 'Islington Store', members: 15, lead: 'Brett Ziegler, +1', action: 35 },
+];
+
+const Teams: React.FC = () => {
+  const classes = useStyles();
+  const sharedClasses = useSharedStyles();
+
+  return (
+    <>
+      <div className={sharedClasses.pageHeader}>
+        <Typography variant="h3" component="h1" className={sharedClasses.pageTitle}>Teams</Typography>
+        <Button variant="contained" color="primary">Add Team</Button>
+      </div>
+      <Typography className={sharedClasses.pageDescription}>
+        Create new teams, customize team permissions, and archive teams from your account.
+      </Typography>
+      <TextField
+        placeholder="Search Teams"
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchOutlined />
+            </InputAdornment>
+          )
+        }}
+        variant="outlined"
+      />
+
+      <DataTable className={classes.table} rows={rows} columns={columns} />
+    </>
+  )
+}
+
+const useStyles = makeStyles(() => ({
+  table: {
+    marginTop: 30
+  }
+}))
+
+export default Teams;
