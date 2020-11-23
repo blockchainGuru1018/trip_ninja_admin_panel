@@ -10,6 +10,7 @@ import {
   TextField,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import classNames from "classnames";
 
 import { ToolTip } from "../../components";
 import useSharedStyles from '../../globalStyles';
@@ -31,8 +32,8 @@ const GeneralInfo: React.FC = () => {
       </Typography>
       <Grid container spacing={3} className={sharedClasses.pageRow}>
         <Grid item xs={12}>
-          <FormLabel className={`${sharedClasses.radioLabel} ${classes.labelWithTooltip}`}>
-            <Typography>Company Name</Typography>
+          <FormLabel className={classNames(sharedClasses.radioLabel, classes.labelWithTooltip)}>
+            Company Name
             <ToolTip
               text='Your company name, as it should appear on quotes and invoices. Legal name recommended.'
             >

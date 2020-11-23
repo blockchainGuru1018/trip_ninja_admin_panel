@@ -11,6 +11,7 @@ import {
   BillingAccountManagement,
   Users,
   Teams,
+  AgencyAccounts,
 } from "./pages";
 import { Header, SideMenu } from './components';
 
@@ -41,6 +42,7 @@ const App: React.FC = () => {
               <Route path="/billing-account-management" exact component={BillingAccountManagement} />
               <Route path="/users" exact component={Users} />
               <Route path="/teams" exact component={Teams} />
+              <Route path="/agency-accounts" exact component={AgencyAccounts} />
             </Switch>
           </Container>
         </div>

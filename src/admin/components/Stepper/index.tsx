@@ -27,7 +27,7 @@ const Stepper:React.FC<Props> = ({ className, steps, activeStep, children }) => 
       {children}
     </div>
   );
-}
+};
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

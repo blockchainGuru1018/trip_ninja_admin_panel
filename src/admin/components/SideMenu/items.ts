@@ -40,6 +40,10 @@ export default [
         name: 'Teams',
         link: '/teams',
       },
+      {
+        name: 'Agency Accounts',
+        link: '/agency-accounts',
+      },
     ]
   },
 ];
