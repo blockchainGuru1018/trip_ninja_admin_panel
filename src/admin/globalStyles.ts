@@ -32,5 +32,19 @@ export default makeStyles(theme => ({
       color: 'white',
       backgroundColor: '#45565E',
     }
+  },
+  btnFilled: {
+    background: '#45565E',
+    border: '2px solid #45565E',
+    borderRadius: 2,
+    fontSize: 16,
+    fontFamily: 'NeuzitGrotesk',
+    fontWeight: 'bold',
+    color: 'white',
+    textTransform: 'none',
+
+    '&:hover': {
+      background: '#45565EEB'
+    }
   }
 }))
