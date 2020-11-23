@@ -12,16 +12,20 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 
 import { UsernameField } from "../../components";
+import userSharedStyles from '../../globalStyles';
 
 const BasicInfo: React.FC = () => {
   const classes = useStyles();
+  const sharedClasses = userSharedStyles();
 
   return (
     <>
-      <Typography variant="h3" component="h1" className={classes.title}>
-        Basic Information
-      </Typography>
-      <Typography className={classes.subtitle}>
+      <div className={sharedClasses.pageHeader}>
+        <Typography variant="h3" component="h1" className={sharedClasses.pageTitle}>
+          Basic Information
+        </Typography>
+      </div>
+      <Typography className={sharedClasses.pageDescription}>
         Configure your name and personal details.
         Settings changed here will overwrite Global Defaults and Team Defaults.
       </Typography>
@@ -32,39 +36,39 @@ const BasicInfo: React.FC = () => {
 
         <UsernameField value="Niloufar Mazloumpar" onChange={console.log} />
       </div>
-      <Grid container spacing={3} className={classes.row}>
+      <Grid container spacing={3} className={sharedClasses.pageRow}>
         <Grid item sm={6} xs={12}>
-          <FormLabel className={classes.label}>Phone Number</FormLabel>
+          <FormLabel className={sharedClasses.radioLabel}>Phone Number</FormLabel>
           <FormControl className={classes.phoneInputField}>
             <TextField className={classes.countryCodeInput} placeholder="XXX" variant="outlined" />
             <TextField className={classes.phoneNumberInput} placeholder="XXX" variant="outlined" />
           </FormControl>
         </Grid>
         <Grid item sm={6} xs={12}>
-          <FormLabel className={classes.label}>Email Address</FormLabel>
+          <FormLabel className={sharedClasses.radioLabel}>Email Address</FormLabel>
           <FormControl>
             <TextField type="email" placeholder="email@email.com" variant="outlined" />
           </FormControl>
         </Grid>
       </Grid>
-      <Grid container spacing={3} className={classes.row}>
+      <Grid container spacing={3} className={sharedClasses.pageRow}>
         <Grid item sm={6} xs={12}>
-          <FormLabel className={classes.label}>Default Currency</FormLabel>
+          <FormLabel className={sharedClasses.radioLabel}>Default Currency</FormLabel>
           <FormControl>
           </FormControl>
         </Grid>
         <Grid item sm={6} xs={12}>
-          <FormLabel className={classes.label}>Default Calendar layout</FormLabel>
+          <FormLabel className={sharedClasses.radioLabel}>Default Calendar layout</FormLabel>
           <FormControl>
             <RadioGroup name="date" row defaultValue="mm/dd/yyyy">
               <FormControlLabel
-                className={classes.radio}
+                className={sharedClasses.radioRadio}
                 value="dd/mm/yyyy"
                 control={<Radio color="default" />}
                 label="DD/MM/YYYY"
               />
               <FormControlLabel
-                className={classes.radio}
+                className={sharedClasses.radioRadio}
                 value="mm/dd/yyyy"
                 control={<Radio color="default" />}
                 label="MM/DD/YYYY"
@@ -78,17 +82,6 @@ const BasicInfo: React.FC = () => {
 };
 
 const useStyles = makeStyles({
-  title: {
-    fontSize: 24,
-    color: '#45565E',
-    fontFamily: 'NeuzitGrotesk',
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#45565E',
-    fontFamily: 'NeuzitGrotesk',
-    marginTop: 24,
-  },
   usernameSection: {
     display: 'flex',
     alignItems: 'center',
@@ -110,18 +103,6 @@ const useStyles = makeStyles({
     fontFamily: 'NeuzitGrotesk',
     fontWeight: 'bolder',
   },
-  row: {
-    marginTop: 0,
-    marginBottom: 0
-  },
-  label: {
-    display: 'block',
-    fontSize: 16,
-    color: '#45565E',
-    fontFamily: 'NeuzitGrotesk',
-    fontWeight: 'bolder',
-    marginBottom: 12
-  },
   phoneInputField: {
     flexDirection: 'row'
   },
@@ -132,13 +113,6 @@ const useStyles = makeStyles({
     flex: 1,
     marginLeft: 16
   },
-  radio: {
-    '& .MuiFormControlLabel-label': {
-      fontSize: 14,
-      fontFamily: 'NeuzitGrotesk',
-      color: '#45565E',
-    }
-  }
 });
 
 export default BasicInfo

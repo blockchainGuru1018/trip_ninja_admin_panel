@@ -32,7 +32,7 @@ const DataTable:React.FC<Props> = ({ className, value, onChange }) => {
 
   const closeList = () => {
     setIsOpened(false);
-  }
+  };
 
   const onClickItem = (val: number) => {
     setIsOpened(false);
@@ -40,7 +40,7 @@ const DataTable:React.FC<Props> = ({ className, value, onChange }) => {
     if (onChange) {
       onChange(val);
     }
-  }
+  };
 
   return (
     <div className={classNames(classes.root, className)}>
@@ -61,7 +61,7 @@ const DataTable:React.FC<Props> = ({ className, value, onChange }) => {
       )}
     </div>
   );
-}
+};
 
 const useStyles = makeStyles({
   root: {

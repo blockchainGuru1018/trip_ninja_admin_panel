@@ -9,6 +9,7 @@ import {
   ContentSources,
   SearchBookingDetail,
   BillingAccountManagement,
+  Users,
   Teams,
 } from "./pages";
 import { Header, SideMenu } from './components';
@@ -38,6 +39,7 @@ const App: React.FC = () => {
               <Route path="/content-sources" exact component={ContentSources} />
               <Route path="/search-booking-detail" exact component={SearchBookingDetail} />
               <Route path="/billing-account-management" exact component={BillingAccountManagement} />
+              <Route path="/users" exact component={Users} />
               <Route path="/teams" exact component={Teams} />
             </Switch>
           </Container>
@@ -69,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     paddingTop: theme.spacing(3),
     paddingLeft: theme.spacing(6),
+    paddingRight: theme.spacing(6),
     maxWidth: '100%',
   },
 }));
