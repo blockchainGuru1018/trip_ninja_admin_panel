@@ -25,7 +25,7 @@ const Teams: React.FC = () => {
     <>
       <div className={sharedClasses.pageHeader}>
         <Typography variant="h3" component="h1" className={sharedClasses.pageTitle}>Teams</Typography>
-        <Button variant="contained" color="primary">Add Team</Button>
+        <Button variant="outlined" className={sharedClasses.btnPrimary}>Add Team</Button>
       </div>
       <Typography className={sharedClasses.pageDescription}>
         Create new teams, customize team permissions, and archive teams from your account.
@@ -42,14 +42,20 @@ const Teams: React.FC = () => {
         variant="outlined"
       />
 
+      <Typography className={classes.total}>Teams: { rows ? rows.length : 0 }</Typography>
       <DataTable className={classes.table} rows={rows} columns={columns} />
     </>
   )
 }
 
 const useStyles = makeStyles(() => ({
-  table: {
+  total: {
+    fontSize: 18,
+    color: '#45565E',
     marginTop: 30
+  },
+  table: {
+    marginTop: 15
   }
 }))
 

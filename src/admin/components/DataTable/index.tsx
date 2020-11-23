@@ -5,11 +5,9 @@ import {
   Paper,
   TableContainer,
   Table,
-  TableBody,
   TableCell,
   TableHead,
-  TableRow,
-  Typography
+  TableRow
 } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import classNames from 'classnames';
@@ -34,9 +32,7 @@ const DataTable:React.FC<Props> = ({ className, columns, rows }) => {
 
   return (
     <div className={classNames(classes.content, className)}>
-      <Typography className={classes.rowsLabel}>Teams: { rows ? rows.length : 0 }</Typography>
-
-      <TableContainer component={Paper} className={classes.paper}>
+      <TableContainer component={Paper}>
         <Table className={classes.table}>
           <TableHead className={classes.tableHeader}>
             <TableRow>
@@ -45,26 +41,22 @@ const DataTable:React.FC<Props> = ({ className, columns, rows }) => {
               ))}
             </TableRow>
           </TableHead>
-        </Table>
-        <PerfectScrollbar style={{ maxHeight: 250, width: '100%' }}>
-          <Table className={classes.table}>
+          <PerfectScrollbar className={classes.tableBody} component="tbody">
             {rows && rows.length > 0 ? (
-              <TableBody>
-                {rows.map((row, i) => (
-                  <TableRow key={i}>
-                    {columns.map((col, j) => (
-                      <TableCell key={`${i}-${j}`} className={classes.tableCell}>
-                        {row[col.field]}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))}
-              </TableBody>
+              rows.map((row, i) => (
+                <TableRow key={i}>
+                  {columns.map((col, j) => (
+                    <TableCell key={`${i}-${j}`} className={classes.tableCell}>
+                      {row[col.field]}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
             ) : (
               <></>
             )}
-          </Table>
-        </PerfectScrollbar>
+          </PerfectScrollbar>
+        </Table>
       </TableContainer>
 
       <div className={classes.pagination}>
@@ -80,13 +72,6 @@ const useStyles = makeStyles({
   content: {
 
   },
-  rowsLabel: {
-    fontSize: 18,
-    color: '#45565E'
-  },
-  paper: {
-    marginTop: 15
-  },
   table: {
     minWidth: 650,
   },
@@ -98,6 +83,9 @@ const useStyles = makeStyles({
     color: '#45565E',
     fontFamily: 'NeuzitGrotesk',
     fontWeight: 'bold',
+  },
+  tableBody: {
+    height: 250
   },
   tableCell: {
     fontSize: 14,
