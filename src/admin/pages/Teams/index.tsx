@@ -106,7 +106,7 @@ const Teams: React.FC = () => {
       </Modal>
     </>
   )
-}
+};
 
 const useStyles = makeStyles(() => ({
   total: {
@@ -144,6 +144,6 @@ const useStyles = makeStyles(() => ({
     width: '100%',
     maxWidth: 600
   }
-}))
+}));
 
 export default Teams;

@@ -66,7 +66,7 @@ const DataTable:React.FC<Props> = ({ className, columns, rows }) => {
       </div>
     </div>
   );
-}
+};
 
 const useStyles = makeStyles({
   content: {

@@ -12,22 +12,26 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 
 import { ToolTip } from "../../components";
+import useSharedStyles from '../../globalStyles';
 
 const GeneralInfo: React.FC = () => {
   const classes = useStyles();
+  const sharedClasses = useSharedStyles();
 
   return (
     <>
-      <Typography variant="h3" component="h1" className={classes.title}>
-        General Information
-      </Typography>
-      <Typography className={classes.subtitle}>
+      <div className={sharedClasses.pageHeader}>
+        <Typography variant="h3" component="h1" className={sharedClasses.pageTitle}>
+          General Information
+        </Typography>
+      </div>
+      <Typography className={sharedClasses.pageDescription}>
         Configure how information is displayed.
         While these are the account defaults, some of these settings can be overwritten on an individual basis.
       </Typography>
-      <Grid container spacing={3} className={classes.row}>
+      <Grid container spacing={3} className={sharedClasses.pageRow}>
         <Grid item xs={12}>
-          <FormLabel className={`${classes.label} ${classes.labelWithTooltip}`}>
+          <FormLabel className={`${sharedClasses.radioLabel} ${classes.labelWithTooltip}`}>
             <Typography>Company Name</Typography>
             <ToolTip
               text='Your company name, as it should appear on quotes and invoices. Legal name recommended.'
@@ -44,24 +48,23 @@ const GeneralInfo: React.FC = () => {
           </FormControl>
         </Grid>
       </Grid>
-      <Grid container spacing={3} className={classes.row}>
+      <Grid container spacing={3} className={sharedClasses.pageRow}>
         <Grid item sm={6} xs={12}>
-          <FormLabel className={classes.label}>Default Currency</FormLabel>
-          <FormControl>
-          </FormControl>
+          <FormLabel className={sharedClasses.radioLabel}>Default Currency</FormLabel>
+          <FormControl />
         </Grid>
         <Grid item sm={6} xs={12}>
-          <FormLabel className={classes.label}>Default Calendar layout</FormLabel>
+          <FormLabel className={sharedClasses.radioLabel}>Default Calendar layout</FormLabel>
           <FormControl>
             <RadioGroup name="date" row defaultValue="mm/dd/yyyy">
               <FormControlLabel
-                className={classes.radio}
+                className={sharedClasses.radioRadio}
                 value="dd/mm/yyyy"
                 control={<Radio color="default" />}
                 label="DD/MM/YYYY"
               />
               <FormControlLabel
-                className={classes.radio}
+                className={sharedClasses.radioRadio}
                 value="mm/dd/yyyy"
                 control={<Radio color="default" />}
                 label="MM/DD/YYYY"
@@ -75,29 +78,6 @@ const GeneralInfo: React.FC = () => {
 };
 
 const useStyles = makeStyles({
-  title: {
-    fontSize: 24,
-    color: '#45565E',
-    fontFamily: 'NeuzitGrotesk',
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#45565E',
-    fontFamily: 'NeuzitGrotesk',
-    marginTop: 24,
-  },
-  row: {
-    marginTop: 46,
-    marginBottom: 0
-  },
-  label: {
-    display: 'block',
-    fontSize: 16,
-    color: '#45565E',
-    fontFamily: 'NeuzitGrotesk',
-    fontWeight: 'bolder',
-    marginBottom: 12
-  },
   labelWithTooltip: {
     display: 'flex',
     alignItems: 'center'
@@ -107,13 +87,6 @@ const useStyles = makeStyles({
     width: 15,
     marginLeft: 15
   },
-  radio: {
-    '& .MuiFormControlLabel-label': {
-      fontSize: 14,
-      fontFamily: 'NeuzitGrotesk',
-      color: '#45565E',
-    }
-  }
 });
 
 export default GeneralInfo
