@@ -8,12 +8,10 @@ import {
   FormControl,
   FormLabel,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 
 import userSharedStyles from '../../globalStyles';
 
 const SearchBookingDetail: React.FC = () => {
-  const classes = useStyles();
   const sharedClasses = userSharedStyles();
 
   return (
@@ -69,8 +67,5 @@ const SearchBookingDetail: React.FC = () => {
     </>
   )
 };
-
-const useStyles = makeStyles({
-});
 
 export default SearchBookingDetail
