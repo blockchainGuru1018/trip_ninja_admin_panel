@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { UsernameField } from "../../components";
+import { Select, UsernameField } from "../../components";
 import userSharedStyles from '../../globalStyles';
 
 const BasicInfo: React.FC = () => {
@@ -55,6 +55,15 @@ const BasicInfo: React.FC = () => {
         <Grid item sm={6} xs={12}>
           <FormLabel className={sharedClasses.radioLabel}>Default Currency</FormLabel>
           <FormControl>
+            <Select
+              className={classes.select}
+              options={[
+                { value: 'usd', label: 'USD' },
+                { value: 'eur', label: 'EUR' },
+              ]}
+              value="usd"
+              placeholder="Default currency"
+            />
           </FormControl>
         </Grid>
         <Grid item sm={6} xs={12}>
@@ -113,6 +122,9 @@ const useStyles = makeStyles({
     flex: 1,
     marginLeft: 16
   },
+  select: {
+    width: 300
+  }
 });
 
 export default BasicInfo
