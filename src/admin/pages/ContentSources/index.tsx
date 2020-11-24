@@ -1,11 +1,9 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 
 import useSharedStyles from "../../globalStyles";
 
 const ContentSources: React.FC = () => {
-  const classes = useStyles();
   const sharedClasses = useSharedStyles();
 
   return (
@@ -21,8 +19,5 @@ const ContentSources: React.FC = () => {
     </>
   )
 };
-
-const useStyles = makeStyles({
-});
 
 export default ContentSources
