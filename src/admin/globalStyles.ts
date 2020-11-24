@@ -68,5 +68,11 @@ export default makeStyles(theme => ({
     '&:hover': {
       background: '#45565EEB'
     }
+  },
+  dataTableTotal: {
+    fontSize: 18,
+    fontFamily: 'NeuzitGrotesk',
+    color: '#45565E',
+    marginTop: 30
   }
 }))

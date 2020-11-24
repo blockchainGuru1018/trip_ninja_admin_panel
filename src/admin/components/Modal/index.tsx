@@ -19,7 +19,7 @@ const Modal:React.FC<Props> = ({ title, className, opened, onClose, children }) 
 
   const handleClose = () => {
     onClose && onClose();
-  }
+  };
 
   return (
     <ReactModal
@@ -35,7 +35,7 @@ const Modal:React.FC<Props> = ({ title, className, opened, onClose, children }) 
       <Fade in={!!opened}>
         <div className={classes.modalContent}>
           <div className={classes.modalHeader}>
-            <Typography variant="h3" component="h1" className={classes.modalTitle}>Teams</Typography>
+            <Typography variant="h3" component="h1" className={classes.modalTitle}>{ title }</Typography>
 
             <CloseIcon className={classes.modalClose} onClick={handleClose} />
           </div>
@@ -46,7 +46,7 @@ const Modal:React.FC<Props> = ({ title, className, opened, onClose, children }) 
       </Fade>
     </ReactModal>
   );
-}
+};
 
 const useStyles = makeStyles((theme) => ({
   modal: {
