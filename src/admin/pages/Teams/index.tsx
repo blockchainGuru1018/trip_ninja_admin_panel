@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button, TextField, InputAdornment, Typography } from '@material-ui/core';
 import { SearchOutlined } from "@material-ui/icons";
 
-import { DataTable, Modal, Stepper } from '../../components';
+import { DataTable, Drawer, Modal, Stepper } from '../../components';
 import useSharedStyles from '../../globalStyles';
 
 const columns = [
@@ -21,6 +21,7 @@ const Teams: React.FC = () => {
   const classes = useStyles();
   const sharedClasses = useSharedStyles();
   const [modalOpened, setModalOpened] = useState(false);
+  const [drawerOpened, setDrawerOpened] = useState(false);
   const [step, setStep] = useState(0);
 
   const onNext = () => {
@@ -29,6 +30,11 @@ const Teams: React.FC = () => {
 
   const onBack = () => {
     setStep(Math.max(step - 1, 0));
+  }
+
+  const onFinal = () => {
+    setModalOpened(false);
+    setDrawerOpened(true);
   }
 
   return (
@@ -95,7 +101,7 @@ const Teams: React.FC = () => {
                   variant="contained"
                   className={sharedClasses.btnFilled}
                   style={{ marginLeft: 'auto' }}
-                  onClick={onNext}
+                  onClick={onFinal}
                 >
                   Create your Team
                 </Button>
@@ -104,6 +110,29 @@ const Teams: React.FC = () => {
           </div>
         </Stepper>
       </Modal>
+
+      <Drawer
+        opened={drawerOpened}
+        onClose={() => setDrawerOpened(false)}
+       >
+         <Drawer.Header>Test Drawer</Drawer.Header>
+         <Drawer.Body>Test Drawer</Drawer.Body>
+         <Drawer.Footer className={classes.editFormButtons}>
+          <Button
+            variant="outlined"
+            className={sharedClasses.btnPrimary}
+            onClick={() => setDrawerOpened(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            className={sharedClasses.btnFilled}
+          >
+            Save
+          </Button>
+         </Drawer.Footer>
+      </Drawer>
     </>
   )
 };
@@ -143,6 +172,10 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'center',
     width: '100%',
     maxWidth: 600
+  },
+  editFormButtons: {
+    display: 'flex',
+    justifyContent: 'space-between'
   }
 }));
 
