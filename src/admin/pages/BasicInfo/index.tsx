@@ -9,54 +9,52 @@ import {
   FormLabel,
   TextField,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 
 import { Select, UsernameField } from "../../components";
-import userSharedStyles from '../../globalStyles';
+
+import "./styles.css";
 
 const BasicInfo: React.FC = () => {
-  const classes = useStyles();
-  const sharedClasses = userSharedStyles();
 
   return (
-    <>
-      <div className={sharedClasses.pageHeader}>
-        <Typography variant="h3" component="h1" className={sharedClasses.pageTitle}>
+    <div className="basicInfo__Page">
+      <div className="page-header">
+        <Typography variant="h3" component="h1" className="page-title">
           Basic Information
         </Typography>
       </div>
-      <Typography className={sharedClasses.pageDescription}>
+      <Typography className="page-description">
         Configure your name and personal details.
         Settings changed here will overwrite Global Defaults and Team Defaults.
       </Typography>
-      <div className={classes.usernameSection}>
-        <div className={classes.avatar}>
-          <Typography className={classes.name}>NM</Typography>
+      <div className="username-section">
+        <div className="avatar">
+          <Typography className="name">NM</Typography>
         </div>
 
         <UsernameField value="Niloufar Mazloumpar" onChange={console.log} />
       </div>
-      <Grid container spacing={3} className={sharedClasses.pageRow}>
+      <Grid container spacing={3} className="page-row">
         <Grid item sm={6} xs={12}>
-          <FormLabel className={sharedClasses.radioLabel}>Phone Number</FormLabel>
-          <FormControl className={classes.phoneInputField}>
-            <TextField className={classes.countryCodeInput} placeholder="XXX" variant="outlined" />
-            <TextField className={classes.phoneNumberInput} placeholder="XXX" variant="outlined" />
+          <FormLabel className="radio-label">Phone Number</FormLabel>
+          <FormControl className="phone-input-field">
+            <TextField className="country-code-input" placeholder="XXX" variant="outlined" />
+            <TextField className="phone-number-input" placeholder="XXX" variant="outlined" />
           </FormControl>
         </Grid>
         <Grid item sm={6} xs={12}>
-          <FormLabel className={sharedClasses.radioLabel}>Email Address</FormLabel>
+          <FormLabel className="radio-label">Email Address</FormLabel>
           <FormControl>
             <TextField type="email" placeholder="email@email.com" variant="outlined" />
           </FormControl>
         </Grid>
       </Grid>
-      <Grid container spacing={3} className={sharedClasses.pageRow}>
+      <Grid container spacing={3} className="page-row">
         <Grid item sm={6} xs={12}>
-          <FormLabel className={sharedClasses.radioLabel}>Default Currency</FormLabel>
+          <FormLabel className="radio-label">Default Currency</FormLabel>
           <FormControl>
             <Select
-              className={classes.select}
+              className="select"
               options={[
                 { value: 'usd', label: 'USD' },
                 { value: 'eur', label: 'EUR' },
@@ -67,17 +65,17 @@ const BasicInfo: React.FC = () => {
           </FormControl>
         </Grid>
         <Grid item sm={6} xs={12}>
-          <FormLabel className={sharedClasses.radioLabel}>Default Calendar layout</FormLabel>
+          <FormLabel className="radio-label">Default Calendar layout</FormLabel>
           <FormControl>
             <RadioGroup name="date" row defaultValue="mm/dd/yyyy">
               <FormControlLabel
-                className={sharedClasses.radioRadio}
+                className="radio-radio"
                 value="dd/mm/yyyy"
                 control={<Radio color="default" />}
                 label="DD/MM/YYYY"
               />
               <FormControlLabel
-                className={sharedClasses.radioRadio}
+                className="radio-radio"
                 value="mm/dd/yyyy"
                 control={<Radio color="default" />}
                 label="MM/DD/YYYY"
@@ -86,45 +84,8 @@ const BasicInfo: React.FC = () => {
           </FormControl>
         </Grid>
       </Grid>
-    </>
+    </div>
   )
 };
-
-const useStyles = makeStyles({
-  usernameSection: {
-    display: 'flex',
-    alignItems: 'center',
-    margin: '40px 0',
-  },
-  avatar: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 80,
-    height: 80,
-    border: '3px solid #45565E',
-    borderRadius: '50%',
-    marginRight: 30
-  },
-  name: {
-    fontSize: 32,
-    color: '#45565E',
-    fontFamily: 'NeuzitGrotesk',
-    fontWeight: 'bolder',
-  },
-  phoneInputField: {
-    flexDirection: 'row'
-  },
-  countryCodeInput: {
-    width: 60,
-  },
-  phoneNumberInput: {
-    flex: 1,
-    marginLeft: 16
-  },
-  select: {
-    width: 300
-  }
-});
 
 export default BasicInfo

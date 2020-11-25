@@ -1,0 +1,19 @@
+.select__Component {
+  position: relative;
+  border: 1px solid #DEDEDF;
+  border-radius: 4px;
+}
+.select__Component .input {
+  width: 100%;
+  cursor: pointer;
+}
+.select__Component .input input {
+  font-family: NeuzitGrotesk, sans-serif;
+  font-size: 14px;
+}
+.select__Component .input .MuiOutlinedInput-notchedOutline {
+  border: none;
+}
+.select__Component .input .Mui-disabled {
+  cursor: pointer;
+}

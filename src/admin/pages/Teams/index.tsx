@@ -7,6 +7,9 @@ import {
   Grid,
   FormLabel,
   FormControl,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
 } from '@material-ui/core';
 import { SearchOutlined } from "@material-ui/icons";
 
@@ -14,12 +17,13 @@ import {
   DataTable,
   Drawer,
   Modal,
+  Select,
   Stepper,
   ToolTip,
+  UsernameField
 } from '../../components';
-import { makeStyles } from '@material-ui/core/styles';
-import classNames from "classnames";
-import useSharedStyles from '../../globalStyles';
+
+import "./styles.css";
 
 const columns = [
   { field: 'team', headerName: 'Team' },
@@ -33,8 +37,6 @@ const rows = [
 ];
 
 const Teams: React.FC = () => {
-  const classes = useStyles();
-  const sharedClasses = useSharedStyles();
   const [modalOpened, setModalOpened] = useState(false);
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [step, setStep] = useState(0);
@@ -47,14 +49,19 @@ const Teams: React.FC = () => {
     setStep(Math.max(step - 1, 0));
   };
 
+  const onFinal = () => {
+    setModalOpened(false);
+    setDrawerOpened(true);
+  };
+
   const renderStepContent = () => {
     if (step === 0) {
       return (
-        <div className={classes.firstStep}>
-          <Typography variant="h3" component="h1" className={classNames(classes.teamFormTitle, classes.firstTitle)}>Create a new team</Typography>
-          <Grid container spacing={3} className={classes.row}>
+        <div className="first-step">
+          <Typography variant="h3" component="h1" className="team-form-title first-title">Create a new team</Typography>
+          <Grid container spacing={3} className="row">
             <Grid item xs={12}>
-              <FormLabel className={classes.label}>Team Name</FormLabel>
+              <FormLabel className="label">Team Name</FormLabel>
               <FormControl>
                 <TextField type="team_name" placeholder="What should we call your team" variant="outlined" required={true} />
               </FormControl>
@@ -64,17 +71,17 @@ const Teams: React.FC = () => {
       )
     } else if (step === 1) {
       return (
-        <div className={classes.secondStep}>
-          <Typography variant="h3" component="h1" className={classes.teamFormTitle}>Islington Store</Typography>
-          <Grid container spacing={3} className={classes.row}>
+        <div className="second-step">
+          <Typography variant="h3" component="h1" className="team-form-title">Islington Store</Typography>
+          <Grid container spacing={3} className="row">
             <Grid item xs={12}>
-              <FormLabel className={classNames(classes.label, classes.labelWithTooltip)}>
+              <FormLabel className="{label labelWithTooltip">
                 Inherit global default permissions
                 <ToolTip
                   text='These settings can be overwritten later by team leads or account administrators.'
                 >
                   <img
-                    className={classes.icon}
+                    className="icon"
                     src={require('../../assets/info.svg')}
                     alt="svg"
                   />
@@ -86,41 +93,62 @@ const Teams: React.FC = () => {
       )
     } else if (step === 2) {
       return (
-        <div className={classes.thirdStep}>
-          <Typography variant="h3" component="h1" className={classes.teamFormTitle}>Islington Store</Typography>
-          <Grid container spacing={3} className={classes.row}>
+        <div className="third-step">
+          <Typography variant="h3" component="h1" className="team-form-title">Islington Store</Typography>
+          <Grid container spacing={3} className="row">
             <Grid item sm={6} xs={12}>
-              <FormLabel className={classes.label}>Add Team Members</FormLabel>
+              <FormLabel className="label">Add Team Members</FormLabel>
+              <FormControl>
+                <Select
+                  className="select"
+                  options={[
+                    { value: 'regina_george', label: 'Regina George' },
+                    { value: 'augustus', label: 'Augustus' },
+                    { value: 'selena_gomez', label: 'Selena Gomez' },
+                    { value: 'augustus', label: 'Augustus' },
+                  ]}
+                  value="regina_george"
+                  placeholder="Add team members"
+                />
+              </FormControl>
             </Grid>
             <Grid item sm={6} xs={12}>
-              <FormLabel className={classes.label}>Add Team Lead(s)</FormLabel>
+              <FormLabel className="label">Add Team Lead(s)</FormLabel>
+              <FormControl>
+                <Select
+                  className="select"
+                  options={[
+                    { value: 'regina_george', label: 'Regina George' },
+                    { value: 'augustus', label: 'Augustus' },
+                    { value: 'selena_gomez', label: 'Selena Gomez' },
+                    { value: 'augustus', label: 'Augustus' },
+                  ]}
+                  value="regina_george"
+                  placeholder="Add Team Lead(s)"
+                />
+              </FormControl>
             </Grid>
           </Grid>
         </div>
       )
     }
     return (
-      <div className={classes.fourthStep}>
-        <Typography variant="h3" component="h1" className={classes.teamFormTitle}>Create a new team</Typography>
-        <Typography className={classes.teamFormDescription}>
+      <div className="fourth-step">
+        <Typography variant="h3" component="h1" className="team-form-title">Create a new team</Typography>
+        <Typography className="team-form-description">
           Add users to your team immediately to get started. You can modify team or individual permissions at any time..
         </Typography>
       </div>
     )
   };
 
-  const onFinal = () => {
-    setModalOpened(false);
-    setDrawerOpened(true);
-  }
-
   return (
-    <>
-      <div className={sharedClasses.pageHeader}>
-        <Typography variant="h3" component="h1" className={sharedClasses.pageTitle}>Teams</Typography>
-        <Button variant="outlined" className={sharedClasses.btnPrimary} onClick={() => setModalOpened(true)}>Add Team</Button>
+    <div className="team__Page">
+      <div className="page-header">
+        <Typography variant="h3" component="h1" className="page-title">Teams</Typography>
+        <Button variant="outlined" className="btn-primary" onClick={() => setModalOpened(true)}>Add Team</Button>
       </div>
-      <Typography className={sharedClasses.pageDescription}>
+      <Typography className="page-description">
         Create new teams, customize team permissions, and archive teams from your account.
       </Typography>
       <TextField
@@ -135,10 +163,11 @@ const Teams: React.FC = () => {
         variant="outlined"
       />
 
-      <Typography className={sharedClasses.dataTableTotal}>Teams: { rows ? rows.length : 0 }</Typography>
-      <DataTable className={classes.table} rows={rows} columns={columns} />
+      <Typography className="data-table-total">Teams: { rows ? rows.length : 0 }</Typography>
+      <DataTable className="table" rows={rows} columns={columns} />
 
       <Modal
+        className="team__Page__modal"
         title="Add Team"
         opened={modalOpened}
         onClose={() => setModalOpened(false)}
@@ -147,17 +176,17 @@ const Teams: React.FC = () => {
           steps={["Create Team", "Set Permissions", "Add Members", "Send Invites"]}
           activeStep={step}
         >
-          <form className={classes.stepperContent}>
-            <div className={classes.stepperContentInner}>
+          <form className="stepper-content">
+            <div className="stepper-content-inner">
               {renderStepContent()}
             </div>
           </form>
-          <div className={classes.stepperActions}>
-            <div className={classes.stepperActionsInner}>
+          <div className="stepper-actions">
+            <div className="stepper-actions-inner">
               {step > 0 && (
                 <Button
                   variant="outlined"
-                  className={sharedClasses.btnPrimary}
+                  className="btn-primary"
                   style={{ marginRight: 'auto' }}
                   onClick={onBack}
                 >
@@ -167,7 +196,7 @@ const Teams: React.FC = () => {
               {step < 3 ? (
                 <Button
                   variant="contained"
-                  className={sharedClasses.btnFilled}
+                  className="btn-filled"
                   style={{ marginLeft: 'auto' }}
                   onClick={onNext}
                 >
@@ -176,7 +205,7 @@ const Teams: React.FC = () => {
               ) : (
                 <Button
                   variant="contained"
-                  className={sharedClasses.btnFilled}
+                  className="btn-filled"
                   style={{ marginLeft: 'auto' }}
                   onClick={onFinal}
                 >
@@ -189,115 +218,89 @@ const Teams: React.FC = () => {
       </Modal>
 
       <Drawer
+        className="team__Page__modal"
         opened={drawerOpened}
         onClose={() => setDrawerOpened(false)}
        >
-         <Drawer.Header>Test Drawer</Drawer.Header>
-         <Drawer.Body>Test Drawer</Drawer.Body>
-         <Drawer.Footer className={classes.editFormButtons}>
+         <Drawer.Header>
+           <UsernameField value="Niloufar Mazloumpar" onChange={console.log} />
+         </Drawer.Header>
+         <Drawer.Body>
+           <Grid container spacing={3} className="page-row">
+             <Grid item sm={6} xs={12}>
+               <FormLabel className="radio-label">Team Members</FormLabel>
+               <FormControl>
+                 <Select
+                   className="select"
+                   options={[
+                     { value: 'regina_george', label: 'Regina George' },
+                     { value: 'augustus', label: 'Augustus' },
+                     { value: 'selena_gomez', label: 'Selena Gomez' },
+                     { value: 'augustus', label: 'Augustus' },
+                   ]}
+                   value="regina_george"
+                   placeholder="Edit Team Members"
+                 />
+               </FormControl>
+             </Grid>
+             <Grid item sm={6} xs={12}>
+               <FormLabel className="radio-label">Team Lead(s)</FormLabel>
+               <FormControl>
+                 <Select
+                   className="select"
+                   options={[
+                     { value: 'regina_george', label: 'Regina George' },
+                     { value: 'augustus', label: 'Augustus' },
+                     { value: 'selena_gomez', label: 'Selena Gomez' },
+                     { value: 'augustus', label: 'Augustus' },
+                   ]}
+                   value="regina_george"
+                   placeholder="Team Lead(s)"
+                 />
+               </FormControl>
+             </Grid>
+           </Grid>
+           <Grid container spacing={3} className="page-row">
+             <Grid item sm={6} xs={12}>
+               <FormLabel className="radio-label">Agent can create PNRs?</FormLabel>
+               <FormControl>
+                 <RadioGroup name="date" row defaultValue="enabled">
+                   <FormControlLabel
+                     className="radio-radio"
+                     value="enabled"
+                     control={<Radio color="default" />}
+                     label="Enabled"
+                   />
+                   <FormControlLabel
+                     className="radio-radio"
+                     value="disabled"
+                     control={<Radio color="default" />}
+                     label="Disabled"
+                   />
+                 </RadioGroup>
+               </FormControl>
+             </Grid>
+           </Grid>
+         </Drawer.Body>
+         <Drawer.Footer className="edit-form-buttons">
           <Button
             variant="outlined"
-            className={sharedClasses.btnPrimary}
+            className="btn-primary"
             onClick={() => setDrawerOpened(false)}
           >
             Cancel
           </Button>
           <Button
             variant="contained"
-            className={sharedClasses.btnFilled}
+            className="btn-filled"
+            onClick={() => setDrawerOpened(false)}
           >
             Save
           </Button>
          </Drawer.Footer>
       </Drawer>
-    </>
+    </div>
   )
 };
-
-const useStyles = makeStyles(() => ({
-  table: {
-    marginTop: 15
-  },
-  stepperContent: {
-    display: 'flex',
-    justifyContent: 'center',
-    padding: '30px 15px',
-    borderTop: '1px solid #CACDD6',
-  },
-  stepperContentInner: {
-    width: '100%',
-    maxWidth: 600
-  },
-  stepTitle: {
-    fontSize: 24,
-    color: '#45565E',
-    fontFamily: 'NeuzitGrotesk',
-  },
-  stepperActions: {
-    display: 'flex',
-    justifyContent: 'center',
-    borderTop: '1px solid #CACDD6',
-    padding: '25px 15px'
-  },
-  stepperActionsInner: {
-    display: 'flex',
-    justifyContent: 'center',
-    width: '100%',
-    maxWidth: 600
-  },
-  editFormButtons: {
-    display: 'flex',
-    justifyContent: 'space-between'
-  },
-  teamFormTitle: {
-    fontSize: 24,
-    color: '#45565E',
-    fontFamily: 'NeuzitGrotesk',
-    fontWeight: 'lighter',
-  },
-  row: {
-    marginTop: 30,
-    marginBottom: 0
-  },
-  label: {
-    display: 'block',
-    fontSize: 16,
-    color: '#45565E',
-    fontFamily: 'NeuzitGrotesk',
-    fontWeight: 'bolder',
-    marginBottom: 12
-  },
-  firstStep: {
-    width: '40%',
-    margin: 'auto'
-  },
-  firstTitle: {
-    textAlign: 'center'
-  },
-  secondStep: {},
-  labelWithTooltip: {
-    display: 'flex',
-    alignItems: 'center'
-  },
-  icon: {
-    display: 'flex',
-    cursor: 'pointer',
-    width: 15,
-    marginLeft: 15
-  },
-  thirdStep: {},
-  fourthStep: {
-    textAlign: 'center',
-    width: '70%',
-    marginInline: 'auto'
-  },
-  teamFormDescription: {
-    fontSize: 16,
-    color: '#45565E',
-    fontFamily: 'NeuzitGrotesk',
-    fontWeight: 'lighter',
-    margin: '30px 0',
-  },
-}));
 
 export default Teams;

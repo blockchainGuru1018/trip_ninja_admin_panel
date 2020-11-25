@@ -7,12 +7,15 @@ import {
   FormLabel,
   FormControl,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import classNames from "classnames";
 import PropTypes from "prop-types";
 
-import { Modal, Stepper, ToolTip } from '../../components';
-import useSharedStyles from '../../globalStyles';
+import {
+  Modal,
+  Drawer,
+  Stepper,
+  ToolTip,
+  UsernameField,
+} from '../../components';
 
 const propTypes = {
   opened: PropTypes.bool.isRequired,
@@ -22,8 +25,7 @@ const propTypes = {
 type Props = PropTypes.InferProps<typeof propTypes>
 
 const BulkAddModal: React.FC<Props> = ({ opened, onClose }) => {
-  const classes = useStyles();
-  const sharedClasses = useSharedStyles();
+  const [drawerOpened, setDrawerOpened] = useState(false);
   const [step, setStep] = useState(0);
 
   const onNext = () => {
@@ -34,24 +36,29 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose }) => {
     setStep(Math.max(step - 1, 0));
   };
 
+  const onFinal = () => {
+    onClose();
+    setDrawerOpened(true);
+  };
+
   const renderStepContent = () => {
     if (step === 0) {
       return (
         <>
-          <div className={classes.firstStep}>
-            <Typography variant="h3" component="h1" className={classes.userFormTitle}>Bulk Add Users</Typography>
-            <Typography className={classes.teamFormDescription}>
+          <div className="first-step">
+            <Typography variant="h3" component="h1" className="user-form-title">Bulk Add Users</Typography>
+            <Typography className="team-form-description">
               Add new users to your QuickTrip account
             </Typography>
-            <Grid container spacing={3} className={classes.row}>
+            <Grid container spacing={3} className="row">
               <Grid item xs={12}>
-                <FormLabel className={classNames(classes.label, classes.labelWithTooltip)}>
+                <FormLabel className="label label-with-tooltip">
                   Email Address
                   <ToolTip
                     text='Adding more than one user? Separate users with a space.'
                   >
                     <img
-                      className={classes.icon}
+                      className="icon"
                       src={require('../../assets/info.svg')}
                       alt="svg"
                     />
@@ -67,28 +74,28 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose }) => {
       )
     } else if (step === 1) {
       return (
-        <div className={classes.secondStep}>
-          <Typography variant="h3" component="h1" className={classes.userFormTitle}>Set Users Team</Typography>
-          <Grid container spacing={3} className={classes.row}>
+        <div className="second-step">
+          <Typography variant="h3" component="h1" className="user-form-title">Set Users Team</Typography>
+          <Grid container spacing={3} className="row">
             <Grid item xs={12}>
-              <FormLabel className={classNames(classes.label, classes.labelWithTooltip)}>Inherit global default permissions</FormLabel>
+              <FormLabel className="label label-with-tooltip">Inherit global default permissions</FormLabel>
             </Grid>
           </Grid>
         </div>
       )
     } else if (step === 2) {
       return (
-        <div className={classes.secondStep}>
-          <Typography variant="h3" component="h1" className={classes.userFormTitle}>Rob.dumont@tripninja.io</Typography>
-          <Grid container spacing={3} className={classes.row}>
+        <div className="second-step">
+          <Typography variant="h3" component="h1" className="user-form-title">Multiple Users</Typography>
+          <Grid container spacing={3} className="row">
             <Grid item xs={12}>
-              <FormLabel className={classNames(classes.label, classes.labelWithTooltip)}>
+              <FormLabel className="label labelWithTooltip)}">
                 Inherit global default permissions
                 <ToolTip
                   text='These settings can be overwritten later by team leads or account administrators.'
                 >
                   <img
-                    className={classes.icon}
+                    className="icon"
                     src={require('../../assets/info.svg')}
                     alt="svg"
                   />
@@ -101,9 +108,9 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose }) => {
     }
 
     return (
-      <div className={classes.thirdStep}>
-        <Typography variant="h3" component="h1" className={classes.userFormTitle}>Invite your teammate to QuickTrip</Typography>
-        <Typography className={classes.teamFormDescription}>
+      <div className="third-step">
+        <Typography variant="h3" component="h1" className="user-form-title">Invite your teammate to QuickTrip</Typography>
+        <Typography className="team-form-description">
           Sent them an invitation with everything they need to get started. Once new users are activated, they will be prorated and added to your next invoice.
         </Typography>
       </div>
@@ -111,131 +118,101 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose }) => {
   };
 
   return (
-    <Modal
-      title="Bulk Add Users"
-      opened={opened}
-      onClose={onClose}
-    >
-      <Stepper
-        steps={["Create User", "Set Team", "Set Permissions", "Send Invite"]}
-        activeStep={step}
+    <>
+      <Modal
+        className="user__Page__bulkAdd__modal"
+        title="Bulk Add Users"
+        opened={opened}
+        onClose={onClose}
       >
-        <form className={classes.stepperContent}>
-          <div className={classes.stepperContentInner}>
-            {renderStepContent()}
+        <Stepper
+          steps={["Create User", "Set Team", "Set Permissions", "Send Invite"]}
+          activeStep={step}
+        >
+          <form className="stepper-content">
+            <div className="stepper-content-inner">
+              {renderStepContent()}
+            </div>
+          </form>
+          <div className="stepper-actions">
+            <div className="stepper-actions-inner">
+              {step > 0 && (
+                <Button
+                  variant="outlined"
+                  className="btn-primary"
+                  style={{ marginRight: 'auto' }}
+                  onClick={onBack}
+                >
+                  Back
+                </Button>
+              )}
+              {step < 3 ? (
+                <Button
+                  variant="contained"
+                  className="btn-filled"
+                  style={{ marginLeft: 'auto' }}
+                  onClick={onNext}
+                >
+                  Next
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  className="btn-filled"
+                  style={{ marginLeft: 'auto' }}
+                  onClick={onFinal}
+                >
+                  Send Invites
+                </Button>
+              )}
+            </div>
           </div>
-        </form>
-        <div className={classes.stepperActions}>
-          <div className={classes.stepperActionsInner}>
-            {step > 0 && (
-              <Button
-                variant="outlined"
-                className={sharedClasses.btnPrimary}
-                style={{ marginRight: 'auto' }}
-                onClick={onBack}
-              >
-                Back
-              </Button>
-            )}
-            {step < 3 ? (
-              <Button
-                variant="contained"
-                className={sharedClasses.btnFilled}
-                style={{ marginLeft: 'auto' }}
-                onClick={onNext}
-              >
-                Next
-              </Button>
-            ) : (
-              <Button
-                variant="contained"
-                className={sharedClasses.btnFilled}
-                style={{ marginLeft: 'auto' }}
-                onClick={onNext}
-              >
-                Send Invites
-              </Button>
-            )}
-          </div>
-        </div>
-      </Stepper>
-    </Modal>
+        </Stepper>
+      </Modal>
+      <Drawer
+        className="user__Page__bulkAdd__modal"
+        opened={drawerOpened}
+        onClose={() => setDrawerOpened(false)}
+      >
+        <Drawer.Header>
+          <UsernameField value="Bob Jones" onChange={console.log} />
+        </Drawer.Header>
+        <Drawer.Body>
+          <Grid container spacing={3} className="page-row">
+            <Grid item sm={6} xs={12}>
+              <FormLabel className="radio-label">Email Address</FormLabel>
+              <FormControl>
+                <TextField type="email" placeholder="email@email.com" variant="outlined" />
+              </FormControl>
+            </Grid>
+            <Grid item sm={6} xs={12}>
+              <FormLabel className="radio-label">Phone Number</FormLabel>
+              <FormControl className="phone-input-field">
+                <TextField className="country-code-input" placeholder="XXX" variant="outlined" />
+                <TextField className="phone-number-input" placeholder="XXX" variant="outlined" />
+              </FormControl>
+            </Grid>
+          </Grid>
+        </Drawer.Body>
+        <Drawer.Footer className="edit-form-buttons">
+          <Button
+            variant="outlined"
+            className="btn-primary"
+            onClick={() => setDrawerOpened(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            className="btn-filled"
+            onClick={() => setDrawerOpened(false)}
+          >
+            Save
+          </Button>
+        </Drawer.Footer>
+      </Drawer>
+    </>
   )
 };
-
-const useStyles = makeStyles({
-  stepperContent: {
-    display: 'flex',
-    justifyContent: 'center',
-    padding: '30px 15px',
-    borderTop: '1px solid #CACDD6',
-  },
-  stepperContentInner: {
-    width: '100%',
-    maxWidth: 600
-  },
-  stepTitle: {
-    fontSize: 24,
-    color: '#45565E',
-    fontFamily: 'NeuzitGrotesk',
-  },
-  stepperActions: {
-    display: 'flex',
-    justifyContent: 'center',
-    borderTop: '1px solid #CACDD6',
-    padding: '25px 15px'
-  },
-  stepperActionsInner: {
-    display: 'flex',
-    justifyContent: 'center',
-    width: '100%',
-    maxWidth: 600
-  },
-  userFormTitle: {
-    fontSize: 24,
-    color: '#45565E',
-    fontFamily: 'NeuzitGrotesk',
-    fontWeight: 'lighter',
-  },
-  row: {
-    marginTop: 30,
-    marginBottom: 0
-  },
-  label: {
-    display: 'block',
-    fontSize: 16,
-    color: '#45565E',
-    fontFamily: 'NeuzitGrotesk',
-    fontWeight: 'bolder',
-    marginBottom: 12
-  },
-  firstStep: {},
-  firstTitle: {
-    textAlign: 'center'
-  },
-  secondStep: {},
-  labelWithTooltip: {
-    display: 'flex',
-    alignItems: 'center'
-  },
-  icon: {
-    display: 'flex',
-    cursor: 'pointer',
-    width: 15,
-    marginLeft: 15
-  },
-  thirdStep: {
-    textAlign: 'center',
-    width: '90%',
-    marginInline: 'auto'
-  },
-  teamFormDescription: {
-    fontSize: 16,
-    color: '#45565E',
-    fontFamily: 'NeuzitGrotesk',
-    fontWeight: 'lighter',
-    margin: '15px 0 0',
-  },
-});
 
 export default BulkAddModal

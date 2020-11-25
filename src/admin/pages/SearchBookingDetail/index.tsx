@@ -9,34 +9,32 @@ import {
   FormLabel,
 } from '@material-ui/core';
 
-import userSharedStyles from '../../globalStyles';
+import "./styles.css";
 
 const SearchBookingDetail: React.FC = () => {
-  const sharedClasses = userSharedStyles();
-
   return (
-    <>
-      <div className={sharedClasses.pageHeader}>
-        <Typography variant="h3" component="h1" className={sharedClasses.pageTitle}>
+    <div className="searchBookingDetail__Page">
+      <div className="page-header">
+        <Typography variant="h3" component="h1" className="page-title">
           Search & Booking Defaults
         </Typography>
       </div>
-      <Typography className={sharedClasses.pageDescription}>
+      <Typography className="page-description">
         Configure how and when bookings are made. While these are the account defaults, some of these settings can be overwritten on an individual basis.
       </Typography>
-      <Grid container spacing={3} className={sharedClasses.pageRow}>
+      <Grid container spacing={3} className="page-row">
         <Grid item sm={6} xs={12}>
-          <FormLabel className={sharedClasses.radioLabel}>Agents can create PNRs?</FormLabel>
+          <FormLabel className="radio-label">Agents can create PNRs?</FormLabel>
           <FormControl>
             <RadioGroup name="date" row defaultValue="Enabled">
               <FormControlLabel
-                className={sharedClasses.radioRadio}
+                className="radio-radio"
                 value="Enabled"
                 control={<Radio color="default" />}
                 label="Enabled"
               />
               <FormControlLabel
-                className={sharedClasses.radioRadio}
+                className="radio-radio"
                 value="Disabled"
                 control={<Radio color="default" />}
                 label="Disabled"
@@ -45,17 +43,17 @@ const SearchBookingDetail: React.FC = () => {
           </FormControl>
         </Grid>
         <Grid item sm={6} xs={12}>
-          <FormLabel className={sharedClasses.radioLabel}>Virtual Interlining</FormLabel>
+          <FormLabel className="radio-label">Virtual Interlining</FormLabel>
           <FormControl>
             <RadioGroup name="date" row defaultValue="Enabled">
               <FormControlLabel
-                className={sharedClasses.radioRadio}
+                className="radio-radio"
                 value="Enabled"
                 control={<Radio color="default" />}
                 label="Enabled"
               />
               <FormControlLabel
-                className={sharedClasses.radioRadio}
+                className="radio-radio"
                 value="Disabled"
                 control={<Radio color="default" />}
                 label="Disabled"
@@ -64,7 +62,7 @@ const SearchBookingDetail: React.FC = () => {
           </FormControl>
         </Grid>
       </Grid>
-    </>
+    </div>
   )
 };
 

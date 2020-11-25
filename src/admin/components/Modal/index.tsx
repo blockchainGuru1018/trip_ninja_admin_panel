@@ -1,9 +1,10 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { Backdrop, Fade, Modal as ReactModal, Typography } from '@material-ui/core';
 import { Close as CloseIcon } from '@material-ui/icons';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+
+import "./styles.css";
 
 const propTypes = {
   title: PropTypes.string,
@@ -15,7 +16,6 @@ const propTypes = {
 type Props = PropTypes.InferProps<typeof propTypes>
 
 const Modal:React.FC<Props> = ({ title, className, opened, onClose, children }) => {
-  const classes = useStyles();
 
   const handleClose = () => {
     onClose && onClose();
@@ -23,7 +23,7 @@ const Modal:React.FC<Props> = ({ title, className, opened, onClose, children }) 
 
   return (
     <ReactModal
-      className={classNames(classes.modal, className)}
+      className={classNames("modal__Component", className)}
       open={!!opened}
       onClose={handleClose}
       closeAfterTransition
@@ -33,13 +33,13 @@ const Modal:React.FC<Props> = ({ title, className, opened, onClose, children }) 
       }}
     >
       <Fade in={!!opened}>
-        <div className={classes.modalContent}>
-          <div className={classes.modalHeader}>
-            <Typography variant="h3" component="h1" className={classes.modalTitle}>{ title }</Typography>
+        <div className="modal-content">
+          <div className="modal-header">
+            <Typography variant="h3" component="h1" className="modal-title">{ title }</Typography>
 
-            <CloseIcon className={classes.modalClose} onClick={handleClose} />
+            <CloseIcon className="modal-close" onClick={handleClose} />
           </div>
-          <div className={classes.modalBody}>
+          <div className="modal-body">
             {children}
           </div>
         </div>
@@ -47,47 +47,5 @@ const Modal:React.FC<Props> = ({ title, className, opened, onClose, children }) 
     </ReactModal>
   );
 };
-
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '30px 15px'
-  },
-  modalContent: {
-    border: '1px solid #B1BBC0',
-    boxShadow: '0px 3px 6px #45565E29',
-    width: '100%',
-    maxWidth: 720,
-    outline: 'none !important'
-  },
-  modalHeader: {
-    position: 'relative',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 75,
-    background: '#45565E'
-  },
-  modalTitle: {
-    fontSize: 24,
-    color: 'white',
-    fontFamily: 'NeuzitGrotesk',
-    fontWeight: 'bold',
-  },
-  modalClose: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    width: 30,
-    height: 30,
-    fill: 'white',
-    cursor: 'pointer'
-  },
-  modalBody: {
-    background: 'white'
-  }
-}));
 
 export default Modal;

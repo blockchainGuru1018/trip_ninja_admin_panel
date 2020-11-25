@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { Drawer as ReactDrawer } from '@material-ui/core';
 import { Close as CloseIcon } from '@material-ui/icons';
 import classNames from 'classnames';
@@ -8,6 +7,8 @@ import PropTypes from 'prop-types';
 import Header, { Props as HeaderProps } from './Header';
 import Body, { Props as BodyProps } from './Body';
 import Footer, { Props as FooterProps } from './Footer';
+
+import "./styles.css";
 
 const propTypes = {
   className: PropTypes.string,
@@ -24,49 +25,27 @@ type iDrawer = React.FC<Props> & {
 }
 
 const Drawer:iDrawer = ({ className, opened, onClose, children }) => {
-  const classes = useStyles();
 
   const handleClose = () => {
     onClose && onClose();
-  }
+  };
 
   return (
     <ReactDrawer
       anchor="right"
       PaperProps={{
-        className: classNames(classes.root, className)
+        className: classNames("drawer__Component", className)
       }}
       open={!!opened}
       onClose={handleClose}
     >
-      <div className={classes.content}>
+      <div className="content">
         {children}
-        <CloseIcon className={classes.closeIcon} onClick={handleClose} />
+        <CloseIcon className="closeIcon" onClick={handleClose} />
       </div>
     </ReactDrawer>
   );
-}
-
-const useStyles = makeStyles({
-  root: {
-    width: '100%',
-    maxWidth: 720
-  },
-  content: {
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
-  },
-  closeIcon: {
-    position: 'absolute',
-    top: 24,
-    right: 24,
-    width: 30,
-    height: 30,
-    cursor: 'pointer'
-  }
-});
+};
 
 Drawer.Header = Header;
 Drawer.Body = Body;

@@ -1,4 +1,3 @@
-export { default as CurrencySelectForm } from './CurrencySelectForm';
 export { default as DataTable } from './DataTable';
 export { default as Drawer } from './Drawer';
 export { default as Header } from './Header';

@@ -1,0 +1,85 @@
+.agencyAccounts__Page .table {
+  margin-top: 15px;
+}
+.agencyAccounts__Page__modal .stepper-content {
+  display: flex;
+  justify-content: center;
+  padding: 30px 15px;
+  border-top: 1px solid #CACDD6;
+}
+.agencyAccounts__Page__modal .stepper-content-inner {
+  width: 100%;
+  max-width: 600px;
+}
+.agencyAccounts__Page__modal .step-title {
+  font-size: 24px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+}
+.agencyAccounts__Page__modal .stepper-actions {
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid #CACDD6;
+  padding: 25px 15px;
+}
+.agencyAccounts__Page__modal .stepper-actions-inner {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 600px;
+}
+.agencyAccounts__Page__modal .label {
+  display: block;
+  font-size: 16px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: bolder;
+  margin-bottom: 12px
+}
+.agencyAccounts__Page__modal .edit-form-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.agencyAccounts__Page__modal .agency-form-title {
+  font-size: 24px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: lighter;
+}
+.agencyAccounts__Page__modal .row {
+  margin-top: 30px;
+  margin-bottom: 0
+}
+.agencyAccounts__Page__modal .first-step {
+  width: 40%;
+  margin: auto;
+}
+.agencyAccounts__Page__modal .first-title {
+  text-align: center;
+}
+.agencyAccounts__Page__modal .label-with-tooltip {
+  display: flex;
+  align-items: center;
+}
+.agencyAccounts__Page__modal .icon {
+  display: flex;
+  cursor: pointer;
+  width: 15px;
+  margin-left: 15px
+}
+.agencyAccounts__Page__modal .third-step {}
+.agencyAccounts__Page__modal .fourth-step {
+  text-align: center;
+  width: 70%;
+  margin-inline: auto;
+}
+.agencyAccounts__Page__modal .agency-form-description {
+  font-size: 16px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: lighter;
+  margin: 30px 0;
+}
+.agencyAccounts__Page__modal .select {
+  width: 300px;
+}

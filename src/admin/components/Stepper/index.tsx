@@ -1,8 +1,9 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Step, StepLabel, Stepper as ReactStepper } from '@material-ui/core';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+
+import "./styles.css";
 
 const propTypes = {
   className: PropTypes.string,
@@ -13,10 +14,9 @@ const propTypes = {
 type Props = PropTypes.InferProps<typeof propTypes>
 
 const Stepper:React.FC<Props> = ({ className, steps, activeStep, children }) => {
-  const classes = useStyles();
 
   return (
-    <div className={classNames(classes.root, className)}>
+    <div className={classNames("stepper__Component", className)}>
       <ReactStepper activeStep={activeStep || 0} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>
@@ -28,13 +28,5 @@ const Stepper:React.FC<Props> = ({ className, steps, activeStep, children }) => 
     </div>
   );
 };
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: '100%',
-    },
-  }),
-);
 
 export default Stepper;

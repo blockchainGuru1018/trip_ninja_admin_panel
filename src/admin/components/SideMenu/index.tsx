@@ -1,31 +1,31 @@
 import React, { forwardRef } from 'react';
 import { NavLink, NavLinkProps } from "react-router-dom";
 import { Drawer, List, ListItem } from "@material-ui/core";
-import { makeStyles, createStyles } from '@material-ui/core/styles';
 
 import menuItems from './items';
 
+import "./styles.css";
+
 const SideMenu: React.FC = () => {
-  const classes = useStyles();
 
   return (
     <Drawer
       variant="permanent"
       classes={{
-        paper: classes.drawerPaper,
+        paper: 'sideMenu__Component',
       }}
     >
-      <div className={classes.menuContainer}>
+      <div className="menuContainer">
         {menuItems.map((item, idx) => (
-          <div key={idx} className={classes.menuList}>
-            <p className={classes.title}>{item.title}</p>
-            <List component="nav" className={classes.subMenuList} disablePadding>
+          <div key={idx} className="menuList">
+            <p className="title">{item.title}</p>
+            <List component="nav" className="subMenuList" disablePadding>
               {item.children.map((el, i) => (
                 <ListItem
                   key={i}
                   button
-                  className={classes.menuItem}
-                  children={<p className={classes.menuText}>{el.name}</p>}
+                  className="menuItem"
+                  children={<p className="menuText">{el.name}</p>}
                   component={forwardRef((props: NavLinkProps, ref: any) => <NavLink exact {...props} innerRef={ref} />)}
                   to={el.link}
                 />
@@ -37,57 +37,5 @@ const SideMenu: React.FC = () => {
     </Drawer>
   )
 };
-
-const useStyles = makeStyles(theme =>
-  createStyles({
-    drawerPaper: {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      zIndex: 0,
-      width: 240,
-      paddingBottom: theme.spacing(4),
-      background: '#45565E',
-      color: '#fff',
-    },
-    menuContainer: {
-      padding: '0px 34px'
-    },
-    menuList: {
-      paddingBottom: 10,
-      borderTop: '1px solid #ABB3B7',
-
-      '&:first-child': {
-        border: 'none'
-      }
-    },
-    title: {
-      fontSize: 16,
-      fontFamily: 'NeuzitGrotesk',
-      fontWeight: 'bold',
-      padding: '24px 0 10px',
-    },
-    subMenuList: {
-      width: '100%',
-    },
-    menuItem: {
-      '&.active': {
-        background: 'rgba(0, 0, 0, 0.08)',
-
-        '& .MuiListItemIcon-root': {
-          color: '#fff',
-        },
-      },
-      padding: 0,
-    },
-    menuText: {
-      fontSize: '16px',
-      fontFamily: 'NeuzitGrotesk',
-      fontWeight: 'lighter',
-      padding: '10px 0',
-      whiteSpace: 'pre-line',
-      margin:0
-    }
-  }),
-);
 
 export default SideMenu;

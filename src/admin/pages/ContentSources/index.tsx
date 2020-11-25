@@ -1,22 +1,21 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
 
-import useSharedStyles from "../../globalStyles";
+import "./styles.css";
 
 const ContentSources: React.FC = () => {
-  const sharedClasses = useSharedStyles();
 
   return (
-    <>
-      <div className={sharedClasses.pageHeader}>
-        <Typography variant="h3" component="h1" className={sharedClasses.pageTitle}>
+    <div className="contentSources__Page">
+      <div className="page-header">
+        <Typography variant="h3" component="h1" className="page-title">
           Content Sources
         </Typography>
       </div>
-      <Typography className={sharedClasses.pageDescription}>
+      <Typography className="page-description">
         Email support@tripninja.io with questions or concerns about data sources.
       </Typography>
-    </>
+    </div>
   )
 };
 

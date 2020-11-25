@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap");
 @font-face {
-  font-family: 'NeuzitGrotesk';
+  font-family: NeuzitGrotesk, sans-serif;
   font-style: normal;
   font-weight: 400;
   src: url(assets/fonts/NeuzeitGro/NeuzeitGro-Reg.otf);
@@ -22,7 +22,7 @@ body .MuiOutlinedInput-input {
   padding-bottom: 12px;
 }
 
-.tooltip-content {
+body .tooltip-content {
   position: absolute;
   display: none;
   left: 50%;
@@ -37,4 +37,78 @@ body .MuiOutlinedInput-input {
   box-shadow: 0 3px 6px #45565E29;
   box-sizing: border-box;
   z-index: 2;
+}
+
+
+body .page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+body .page-title {
+  font-size: 24px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: lighter;
+}
+body .page-description {
+  font-size: 16px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: lighter;
+  margin: 30px 0;
+}
+body .page-row {
+  margin-top: 30px;
+  margin-bottom: 0
+}
+body .radio-label {
+  display: block;
+  font-size: 16px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: bolder;
+  margin-bottom: 12px;
+}
+body .radio-radio .MuiFormControlLabel-label {
+  font-size: 14px;
+  font-family: NeuzitGrotesk, sans-serif;
+  color: #45565E;
+}
+body .radio-radio:nth-child(2) {
+  margin-left: 50px;
+}
+body .btn-primary {
+  border: 2px solid #45565E;
+  border-radius: 2px;
+  font-size: 16px;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: bold;
+  color: #45565E;
+  text-transform: none;
+  padding: 5px 20px;
+}
+body .btn-primary:hover {
+  color: white;
+  background-color: #45565E;
+}
+body .btn-filled {
+  background: #45565E;
+  border: 2px solid #45565E;
+  border-radius: 2px;
+  font-size: 16px;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: bold;
+  color: white;
+  text-transform: none;
+  padding: 5px 20px;
+}
+body .btn-filled:hover {
+  background: #45565EEB;
+}
+body .data-table-total {
+  font-size: 18px;
+  font-family: NeuzitGrotesk, sans-serif;
+  color: #45565E;
+  margin-top: 30px;
 }

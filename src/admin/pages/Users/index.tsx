@@ -6,12 +6,12 @@ import {
   Typography,
 } from '@material-ui/core';
 import { SearchOutlined } from "@material-ui/icons";
-import { makeStyles } from '@material-ui/core/styles';
 
 import { DataTable } from '../../components';
 import SingleAddModal from "./SingleAddModal";
 import BulkAddModal from "./BulkAddModal";
-import useSharedStyles from '../../globalStyles';
+
+import "./styles.css";
 
 const columns = [
   { field: 'name', headerName: 'Name' },
@@ -33,23 +33,21 @@ const rows = [
 ];
 
 const Users: React.FC = () => {
-  const classes = useStyles();
-  const sharedClasses = useSharedStyles();
   const [singleModalOpened, setSingleModalOpened] = useState(false);
   const [bulkModalOpened, setBulkModalOpened] = useState(false);
 
   return (
-    <>
-      <div className={sharedClasses.pageHeader}>
-        <Typography variant="h3" component="h1" className={sharedClasses.pageTitle}>
+    <div className="user__Page">
+      <div className="page-header">
+        <Typography variant="h3" component="h1" className="page-title">
           Users
         </Typography>
-        <div className={classes.btnGroup}>
-          <Button variant="outlined" className={sharedClasses.btnPrimary} onClick={() => setSingleModalOpened(true)}>Add User</Button>
-          <Button variant="outlined" className={sharedClasses.btnPrimary} onClick={() => setBulkModalOpened(true)} style={{ marginLeft: 20 }}>Bulk Add</Button>
+        <div className="btn-group">
+          <Button variant="outlined" className="btn-primary" onClick={() => setSingleModalOpened(true)}>Add User</Button>
+          <Button variant="outlined" className="btn-primary" onClick={() => setBulkModalOpened(true)} style={{ marginLeft: 20 }}>Bulk Add</Button>
         </div>
       </div>
-      <Typography className={sharedClasses.pageDescription}>
+      <Typography className="page-description">
         Create new users, customize user permissions, and remove users from your account.
       </Typography>
       <TextField
@@ -64,8 +62,8 @@ const Users: React.FC = () => {
         variant="outlined"
       />
 
-      <Typography className={sharedClasses.dataTableTotal}>Teams: { rows ? rows.length : 0 }</Typography>
-      <DataTable className={classes.table} rows={rows} columns={columns} />
+      <Typography className="data-table-total">Active users: { rows ? rows.length : 0 }</Typography>
+      <DataTable className="table" rows={rows} columns={columns} />
 
       <SingleAddModal
         opened={singleModalOpened}
@@ -76,17 +74,8 @@ const Users: React.FC = () => {
         opened={bulkModalOpened}
         onClose={() => setBulkModalOpened(false)}
       />
-    </>
+    </div>
   )
 };
-
-const useStyles = makeStyles({
-  table: {
-    marginTop: 30
-  },
-  btnGroup: {
-    display: 'flex',
-  },
-});
 
 export default Users

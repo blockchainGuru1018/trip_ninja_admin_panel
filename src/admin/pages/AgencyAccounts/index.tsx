@@ -12,12 +12,14 @@ import { SearchOutlined } from "@material-ui/icons";
 
 import {
   DataTable,
+  Drawer,
   Modal,
-  Stepper
+  Select,
+  Stepper,
+  UsernameField
 } from '../../components';
-import { makeStyles } from '@material-ui/core/styles';
-import classNames from "classnames";
-import useSharedStyles from '../../globalStyles';
+
+import "./styles.css";
 
 const columns = [
   { field: 'accountName', headerName: 'Account Name' },
@@ -33,9 +35,8 @@ const rows = [
 ];
 
 const AgencyAccounts: React.FC = () => {
-  const classes = useStyles();
-  const sharedClasses = useSharedStyles();
   const [modalOpened, setModalOpened] = useState(false);
+  const [drawerOpened, setDrawerOpened] = useState(false);
   const [step, setStep] = useState(0);
 
   const onNext = () => {
@@ -46,14 +47,19 @@ const AgencyAccounts: React.FC = () => {
     setStep(Math.max(step - 1, 0));
   };
 
+  const onFinal = () => {
+    setModalOpened(false);
+    setDrawerOpened(true);
+  };
+
   const renderStepContent = () => {
     if (step === 0) {
       return (
-        <div className={classes.firstStep}>
-          <Typography variant="h3" component="h1" className={classNames(classes.agencyFormTitle, classes.firstTitle)}>Create a new agency</Typography>
-          <Grid container spacing={3} className={classes.row}>
+        <div className="first-step">
+          <Typography variant="h3" component="h1" className="agency-form-title first-title">Create a new agency</Typography>
+          <Grid container spacing={3} className="row">
             <Grid item xs={12}>
-              <FormLabel className={classes.label}>Agency Name</FormLabel>
+              <FormLabel className="label">Agency Name</FormLabel>
               <FormControl>
                 <TextField type="agency_name" placeholder="What should we call your agency" variant="outlined" />
               </FormControl>
@@ -63,18 +69,18 @@ const AgencyAccounts: React.FC = () => {
       )
     } else if (step === 1) {
       return (
-        <div className={classes.secondStep}>
-          <Grid container spacing={3} className={classes.row}>
+        <div className="second-step">
+          <Grid container spacing={3} className="row">
             <Grid item sm={6} xs={12}>
-              <FormLabel className={classes.label}>API Username</FormLabel>
+              <FormLabel className="label">API Username</FormLabel>
               <FormControl>
-                <TextField type="agency_name" placeholder="API Username" variant="outlined" />
+                <TextField type="api_username" placeholder="API Username" variant="outlined" />
               </FormControl>
             </Grid>
             <Grid item sm={6} xs={12}>
-              <FormLabel className={classes.label}>API Password</FormLabel>
+              <FormLabel className="label">API Password</FormLabel>
               <FormControl>
-                <TextField type="agency_name" placeholder="API Password" variant="outlined" />
+                <TextField type="api_password" placeholder="API Password" variant="outlined" />
               </FormControl>
             </Grid>
           </Grid>
@@ -82,23 +88,38 @@ const AgencyAccounts: React.FC = () => {
       )
     } else if (step === 2) {
       return (
-        <div className={classes.thirdStep}>
-          <Typography variant="h3" component="h1" className={classes.agencyFormTitle}>Islington Store</Typography>
-          <Grid container spacing={3} className={classes.row}>
+        <div className="third-step">
+          <Grid container spacing={3} className="row">
             <Grid item sm={6} xs={12}>
-              <FormLabel className={classes.label}>Add Team Members</FormLabel>
+              <FormLabel className="label">Supplier</FormLabel>
+              <FormControl>
+                <Select
+                  className="select"
+                  options={[
+                    { value: 'regina_george', label: 'Regina George' },
+                    { value: 'augustus', label: 'Augustus' },
+                    { value: 'selena_gomez', label: 'Selena Gomez' },
+                    { value: 'augustus', label: 'Augustus' },
+                  ]}
+                  value="regina_george"
+                  placeholder="Select your data source"
+                />
+              </FormControl>
             </Grid>
             <Grid item sm={6} xs={12}>
-              <FormLabel className={classes.label}>Add Team Lead(s)</FormLabel>
+              <FormLabel className="label">PCC/OID/ACCESS CREDS</FormLabel>
+              <FormControl>
+                <TextField type="credentials" placeholder="Your credentials" variant="outlined" />
+              </FormControl>
             </Grid>
           </Grid>
         </div>
       )
     }
     return (
-      <div className={classes.fourthStep}>
-        <Typography variant="h3" component="h1" className={classes.agencyFormTitle}>Create your Agency</Typography>
-        <Typography className={classes.agencyFormDescription}>
+      <div className="fourth-step">
+        <Typography variant="h3" component="h1" className="agency-form-title">Create your Agency</Typography>
+        <Typography className="agency-form-description">
           Once your agency is created it can be edited or archived anytime from the overview panel.
         </Typography>
       </div>
@@ -106,12 +127,12 @@ const AgencyAccounts: React.FC = () => {
   };
 
   return (
-    <>
-      <div className={sharedClasses.pageHeader}>
-        <Typography variant="h3" component="h1" className={sharedClasses.pageTitle}>Agency Accounts</Typography>
-        <Button variant="outlined" className={sharedClasses.btnPrimary} onClick={() => setModalOpened(true)}>Add Agency account</Button>
+    <div className="agencyAccounts__Page">
+      <div className="page-header">
+        <Typography variant="h3" component="h1" className="page-title">Agency Accounts</Typography>
+        <Button variant="outlined" className="btn-primary" onClick={() => setModalOpened(true)}>Add Agency account</Button>
       </div>
-      <Typography className={sharedClasses.pageDescription}>
+      <Typography className="page-description">
         Add, edit, and remove available agency accounts.
       </Typography>
       <TextField
@@ -126,10 +147,11 @@ const AgencyAccounts: React.FC = () => {
         variant="outlined"
       />
 
-      <Typography className={sharedClasses.dataTableTotal}>Teams: { rows ? rows.length : 0 }</Typography>
-      <DataTable className={classes.table} rows={rows} columns={columns} />
+      <Typography className="data-table-total">Agencies: { rows ? rows.length : 0 }</Typography>
+      <DataTable className="table" rows={rows} columns={columns} />
 
       <Modal
+        className="agencyAccounts__Page__modal"
         title="Add Agency"
         opened={modalOpened}
         onClose={() => setModalOpened(false)}
@@ -138,17 +160,17 @@ const AgencyAccounts: React.FC = () => {
           steps={["Create Agency", "Set API Creds", "Add Data Sources", "Finalize Settings"]}
           activeStep={step}
         >
-          <form className={classes.stepperContent}>
-            <div className={classes.stepperContentInner}>
+          <form className="stepper-content">
+            <div className="stepper-content-inner">
               {renderStepContent()}
             </div>
           </form>
-          <div className={classes.stepperActions}>
-            <div className={classes.stepperActionsInner}>
+          <div className="stepper-actions">
+            <div className="stepper-actions-inner">
               {step > 0 && (
                 <Button
                   variant="outlined"
-                  className={sharedClasses.btnPrimary}
+                  className="btn-primary"
                   style={{ marginRight: 'auto' }}
                   onClick={onBack}
                 >
@@ -158,7 +180,7 @@ const AgencyAccounts: React.FC = () => {
               {step < 3 ? (
                 <Button
                   variant="contained"
-                  className={sharedClasses.btnFilled}
+                  className="btn-filled"
                   style={{ marginLeft: 'auto' }}
                   onClick={onNext}
                 >
@@ -167,9 +189,9 @@ const AgencyAccounts: React.FC = () => {
               ) : (
                 <Button
                   variant="contained"
-                  className={sharedClasses.btnFilled}
+                  className="btn-filled"
                   style={{ marginLeft: 'auto' }}
-                  onClick={onNext}
+                  onClick={onFinal}
                 >
                   Create Agency
                 </Button>
@@ -178,90 +200,71 @@ const AgencyAccounts: React.FC = () => {
           </div>
         </Stepper>
       </Modal>
-    </>
+
+      <Drawer
+        className="agencyAccounts__Page__modal"
+        opened={drawerOpened}
+        onClose={() => setDrawerOpened(false)}
+      >
+        <Drawer.Header>
+          <UsernameField value="Agency Name" onChange={console.log} />
+        </Drawer.Header>
+        <Drawer.Body>
+          <Grid container spacing={3} className="row">
+            <Grid item sm={6} xs={12}>
+              <FormLabel className="label">API Username</FormLabel>
+              <FormControl>
+                <TextField type="api_username" placeholder="API Username" variant="outlined" />
+              </FormControl>
+            </Grid>
+            <Grid item sm={6} xs={12}>
+              <FormLabel className="label">API Password</FormLabel>
+              <FormControl>
+                <TextField type="api_password" placeholder="API Password" variant="outlined" />
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Grid container spacing={3} className="row">
+            <Grid item sm={6} xs={12}>
+              <FormLabel className="label">Supplier</FormLabel>
+              <FormControl>
+                <Select
+                  className="select"
+                  options={[
+                    { value: 'amadeus', label: 'Amadeus' },
+                  ]}
+                  value="amadeus"
+                  placeholder="Select your data source"
+                />
+              </FormControl>
+            </Grid>
+            <Grid item sm={6} xs={12}>
+              <FormLabel className="label">PCC/OID/ACCESS CREDS</FormLabel>
+              <FormControl>
+                <TextField type="pcc_creds" placeholder="NYEND" variant="outlined" />
+              </FormControl>
+            </Grid>
+          </Grid>
+        </Drawer.Body>
+        <Drawer.Footer className="edit-form-buttons">
+          <Button
+            variant="outlined"
+            className="btn-primary"
+            onClick={() => setDrawerOpened(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            className="btn-filled"
+            onClick={() => setDrawerOpened(false)}
+          >
+            Save
+          </Button>
+        </Drawer.Footer>
+      </Drawer>
+    </div>
   )
 };
-
-const useStyles = makeStyles(() => ({
-  table: {
-    marginTop: 15
-  },
-  stepperContent: {
-    display: 'flex',
-    justifyContent: 'center',
-    padding: '30px 15px',
-    borderTop: '1px solid #CACDD6',
-  },
-  stepperContentInner: {
-    width: '100%',
-    maxWidth: 600
-  },
-  stepTitle: {
-    fontSize: 24,
-    color: '#45565E',
-    fontFamily: 'NeuzitGrotesk',
-  },
-  stepperActions: {
-    display: 'flex',
-    justifyContent: 'center',
-    borderTop: '1px solid #CACDD6',
-    padding: '25px 15px'
-  },
-  stepperActionsInner: {
-    display: 'flex',
-    justifyContent: 'center',
-    width: '100%',
-    maxWidth: 600
-  },
-  label: {
-    display: 'block',
-    fontSize: 16,
-    color: '#45565E',
-    fontFamily: 'NeuzitGrotesk',
-    fontWeight: 'bolder',
-    marginBottom: 12
-  },
-  agencyFormTitle: {
-    fontSize: 24,
-    color: '#45565E',
-    fontFamily: 'NeuzitGrotesk',
-    fontWeight: 'lighter',
-  },
-  row: {
-    marginTop: 30,
-    marginBottom: 0
-  },
-  firstStep: {
-    width: '40%',
-    margin: 'auto'
-  },
-  firstTitle: {
-    textAlign: 'center'
-  },
-  secondStep: {},
-  labelWithTooltip: {
-    display: 'flex',
-    alignItems: 'center'
-  },
-  icon: {
-    display: 'flex',
-    cursor: 'pointer',
-    width: 15,
-    marginLeft: 15
-  },
-  thirdStep: {},
-  fourthStep: {
-    textAlign: 'center',
-    width: '70%',
-    marginInline: 'auto'
-  },
-  agencyFormDescription: {
-    fontSize: 16,
-    color: '#45565E',
-    fontFamily: 'NeuzitGrotesk',
-    fontWeight: 'lighter',
-    margin: '30px 0',
-  },
-}));
 
 export default AgencyAccounts;

@@ -1,0 +1,179 @@
+.user__Page .table {
+  margin-top: 15px;
+}
+.user__Page .btn-group {
+  display: flex;
+}
+.user__Page__bulkAdd__modal .stepper-content {
+  display: flex;
+  justify-content: center;
+  padding: 30px 15px;
+  border-top: 1px solid #CACDD6;
+}
+.user__Page__bulkAdd__modal .stepper-content-inner {
+  width: 100%;
+  max-width: 600px;
+}
+.user__Page__bulkAdd__modal .step-title {
+  font-size: 24px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+}
+.user__Page__bulkAdd__modal .stepper-actions {
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid #CACDD6;
+  padding: 25px 15px;
+}
+.user__Page__bulkAdd__modal .stepper-actions-inner {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 600px;
+}
+.user__Page__bulkAdd__modal .phone-input-field {
+  flex-direction: row;
+}
+.user__Page__bulkAdd__modal .country-code-input {
+  width: 60px;
+}
+.user__Page__bulkAdd__modal .phone-number-input {
+  flex: 1;
+  margin-left: 16px;
+}
+.user__Page__bulkAdd__modal .edit-form-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.user__Page__bulkAdd__modal .user-form-title {
+  font-size: 24px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: lighter;
+}
+.user__Page__bulkAdd__modal .row {
+  margin-top: 30px;
+  margin-bottom: 0
+}
+.user__Page__bulkAdd__modal .label {
+  display: flex;
+  font-size: 16px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: bolder;
+  margin-bottom: 12px;
+}
+.user__Page__bulkAdd__modal .first-title {
+  text-align: center;
+}
+.user__Page__bulkAdd__modal .label-with-tooltip {
+  display: flex;
+  align-items: center;
+}
+.user__Page__bulkAdd__modal .icon {
+  display: flex;
+  cursor: pointer;
+  width: 15px;
+  margin-left: 15px;
+}
+.user__Page__bulkAdd__modal .third-step {
+  text-align: center;
+  width: 90%;
+  margin-inline: auto;
+}
+.user__Page__bulkAdd__modal .team-form-description {
+  font-size: 16px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: lighter;
+  margin: 15px 0 0;
+}
+
+.user__Page__singleAdd__modal .stepper-content {
+  display: flex;
+  justify-content: center;
+  padding: 30px 15px;
+  border-top: 1px solid #CACDD6;
+}
+.user__Page__singleAdd__modal .stepper-content-inner {
+  width: 100%;
+  max-width: 600px;
+}
+.user__Page__singleAdd__modal .step-title {
+  font-size: 24px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+}
+.user__Page__singleAdd__modal .stepper-actions {
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid #CACDD6;
+  padding: 25px 15px;
+}
+.user__Page__singleAdd__modal .stepper-actions-inner {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 600px;
+}
+.user__Page__singleAdd__modal .phone-input-field {
+  flex-direction: row;
+}
+.user__Page__singleAdd__modal .country-code-input {
+  width: 60px;
+}
+.user__Page__singleAdd__modal .phone-number-input {
+  flex: 1;
+  margin-left: 16px;
+}
+.user__Page__singleAdd__modal .edit-form-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.user__Page__singleAdd__modal .user-form-title {
+  font-size: 24px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: lighter;
+}
+.user__Page__singleAdd__modal .row {
+  margin-top: 30px;
+  margin-bottom: 0
+}
+.user__Page__singleAdd__modal .label {
+  display: block;
+  font-size: 16px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: bolder;
+  margin-bottom: 12px;
+}
+.user__Page__singleAdd__modal .first_step {
+  width: 70%;
+  margin: auto;
+}
+.user__Page__singleAdd__modal .first-title {
+  text-align: center;
+}
+.user__Page__singleAdd__modal .label-with-tooltip {
+  display: flex;
+  align-items: center;
+}
+.user__Page__singleAdd__modal .icon {
+  display: flex;
+  cursor: pointer;
+  width: 15px;
+  margin-left: 15px;
+}
+.user__Page__singleAdd__modal .third-step {
+  text-align: center;
+  width: 90%;
+  margin-inline: auto;
+}
+.user__Page__singleAdd__modal .team-form-description {
+  font-size: 16px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: lighter;
+  margin: 30px 0;
+}

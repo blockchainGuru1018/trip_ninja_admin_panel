@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import ReactSelect from 'react-select';
-import { makeStyles } from '@material-ui/core/styles';
 import { TextField, InputAdornment } from '@material-ui/core';
 import { ArrowDropDown, ArrowDropUp, SearchOutlined } from "@material-ui/icons";
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+
+import "./styles.css";
 
 const propTypes = {
   className: PropTypes.string,
@@ -21,13 +22,12 @@ const propTypes = {
 type Props = PropTypes.InferProps<typeof propTypes>
 
 const Select:React.FC<Props> = ({ className, value, options, multiple, placeholder, onChange }) => {
-  const classes = useStyles();
   const [isOpened, setIsOpened] = useState(false);
   let selectedOptions: any = multiple ? (
     options.filter((el) => value.includes(el.value))
   ) : (
     options.find((el) => el.value === value)
-  )
+  );
 
   useEffect(() => {
     if (isOpened) {
@@ -59,12 +59,12 @@ const Select:React.FC<Props> = ({ className, value, options, multiple, placehold
     }
 
     return selectedOptions ? selectedOptions.label : null;
-  }
+  };
 
   const onClick = (e: React.MouseEvent<HTMLInputElement>) => {
     e.stopPropagation();
     setIsOpened(!isOpened);
-  }
+  };
 
   const onClose = () => {
     setIsOpened(false)
@@ -80,12 +80,12 @@ const Select:React.FC<Props> = ({ className, value, options, multiple, placehold
         opt.value
       ])
     }
-  }
+  };
 
   return (
-    <div className={classNames(className, classes.root)}>
+    <div className={classNames(className, "select__Component")}>
       <TextField
-        className={classes.input}
+        className="input"
         disabled
         InputProps={{
           endAdornment: (
@@ -169,28 +169,5 @@ const Select:React.FC<Props> = ({ className, value, options, multiple, placehold
     </div>
   );
 };
-
-const useStyles = makeStyles(() => ({
-  root: {
-    position: 'relative',
-    border: '1px solid #DEDEDF',
-    borderRadius: 4
-  },
-  input: {
-    width: '100%',
-    cursor: 'pointer',
-
-    '& input': {
-      fontFamily: 'NeuzitGrotesk',
-      fontSize: 14,
-    },
-    '& .MuiOutlinedInput-notchedOutline': {
-      border: 'none',
-    },
-    '& .Mui-disabled': {
-      cursor: 'pointer'
-    }
-  }
-}));
 
 export default Select;

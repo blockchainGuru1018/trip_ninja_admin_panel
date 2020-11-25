@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { Typography, TextField } from "@material-ui/core";
 import PropTypes from 'prop-types';
+
+import "./styles.css";
 
 const propTypes = {
   value: PropTypes.string.isRequired,
@@ -11,45 +12,27 @@ const propTypes = {
 type Props = PropTypes.InferProps<typeof propTypes>
 
 const UsernameField: React.FC<Props> = ({ value, onChange }) => {
-  const classes = useStyles();
   const [opened, setOpened] = useState(false);
 
   return (
-    <div className={classes.content}>
-      {opened ? (
-        <TextField value={value} onChange={onChange} variant="outlined" />
-      ) : (
-        <Typography variant="h3" component="h1" className={classes.label}>{value}</Typography>
-      )}
-      <span>
+    <div className="userNameField__Component">
+      <div className="content">
+        {opened ? (
+          <TextField value={value} onChange={onChange} variant="outlined" />
+        ) : (
+          <Typography variant="h3" component="h1" className="label">{value}</Typography>
+        )}
+        <span>
         <img
-          className={classes.icon}
+          className="icon"
           src={opened ? require('../../assets/close.svg') : require('../../assets/edit-24px.svg')}
-           onClick={() => setOpened(!opened)}
-           alt="svg"
+          onClick={() => setOpened(!opened)}
+          alt="svg"
         />
       </span>
+      </div>
     </div>
   )
 };
-
-const useStyles = makeStyles(() => ({
-  content: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  label: {
-    fontSize: 24,
-    color: '#45565E',
-    fontFamily: 'NeuzitGrotesk',
-    fontWeight: 'lighter',
-  },
-  icon: {
-    marginLeft: 13,
-    marginTop: 5,
-    cursor: 'pointer',
-    width: '18px'
-  }
-}));
 
 export default UsernameField;

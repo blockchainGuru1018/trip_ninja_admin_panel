@@ -1,6 +1,7 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+
+import "./styles.css";
 
 const propTypes = {
   text: PropTypes.string.isRequired,
@@ -9,26 +10,17 @@ const propTypes = {
 type Props = PropTypes.InferProps<typeof propTypes>
 
 const ToolTip: React.FC<Props> = ({ text, children }) => {
-  const classes = useStyles();
 
   return (
-    <div className={classes.tooltip}>
-      {children}
-      <div className="tooltip-content">
-        {text}
+    <div className="tooltip__Component">
+      <div className="tooltip">
+        {children}
+        <div className="tooltip-content">
+          {text}
+        </div>
       </div>
     </div>
   )
 };
-
-const useStyles = makeStyles(() => ({
-  tooltip: {
-    position: 'relative',
-
-    '&:hover .tooltip-content': {
-      display: 'block'
-    }
-  }
-}));
 
 export default ToolTip;
