@@ -81,6 +81,9 @@
   width: 90%;
   margin-inline: auto;
 }
+.user__Page__bulkAdd__modal .custom-switch {
+  margin-left: 15px;
+}
 .user__Page__bulkAdd__modal .team-form-description {
   font-size: 16px;
   color: #45565E;

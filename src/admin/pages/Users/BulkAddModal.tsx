@@ -15,6 +15,8 @@ import {
   Stepper,
   ToolTip,
   UsernameField,
+  Switch,
+  Tabs
 } from '../../components';
 
 const propTypes = {
@@ -27,6 +29,7 @@ type Props = PropTypes.InferProps<typeof propTypes>
 const BulkAddModal: React.FC<Props> = ({ opened, onClose }) => {
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [step, setStep] = useState(0);
+  const [activeTab, setActiveTab] = useState(0);
 
   const onNext = () => {
     setStep(Math.min(step + 1, 3));
@@ -89,7 +92,7 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose }) => {
           <Typography variant="h3" component="h1" className="user-form-title">Multiple Users</Typography>
           <Grid container spacing={3} className="row">
             <Grid item xs={12}>
-              <FormLabel className="label labelWithTooltip)}">
+              <FormLabel className="label" style={{ alignItems: 'center' }}>
                 Inherit global default permissions
                 <ToolTip
                   text='These settings can be overwritten later by team leads or account administrators.'
@@ -100,7 +103,16 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose }) => {
                     alt="svg"
                   />
                 </ToolTip>
+                <Switch inputProps={{ 'aria-label': 'primary checkbox' }} className="custom-switch" />
               </FormLabel>
+            </Grid>
+            <Grid item xs={12}>
+              <Tabs value={activeTab} tabs={["Booking", "Test"]} onChange={(event: React.ChangeEvent<{}>, newValue: any) => setActiveTab(newValue)} />
+              {activeTab === 0 ? (
+                <Typography>Booking Content</Typography>
+              ) : (
+                <Typography>Test Content</Typography>
+              )}
             </Grid>
           </Grid>
         </div>

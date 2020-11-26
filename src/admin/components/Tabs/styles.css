@@ -1,0 +1,13 @@
+.MuiTabs-flexContainer {
+    border-bottom: 1px solid #D0D4D6;
+}
+.MuiTabs-flexContainer .MuiTab-root {
+    border: 1px solid #45565E40;
+    border-bottom: none;
+    color: #45565E;
+}
+.MuiTabs-flexContainer .MuiTab-wrapper {
+    font-size: 16px;
+    font-family: NeuzitGrotesk, sans-serif;
+    text-transform: none;
+}
