@@ -106,9 +106,20 @@ body .btn-filled {
 body .btn-filled:hover {
   background: #45565EEB;
 }
+body .btn-text {
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: bold;
+  text-transform: none;
+}
+body .btn-text:hover {
+  background-color: transparent;
+}
 body .data-table-total {
   font-size: 18px;
   font-family: NeuzitGrotesk, sans-serif;
   color: #45565E;
   margin-top: 30px;
+}
+body .MuiButton-textSecondary {
+  color: #00B4C3;
 }

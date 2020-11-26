@@ -1,4 +1,4 @@
-.dataTable__Component .table {
+.dataTable__Component .dataTable__Component__table {
   min-width: 650px;
 }
 .dataTable__Component .table-header {
@@ -9,6 +9,13 @@
   color: #45565E;
   font-family: NeuzitGrotesk, sans-serif;
   font-weight: bold;
+}
+.dataTable__Component .table-header-cell .sortable-column {
+  display: flex;
+}
+.dataTable__Component .table-header-cell .sortable-column svg {
+  margin-left: 8px;
+  cursor: pointer;
 }
 .dataTable__Component .table-body {
   height: 250px;

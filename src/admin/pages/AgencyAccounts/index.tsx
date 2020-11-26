@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PerfectScrollbar from "react-perfect-scrollbar"
 import {
   Button,
   TextField,
@@ -40,6 +41,9 @@ const AgencyAccounts: React.FC = () => {
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [step, setStep] = useState(0);
   const [activeTab, setActiveTab] = useState(0);
+  const [suppliers, setSuppliers] = useState([
+    { supplier: '', credential: '' }
+  ]);
 
   const onNext = () => {
     setStep(Math.min(step + 1, 3));
@@ -53,6 +57,13 @@ const AgencyAccounts: React.FC = () => {
     setModalOpened(false);
     setDrawerOpened(true);
   };
+
+  const addSupplier = () => {
+    setSuppliers([
+      ...suppliers,
+      { supplier: '', credential: '' }
+    ])
+  }
 
   const renderStepContent = () => {
     if (step === 0) {
@@ -75,13 +86,13 @@ const AgencyAccounts: React.FC = () => {
           <Grid container spacing={3} className="row">
             <Grid item sm={6} xs={12}>
               <FormLabel className="label">API Username</FormLabel>
-              <FormControl>
+              <FormControl fullWidth>
                 <TextField type="api_username" placeholder="API Username" variant="outlined" />
               </FormControl>
             </Grid>
             <Grid item sm={6} xs={12}>
               <FormLabel className="label">API Password</FormLabel>
-              <FormControl>
+              <FormControl fullWidth>
                 <TextField type="api_password" placeholder="API Password" variant="outlined" />
               </FormControl>
             </Grid>
@@ -91,28 +102,35 @@ const AgencyAccounts: React.FC = () => {
     } else if (step === 2) {
       return (
         <div className="third-step">
-          <Grid container spacing={3} className="row">
-            <Grid item sm={6} xs={12}>
-              <FormLabel className="label">Supplier</FormLabel>
-              <FormControl>
-                <Select
-                  className="select"
-                  options={[
-                    { value: 'regina_george', label: 'Regina George' },
-                    { value: 'augustus', label: 'Augustus' },
-                    { value: 'selena_gomez', label: 'Selena Gomez' },
-                    { value: 'augustus', label: 'Augustus' },
-                  ]}
-                  value="regina_george"
-                  placeholder="Select your data source"
-                />
-              </FormControl>
+          {suppliers.map((el, idx) => (
+            <Grid key={idx} container spacing={3} className="row">
+              <Grid item sm={6} xs={12}>
+                <FormLabel className="label">Supplier</FormLabel>
+                <FormControl fullWidth>
+                  <Select
+                    className="select"
+                    options={[
+                      { value: 'regina_george', label: 'Regina George' },
+                      { value: 'augustus', label: 'Augustus' },
+                      { value: 'selena_gomez', label: 'Selena Gomez' },
+                      { value: 'augustus', label: 'Augustus' },
+                    ]}
+                    value="regina_george"
+                    placeholder="Select your data source"
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item sm={6} xs={12}>
+                <FormLabel className="label">PCC/OID/ACCESS CREDS</FormLabel>
+                <FormControl fullWidth>
+                  <TextField type="credentials" placeholder="Your credentials" variant="outlined" />
+                </FormControl>
+              </Grid>
             </Grid>
-            <Grid item sm={6} xs={12}>
-              <FormLabel className="label">PCC/OID/ACCESS CREDS</FormLabel>
-              <FormControl>
-                <TextField type="credentials" placeholder="Your credentials" variant="outlined" />
-              </FormControl>
+          ))}
+          <Grid container spacing={3} className="row">
+            <Grid item xs={12}>
+              <Button size="small" color="secondary" className="btn-text" onClick={addSupplier}>+ Supplier</Button>
             </Grid>
           </Grid>
         </div>
@@ -162,11 +180,9 @@ const AgencyAccounts: React.FC = () => {
           steps={["Create Agency", "Set API Creds", "Add Data Sources", "Finalize Settings"]}
           activeStep={step}
         >
-          <form className="stepper-content">
-            <div className="stepper-content-inner">
-              {renderStepContent()}
-            </div>
-          </form>
+          <PerfectScrollbar className="stepper-content">
+            {renderStepContent()}
+          </PerfectScrollbar>
           <div className="stepper-actions">
             <div className="stepper-actions-inner">
               {step > 0 && (

@@ -28,9 +28,9 @@ import {
 import "./styles.css";
 
 const columns = [
-  { field: 'team', headerName: 'Team' },
-  { field: 'members', headerName: 'Members' },
-  { field: 'lead', headerName: 'Team Lead' },
+  { field: 'team', headerName: 'Team', sortable: true },
+  { field: 'members', headerName: 'Members', sortable: true },
+  { field: 'lead', headerName: 'Team Lead', sortable: true },
   { field: 'action', headerName: '' },
 ];
 
