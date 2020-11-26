@@ -5,7 +5,7 @@ import './styles.css';
 
 export interface ITabsProps extends Omit<TabsProps, 'onChange'> {
   tabs: string[],
-  onChange: (event: React.ChangeEvent<{}>, value: number) => void;
+  onChange?: (event: React.ChangeEvent<{}>, value: number) => void;
 }
 
 const Tabs:React.FC<ITabsProps> = ({ tabs, children, ...props }) => (

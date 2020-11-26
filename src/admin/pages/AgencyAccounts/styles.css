@@ -51,7 +51,7 @@
   margin-bottom: 0
 }
 .agencyAccounts__Page__modal .first-step {
-  width: 40%;
+  width: 50%;
   margin: auto;
 }
 .agencyAccounts__Page__modal .first-title {
@@ -71,7 +71,7 @@
 .agencyAccounts__Page__modal .fourth-step {
   text-align: center;
   width: 70%;
-  margin-inline: auto;
+  margin: auto;
 }
 .agencyAccounts__Page__modal .agency-form-description {
   font-size: 16px;

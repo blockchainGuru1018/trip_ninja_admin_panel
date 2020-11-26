@@ -6,7 +6,7 @@ const Switch: React.FC<SwitchProps> = (props: SwitchProps) => {
   return (
     <ReactSwitch {...props} />
   )
-}
+};
 
 export default withStyles({
   switchBase: {

@@ -31,25 +31,50 @@
   width: 100%;
   max-width: 600px;
 }
-.user__Page__bulkAdd__modal .phone-input-field {
+.user__Page__bulkAdd__modal .tab-content {
+  margin-top: 30px;
+}
+.user__Page__bulkAdd__drawer__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.user__Page__bulkAdd__drawer .phone-input-field {
   flex-direction: row;
 }
-.user__Page__bulkAdd__modal .country-code-input {
+.user__Page__bulkAdd__drawer .country-code-input {
   width: 60px;
 }
-.user__Page__bulkAdd__modal .phone-number-input {
+.user__Page__bulkAdd__drawer .phone-number-input {
   flex: 1;
   margin-left: 16px;
 }
-.user__Page__bulkAdd__modal .edit-form-buttons {
+.user__Page__bulkAdd__drawer .edit-form-buttons {
   display: flex;
   justify-content: space-between;
+}
+.user__Page__bulkAdd__drawer .reset-label {
+  text-align: center;
+  text-transform: none;
+  color: #00B4C3;
+}
+.user__Page__bulkAdd__drawer .tab-content {
+  margin-top: 30px;
+  display: flex;
 }
 .user__Page__bulkAdd__modal .user-form-title {
   font-size: 24px;
   color: #45565E;
   font-family: NeuzitGrotesk, sans-serif;
   font-weight: lighter;
+}
+.user__Page__bulkAdd__modal .user-form-content {
+  font-size: 16px;
+  border: 1px solid #CFD2D5;
+  padding: 30px 15px;
+  max-height: 50px;
+  overflow-x: auto;
+  overflow-y: auto;
 }
 .user__Page__bulkAdd__modal .row {
   margin-top: 30px;
@@ -119,19 +144,36 @@
   width: 100%;
   max-width: 600px;
 }
-.user__Page__singleAdd__modal .phone-input-field {
+.user__Page__singleAdd__modal .tab-content {
+  margin-top: 30px;
+}
+.user__Page__singleAdd__drawer__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.user__Page__singleAdd__drawer .phone-input-field {
   flex-direction: row;
 }
-.user__Page__singleAdd__modal .country-code-input {
+.user__Page__singleAdd__drawer .country-code-input {
   width: 60px;
 }
-.user__Page__singleAdd__modal .phone-number-input {
+.user__Page__singleAdd__drawer .phone-number-input {
   flex: 1;
   margin-left: 16px;
 }
-.user__Page__singleAdd__modal .edit-form-buttons {
+.user__Page__singleAdd__drawer .edit-form-buttons {
   display: flex;
   justify-content: space-between;
+}
+.user__Page__singleAdd__drawer .reset-label {
+  text-align: center;
+  text-transform: none;
+  color: #00B4C3;
+}
+.user__Page__singleAdd__drawer .tab-content {
+  margin-top: 30px;
+  display: flex;
 }
 .user__Page__singleAdd__modal .user-form-title {
   font-size: 24px;

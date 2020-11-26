@@ -19,6 +19,8 @@ import {
   Modal,
   Select,
   Stepper,
+  Switch,
+  Tabs,
   ToolTip,
   UsernameField
 } from '../../components';
@@ -62,7 +64,7 @@ const Teams: React.FC = () => {
           <Grid container spacing={3} className="row">
             <Grid item xs={12}>
               <FormLabel className="label">Team Name</FormLabel>
-              <FormControl>
+              <FormControl fullWidth>
                 <TextField type="team_name" placeholder="What should we call your team" variant="outlined" required={true} />
               </FormControl>
             </Grid>
@@ -86,7 +88,30 @@ const Teams: React.FC = () => {
                     alt="svg"
                   />
                 </ToolTip>
+                <Switch inputProps={{ 'aria-label': 'primary checkbox' }} className="custom-switch" />
               </FormLabel>
+            </Grid>
+            <Grid item xs={12}>
+              <Tabs value={0} tabs={["Booking"]} />
+              <div className="tab-content">
+                <FormLabel className="radio-label">Agents can create PNRs?</FormLabel>
+                <FormControl>
+                  <RadioGroup name="date" row defaultValue="Enabled">
+                    <FormControlLabel
+                      className="radio-radio"
+                      value="Enabled"
+                      control={<Radio color="default" />}
+                      label="Enabled"
+                    />
+                    <FormControlLabel
+                      className="radio-radio"
+                      value="Disabled"
+                      control={<Radio color="default" />}
+                      label="Disabled"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </div>
             </Grid>
           </Grid>
         </div>
@@ -260,26 +285,27 @@ const Teams: React.FC = () => {
                </FormControl>
              </Grid>
            </Grid>
-           <Grid container spacing={3} className="page-row">
-             <Grid item sm={6} xs={12}>
-               <FormLabel className="radio-label">Agent can create PNRs?</FormLabel>
+           <Grid item xs={12}>
+             <Tabs value={0} tabs={["Booking"]} />
+             <div className="tab-content">
+               <FormLabel className="radio-label">Agents can create PNRs?</FormLabel>
                <FormControl>
-                 <RadioGroup name="date" row defaultValue="enabled">
+                 <RadioGroup name="date" row defaultValue="Enabled">
                    <FormControlLabel
                      className="radio-radio"
-                     value="enabled"
+                     value="Enabled"
                      control={<Radio color="default" />}
                      label="Enabled"
                    />
                    <FormControlLabel
                      className="radio-radio"
-                     value="disabled"
+                     value="Disabled"
                      control={<Radio color="default" />}
                      label="Disabled"
                    />
                  </RadioGroup>
                </FormControl>
-             </Grid>
+             </div>
            </Grid>
          </Drawer.Body>
          <Drawer.Footer className="edit-form-buttons">

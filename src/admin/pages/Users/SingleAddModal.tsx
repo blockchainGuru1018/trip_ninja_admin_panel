@@ -6,6 +6,9 @@ import {
   Grid,
   FormLabel,
   FormControl,
+  RadioGroup,
+  FormControlLabel,
+  Radio
 } from '@material-ui/core';
 import PropTypes from "prop-types";
 
@@ -15,6 +18,8 @@ import {
   Stepper,
   ToolTip,
   UsernameField,
+  Switch,
+  Tabs
 } from '../../components';
 
 const propTypes = {
@@ -26,7 +31,9 @@ type Props = PropTypes.InferProps<typeof propTypes>
 
 const SingleAddModal: React.FC<Props> = ({ opened, onClose }) => {
   const [drawerOpened, setDrawerOpened] = useState(false);
+  const [resetModalOpened, setResetModalOpened] = useState(false);
   const [step, setStep] = useState(0);
+  const [activeTab, setActiveTab] = useState(0);
 
   const onNext = () => {
     setStep(Math.min(step + 1, 2));
@@ -36,9 +43,14 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose }) => {
     setStep(Math.max(step - 1, 0));
   };
 
-  const onFinal = () => {
+  const openDrawer = () => {
     onClose();
     setDrawerOpened(true);
+  };
+
+  const openReset = () => {
+    setDrawerOpened(false);
+    setResetModalOpened(true);
   };
 
   const renderStepContent = () => {
@@ -64,7 +76,7 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose }) => {
           <Grid container spacing={3} className="row">
             <Grid item xs={12}>
               <FormLabel className="label">Email Address</FormLabel>
-              <FormControl>
+              <FormControl fullWidth>
                 <TextField type="email" placeholder="User@user.com" variant="outlined" />
               </FormControl>
             </Grid>
@@ -88,7 +100,30 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose }) => {
                     alt="svg"
                   />
                 </ToolTip>
+                <Switch inputProps={{ 'aria-label': 'primary checkbox' }} className="custom-switch" />
               </FormLabel>
+            </Grid>
+            <Grid item xs={12}>
+              <Tabs value={0} tabs={["Booking"]} />
+              <div className="tab-content">
+                <FormLabel className="radio-label">Agents can create PNRs?</FormLabel>
+                <FormControl>
+                  <RadioGroup name="date" row defaultValue="Enabled">
+                    <FormControlLabel
+                      className="radio-radio"
+                      value="Enabled"
+                      control={<Radio color="default" />}
+                      label="Enabled"
+                    />
+                    <FormControlLabel
+                      className="radio-radio"
+                      value="Disabled"
+                      control={<Radio color="default" />}
+                      label="Disabled"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </div>
             </Grid>
           </Grid>
         </div>
@@ -148,7 +183,7 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose }) => {
                   variant="contained"
                   className="btn-filled"
                   style={{ marginLeft: 'auto' }}
-                  onClick={onFinal}
+                  onClick={openDrawer}
                 >
                   Send Invites
                 </Button>
@@ -159,29 +194,58 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose }) => {
       </Modal>
 
       <Drawer
-        className="user__Page__singleAdd__modal"
+        className="user__Page__singleAdd__drawer"
         opened={drawerOpened}
         onClose={() => setDrawerOpened(false)}
       >
         <Drawer.Header>
           <UsernameField value="Bob Jones" onChange={console.log} />
         </Drawer.Header>
-        <Drawer.Body>
-          <Grid container spacing={3} className="page-row">
-            <Grid item sm={6} xs={12}>
-              <FormLabel className="radio-label">Email Address</FormLabel>
-              <FormControl>
-                <TextField type="email" placeholder="email@email.com" variant="outlined" />
-              </FormControl>
-            </Grid>
-            <Grid item sm={6} xs={12}>
-              <FormLabel className="radio-label">Phone Number</FormLabel>
-              <FormControl className="phone-input-field">
-                <TextField className="country-code-input" placeholder="XXX" variant="outlined" />
-                <TextField className="phone-number-input" placeholder="XXX" variant="outlined" />
-              </FormControl>
-            </Grid>
+        <Drawer.Body
+          className="user__Page__singleAdd__drawer__body">
+          <Grid item xs={12}>
+            <Tabs value={activeTab} tabs={["Personal Info", "Booking"]} onChange={(event: React.ChangeEvent<{}>, newValue: any) => setActiveTab(newValue)} />
+            {activeTab === 0 ? (
+              <div className="tab-content">
+                <Grid item sm={6} xs={12}>
+                  <FormLabel className="radio-label">Email Address</FormLabel>
+                  <FormControl>
+                    <TextField type="email" placeholder="email@email.com" variant="outlined" />
+                  </FormControl>
+                </Grid>
+                <Grid item sm={6} xs={12}>
+                  <FormLabel className="radio-label">Phone Number</FormLabel>
+                  <FormControl className="phone-input-field">
+                    <TextField className="country-code-input" placeholder="XXX" variant="outlined" />
+                    <TextField className="phone-number-input" placeholder="XXX" variant="outlined" />
+                  </FormControl>
+                </Grid>
+              </div>
+            ) : (
+              <div className="tab-content" style={{ display:"block" }}>
+                <FormLabel className="radio-label">Agents can create PNRs?</FormLabel>
+                <FormControl>
+                  <RadioGroup name="date" row defaultValue="Enabled">
+                    <FormControlLabel
+                      className="radio-radio"
+                      value="Enabled"
+                      control={<Radio color="default" />}
+                      label="Enabled"
+                    />
+                    <FormControlLabel
+                      className="radio-radio"
+                      value="Disabled"
+                      control={<Radio color="default" />}
+                      label="Disabled"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </div>
+            )}
           </Grid>
+          <Button onClick={openReset}>
+            <FormLabel className="reset-label">Send password reset link?</FormLabel>
+          </Button>
         </Drawer.Body>
         <Drawer.Footer className="edit-form-buttons">
           <Button
@@ -200,6 +264,53 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose }) => {
           </Button>
         </Drawer.Footer>
       </Drawer>
+      <Modal
+        className="user__Page__singleAdd__modal"
+        title="Reset Password"
+        opened={resetModalOpened}
+        onClose={() => setResetModalOpened(false)}
+      >
+        <form className="stepper-content">
+          <div className="stepper-content-inner">
+            <Grid container spacing={3} className="page-row">
+              <Grid item xs={12}>
+                <FormLabel className="radio-label labelWithTooltip">Confirm Current Password</FormLabel>
+                <FormControl fullWidth>
+                  <TextField type="company_name" placeholder="Trip Ninja Inc." variant="outlined"/>
+                </FormControl>
+              </Grid>
+            </Grid>
+            <Grid container spacing={3} className="page-row">
+              <Grid item xs={12}>
+                <FormLabel className="radio-label labelWithTooltip">New Password</FormLabel>
+                <FormControl fullWidth>
+                  <TextField type="company_name" placeholder="Trip Ninja Inc." variant="outlined"/>
+                </FormControl>
+              </Grid>
+            </Grid>
+          </div>
+        </form>
+        <div className="stepper-actions">
+          <div className="stepper-actions-inner">
+            <Button
+              variant="outlined"
+              className="btn-primary"
+              style={{ marginRight: 'auto' }}
+              onClick={() => setResetModalOpened(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              className="btn-filled"
+              style={{ marginLeft: 'auto' }}
+              onClick={() => setResetModalOpened(false)}
+            >
+              Reset Password
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </>
   )
 };

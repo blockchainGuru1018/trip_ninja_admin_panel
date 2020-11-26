@@ -1,6 +1,9 @@
 .team__Page .table {
   margin-top: 15px;
 }
+.team__Page__modal .tab-content {
+  margin-top: 30px;
+}
 .team__Page__modal .stepper-content {
   display: flex;
   justify-content: center;
@@ -50,8 +53,12 @@
   font-weight: bolder;
   margin-bottom: 12px;
 }
+.team__Page__modal .tab-content {
+  margin-top: 30px;
+  display: block;
+}
 .team__Page__modal .first-step {
-  width: 40%;
+  width: 50%;
   margin: auto;
 }
 .team__Page__modal .first-title {
@@ -70,7 +77,7 @@
 .team__Page__modal .fourth-step {
   text-align: center;
   width: 70%;
-  margin-inline: auto
+  margin: auto
 }
 .team__Page__modal .team-form-description {
   font-size: 16px;

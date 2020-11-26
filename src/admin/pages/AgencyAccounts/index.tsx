@@ -16,6 +16,7 @@ import {
   Modal,
   Select,
   Stepper,
+  Tabs,
   UsernameField
 } from '../../components';
 
@@ -38,6 +39,7 @@ const AgencyAccounts: React.FC = () => {
   const [modalOpened, setModalOpened] = useState(false);
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [step, setStep] = useState(0);
+  const [activeTab, setActiveTab] = useState(0);
 
   const onNext = () => {
     setStep(Math.min(step + 1, 3));
@@ -60,7 +62,7 @@ const AgencyAccounts: React.FC = () => {
           <Grid container spacing={3} className="row">
             <Grid item xs={12}>
               <FormLabel className="label">Agency Name</FormLabel>
-              <FormControl>
+              <FormControl fullWidth>
                 <TextField type="agency_name" placeholder="What should we call your agency" variant="outlined" />
               </FormControl>
             </Grid>
@@ -210,40 +212,46 @@ const AgencyAccounts: React.FC = () => {
           <UsernameField value="Agency Name" onChange={console.log} />
         </Drawer.Header>
         <Drawer.Body>
-          <Grid container spacing={3} className="row">
-            <Grid item sm={6} xs={12}>
-              <FormLabel className="label">API Username</FormLabel>
-              <FormControl>
-                <TextField type="api_username" placeholder="API Username" variant="outlined" />
-              </FormControl>
-            </Grid>
-            <Grid item sm={6} xs={12}>
-              <FormLabel className="label">API Password</FormLabel>
-              <FormControl>
-                <TextField type="api_password" placeholder="API Password" variant="outlined" />
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Grid container spacing={3} className="row">
-            <Grid item sm={6} xs={12}>
-              <FormLabel className="label">Supplier</FormLabel>
-              <FormControl>
-                <Select
-                  className="select"
-                  options={[
-                    { value: 'amadeus', label: 'Amadeus' },
-                  ]}
-                  value="amadeus"
-                  placeholder="Select your data source"
-                />
-              </FormControl>
-            </Grid>
-            <Grid item sm={6} xs={12}>
-              <FormLabel className="label">PCC/OID/ACCESS CREDS</FormLabel>
-              <FormControl>
-                <TextField type="pcc_creds" placeholder="NYEND" variant="outlined" />
-              </FormControl>
-            </Grid>
+          <Grid item xs={12}>
+            <Tabs value={activeTab} tabs={["API Credentials", "Data Sources"]} onChange={(event: React.ChangeEvent<{}>, newValue: any) => setActiveTab(newValue)} />
+            {activeTab === 0 ? (
+              <Grid container spacing={3} className="row">
+                <Grid item sm={6} xs={12}>
+                  <FormLabel className="label">API Username</FormLabel>
+                  <FormControl>
+                    <TextField type="api_username" placeholder="API Username" variant="outlined" />
+                  </FormControl>
+                </Grid>
+                <Grid item sm={6} xs={12}>
+                  <FormLabel className="label">API Password</FormLabel>
+                  <FormControl>
+                    <TextField type="api_password" placeholder="API Password" variant="outlined" />
+                  </FormControl>
+                </Grid>
+              </Grid>
+            ) : (
+              <Grid container spacing={3} className="row">
+                <Grid item sm={6} xs={12}>
+                  <FormLabel className="label">Supplier</FormLabel>
+                  <FormControl>
+                    <Select
+                      className="select"
+                      options={[
+                        { value: 'amadeus', label: 'Amadeus' },
+                      ]}
+                      value="amadeus"
+                      placeholder="Select your data source"
+                    />
+                  </FormControl>
+                </Grid>
+                <Grid item sm={6} xs={12}>
+                  <FormLabel className="label">PCC/OID/ACCESS CREDS</FormLabel>
+                  <FormControl>
+                    <TextField type="pcc_creds" placeholder="NYEND" variant="outlined" />
+                  </FormControl>
+                </Grid>
+              </Grid>
+            )}
           </Grid>
         </Drawer.Body>
         <Drawer.Footer className="edit-form-buttons">
