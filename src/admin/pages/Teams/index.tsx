@@ -36,6 +36,7 @@ const columns = [
 
 const rows = [
   { team: 'Islington Store', members: 15, lead: 'Brett Ziegler, +1', action: 35 },
+  { team: 'Islington Store', members: 14, lead: 'Brett Ziegler, +0', action: 30 },
 ];
 
 const Teams: React.FC = () => {

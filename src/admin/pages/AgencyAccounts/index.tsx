@@ -24,10 +24,10 @@ import {
 import "./styles.css";
 
 const columns = [
-  { field: 'accountName', headerName: 'Account Name' },
-  { field: 'numberOfUsers', headerName: 'Number of Users' },
-  { field: 'dataSource', headerName: 'Data Source' },
-  { field: 'status', headerName: 'Status' },
+  { field: 'accountName', headerName: 'Account Name', sortable: true },
+  { field: 'numberOfUsers', headerName: 'Number of Users', sortable: true },
+  { field: 'dataSource', headerName: 'Data Source', sortable: true },
+  { field: 'status', headerName: 'Status', sortable: true },
   { field: 'action', headerName: '' },
 ];
 
@@ -63,7 +63,7 @@ const AgencyAccounts: React.FC = () => {
       ...suppliers,
       { supplier: '', credential: '' }
     ])
-  }
+  };
 
   const renderStepContent = () => {
     if (step === 0) {
@@ -227,49 +227,68 @@ const AgencyAccounts: React.FC = () => {
         <Drawer.Header>
           <UsernameField value="Agency Name" onChange={console.log} />
         </Drawer.Header>
-        <Drawer.Body>
-          <Grid item xs={12}>
-            <Tabs value={activeTab} tabs={["API Credentials", "Data Sources"]} onChange={(event: React.ChangeEvent<{}>, newValue: any) => setActiveTab(newValue)} />
-            {activeTab === 0 ? (
-              <Grid container spacing={3} className="row">
-                <Grid item sm={6} xs={12}>
-                  <FormLabel className="label">API Username</FormLabel>
-                  <FormControl>
-                    <TextField type="api_username" placeholder="API Username" variant="outlined" />
-                  </FormControl>
-                </Grid>
-                <Grid item sm={6} xs={12}>
-                  <FormLabel className="label">API Password</FormLabel>
-                  <FormControl>
-                    <TextField type="api_password" placeholder="API Password" variant="outlined" />
-                  </FormControl>
-                </Grid>
+        <PerfectScrollbar>
+          <Drawer.Body>
+            <Grid item xs={12}>
+                <Tabs
+                  value={activeTab}
+                  tabs={["API Credentials", "Data Sources"]}
+                  onChange={(event: React.ChangeEvent<{}>, newValue: any) => setActiveTab(newValue)}
+                  style={{ marginBottom: 30 }}
+                />
+                {activeTab === 0 ? (
+                  <Grid container spacing={3} className="row">
+                    <Grid item sm={6} xs={12}>
+                      <FormLabel className="label">API Username</FormLabel>
+                      <FormControl>
+                        <TextField type="api_username" placeholder="API Username" variant="outlined" />
+                      </FormControl>
+                    </Grid>
+                    <Grid item sm={6} xs={12}>
+                      <FormLabel className="label">API Password</FormLabel>
+                      <FormControl>
+                        <TextField type="api_password" placeholder="API Password" variant="outlined" />
+                      </FormControl>
+                    </Grid>
+                  </Grid>
+                ) : (
+                  <div>
+                    {suppliers.map((el, idx) => (
+                      <Grid key={idx} container spacing={3} className="row">
+                        <Grid item sm={6} xs={12}>
+                          <FormLabel className="label">Supplier</FormLabel>
+                          <FormControl fullWidth>
+                            <Select
+                              className="select"
+                              options={[
+                                { value: 'regina_george', label: 'Regina George' },
+                                { value: 'augustus', label: 'Augustus' },
+                                { value: 'selena_gomez', label: 'Selena Gomez' },
+                                { value: 'augustus', label: 'Augustus' },
+                              ]}
+                              value="regina_george"
+                              placeholder="Select your data source"
+                            />
+                          </FormControl>
+                        </Grid>
+                        <Grid item sm={6} xs={12}>
+                          <FormLabel className="label">PCC/OID/ACCESS CREDS</FormLabel>
+                          <FormControl fullWidth>
+                            <TextField type="credentials" placeholder="Your credentials" variant="outlined" />
+                          </FormControl>
+                        </Grid>
+                      </Grid>
+                    ))}
+                    <Grid container spacing={3} className="row">
+                      <Grid item xs={12}>
+                        <Button size="small" color="secondary" className="btn-text" onClick={addSupplier}>+ Supplier</Button>
+                      </Grid>
+                    </Grid>
+                  </div>
+                )}
               </Grid>
-            ) : (
-              <Grid container spacing={3} className="row">
-                <Grid item sm={6} xs={12}>
-                  <FormLabel className="label">Supplier</FormLabel>
-                  <FormControl>
-                    <Select
-                      className="select"
-                      options={[
-                        { value: 'amadeus', label: 'Amadeus' },
-                      ]}
-                      value="amadeus"
-                      placeholder="Select your data source"
-                    />
-                  </FormControl>
-                </Grid>
-                <Grid item sm={6} xs={12}>
-                  <FormLabel className="label">PCC/OID/ACCESS CREDS</FormLabel>
-                  <FormControl>
-                    <TextField type="pcc_creds" placeholder="NYEND" variant="outlined" />
-                  </FormControl>
-                </Grid>
-              </Grid>
-            )}
-          </Grid>
-        </Drawer.Body>
+          </Drawer.Body>
+        </PerfectScrollbar>
         <Drawer.Footer className="edit-form-buttons">
           <Button
             variant="outlined"

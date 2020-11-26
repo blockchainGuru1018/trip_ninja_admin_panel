@@ -14,11 +14,11 @@ import BulkAddModal from "./BulkAddModal";
 import "./styles.css";
 
 const columns = [
-  { field: 'name', headerName: 'Name' },
-  { field: 'teams', headerName: 'Teams' },
-  { field: 'status', headerName: 'Status' },
-  { field: 'role', headerName: 'Role' },
-  { field: 'lastlogin', headerName: 'Last Login' },
+  { field: 'name', headerName: 'Name', sortable: true },
+  { field: 'teams', headerName: 'Teams', sortable: true },
+  { field: 'status', headerName: 'Status', sortable: true },
+  { field: 'role', headerName: 'Role', sortable: true },
+  { field: 'lastlogin', headerName: 'Last Login', sortable: true },
   { field: 'action', headerName: '' }
 ];
 
