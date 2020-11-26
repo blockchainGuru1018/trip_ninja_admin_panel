@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PerfectScrollbar from "react-perfect-scrollbar";
 import {
   Button,
   TextField,
@@ -124,7 +125,7 @@ const Teams: React.FC = () => {
           <Grid container spacing={3} className="row">
             <Grid item sm={6} xs={12}>
               <FormLabel className="label">Add Team Members</FormLabel>
-              <FormControl>
+              <FormControl fullWidth>
                 <Select
                   className="select"
                   options={[
@@ -140,7 +141,7 @@ const Teams: React.FC = () => {
             </Grid>
             <Grid item sm={6} xs={12}>
               <FormLabel className="label">Add Team Lead(s)</FormLabel>
-              <FormControl>
+              <FormControl fullWidth>
                 <Select
                   className="select"
                   options={[
@@ -202,11 +203,9 @@ const Teams: React.FC = () => {
           steps={["Create Team", "Set Permissions", "Add Members", "Send Invites"]}
           activeStep={step}
         >
-          <form className="stepper-content">
-            <div className="stepper-content-inner">
-              {renderStepContent()}
-            </div>
-          </form>
+          <PerfectScrollbar className="stepper-content">
+            {renderStepContent()}
+          </PerfectScrollbar>
           <div className="stepper-actions">
             <div className="stepper-actions-inner">
               {step > 0 && (
@@ -255,7 +254,7 @@ const Teams: React.FC = () => {
            <Grid container spacing={3} className="page-row">
              <Grid item sm={6} xs={12}>
                <FormLabel className="radio-label">Team Members</FormLabel>
-               <FormControl>
+               <FormControl fullWidth>
                  <Select
                    className="select"
                    options={[
@@ -271,7 +270,7 @@ const Teams: React.FC = () => {
              </Grid>
              <Grid item sm={6} xs={12}>
                <FormLabel className="radio-label">Team Lead(s)</FormLabel>
-               <FormControl>
+               <FormControl fullWidth>
                  <Select
                    className="select"
                    options={[

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PerfectScrollbar from "react-perfect-scrollbar";
 import {
   Button,
   TextField,
@@ -87,7 +88,7 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose }) => {
     } else if (step === 1) {
       return (
         <div className="second-step">
-          <Typography variant="h3" component="h1" className="user-form-title">Set Users Team</Typography>
+          <Typography variant="h3" component="h1" className="second-title">Set Users Team</Typography>
           <Grid container spacing={3} className="row">
             <Grid item xs={12}>
               <Typography variant="h3" component="h1" className="user-form-content">
@@ -102,7 +103,7 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose }) => {
       )
     } else if (step === 2) {
       return (
-        <div className="second-step">
+        <div className="third-step">
           <Typography variant="h3" component="h1" className="user-form-title">Multiple Users</Typography>
           <Grid container spacing={3} className="row">
             <Grid item xs={12}>
@@ -148,8 +149,8 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose }) => {
     }
 
     return (
-      <div className="third-step">
-        <Typography variant="h3" component="h1" className="user-form-title">Invite your teammate to QuickTrip</Typography>
+      <div className="fourth-step">
+        <Typography variant="h3" component="h1" className="fourth-title">Invite your teammate to QuickTrip</Typography>
         <Typography className="team-form-description">
           Sent them an invitation with everything they need to get started. Once new users are activated, they will be prorated and added to your next invoice.
         </Typography>
@@ -169,11 +170,9 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose }) => {
           steps={["Create User", "Set Team", "Set Permissions", "Send Invite"]}
           activeStep={step}
         >
-          <form className="stepper-content">
-            <div className="stepper-content-inner">
-              {renderStepContent()}
-            </div>
-          </form>
+          <PerfectScrollbar className="stepper-content">
+            {renderStepContent()}
+          </PerfectScrollbar>
           <div className="stepper-actions">
             <div className="stepper-actions-inner">
               {step > 0 && (

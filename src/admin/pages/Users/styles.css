@@ -6,13 +6,13 @@
 }
 .user__Page__bulkAdd__modal .stepper-content {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 300px;
   padding: 30px 15px;
   border-top: 1px solid #CACDD6;
-}
-.user__Page__bulkAdd__modal .stepper-content-inner {
-  width: 100%;
-  max-width: 600px;
+  box-sizing: border-box;
 }
 .user__Page__bulkAdd__modal .step-title {
   font-size: 24px;
@@ -76,10 +76,6 @@
   overflow-x: auto;
   overflow-y: auto;
 }
-.user__Page__bulkAdd__modal .row {
-  margin-top: 30px;
-  margin-bottom: 0
-}
 .user__Page__bulkAdd__modal .label {
   display: flex;
   font-size: 16px;
@@ -88,8 +84,32 @@
   font-weight: bolder;
   margin-bottom: 12px;
 }
+.user__Page__bulkAdd__modal .first-step {
+  max-width: 600px;
+  width: 100%;
+  margin: auto;
+  padding: 0 12px;
+}
 .user__Page__bulkAdd__modal .first-title {
   text-align: center;
+}
+.user__Page__bulkAdd__modal .second-step {
+  max-width: 600px;
+  width: 100%;
+  margin: auto;
+  padding: 0 12px;
+}
+.user__Page__bulkAdd__modal .second-title {
+  font-size: 24px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: lighter;
+  margin-bottom: 30px;
+}
+.user__Page__bulkAdd__modal .third-step {
+  max-width: 600px;
+  width: 100%;
+  margin: auto;
 }
 .user__Page__bulkAdd__modal .label-with-tooltip {
   display: flex;
@@ -101,10 +121,17 @@
   width: 15px;
   margin-left: 15px;
 }
-.user__Page__bulkAdd__modal .third-step {
+.user__Page__bulkAdd__modal .fourth-step {
   text-align: center;
-  width: 90%;
-  margin-inline: auto;
+  max-width: 600px;
+  margin: auto;
+}
+.user__Page__bulkAdd__modal .fourth-title {
+  font-size: 24px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: lighter;
+  margin-bottom: 30px;
 }
 .user__Page__bulkAdd__modal .custom-switch {
   margin-left: 15px;
@@ -114,14 +141,18 @@
   color: #45565E;
   font-family: NeuzitGrotesk, sans-serif;
   font-weight: lighter;
-  margin: 15px 0 0;
+  margin-bottom: 15px;
 }
 
 .user__Page__singleAdd__modal .stepper-content {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 350px;
   padding: 30px 15px;
   border-top: 1px solid #CACDD6;
+  box-sizing: border-box;
 }
 .user__Page__singleAdd__modal .stepper-content-inner {
   width: 100%;
@@ -181,10 +212,6 @@
   font-family: NeuzitGrotesk, sans-serif;
   font-weight: lighter;
 }
-.user__Page__singleAdd__modal .row {
-  margin-top: 30px;
-  margin-bottom: 0
-}
 .user__Page__singleAdd__modal .label {
   display: block;
   font-size: 16px;
@@ -194,11 +221,18 @@
   margin-bottom: 12px;
 }
 .user__Page__singleAdd__modal .first_step {
-  width: 70%;
+  max-width: 500px;
+  padding: 12px;
   margin: auto;
 }
 .user__Page__singleAdd__modal .first-title {
   text-align: center;
+  margin-bottom: 30px;
+}
+.user__Page__singleAdd__modal .second_step {
+  max-width: 600px;
+  padding: 12px;
+  margin: auto;
 }
 .user__Page__singleAdd__modal .label-with-tooltip {
   display: flex;
@@ -212,8 +246,8 @@
 }
 .user__Page__singleAdd__modal .third-step {
   text-align: center;
-  width: 90%;
-  margin-inline: auto;
+  max-width: 600px;
+  margin: auto;
 }
 .user__Page__singleAdd__modal .team-form-description {
   font-size: 16px;

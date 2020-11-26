@@ -85,7 +85,9 @@ const Select:React.FC<Props> = ({ className, value, options, multiple, placehold
   return (
     <div className={classNames(className, "select__Component")}>
       <TextField
-        className="input"
+        className={classNames("input", {
+          "opened": isOpened
+        })}
         disabled
         InputProps={{
           endAdornment: (
@@ -104,7 +106,7 @@ const Select:React.FC<Props> = ({ className, value, options, multiple, placehold
         variant="outlined"
       />
       {isOpened && (
-        <div onClick={(e) => e.stopPropagation()}>
+        <div className="select-container" onClick={(e) => e.stopPropagation()}>
           <ReactSelect
             autoFocus
             components={{
@@ -118,7 +120,6 @@ const Select:React.FC<Props> = ({ className, value, options, multiple, placehold
             options={options}
             placeholder="Search"
             styles={{
-              // container: (provided) => ({ ...provided, zIndex: 999 }),
               control: (provided, state) => ({
                 ...provided,
                 minWidth: 240,

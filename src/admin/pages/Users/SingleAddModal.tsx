@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PerfectScrollbar from "react-perfect-scrollbar";
 import {
   Button,
   TextField,
@@ -152,11 +153,9 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose }) => {
           steps={["Create User", "Set Permissions", "Send Invites"]}
           activeStep={step}
         >
-          <form className="stepper-content">
-            <div className="stepper-content-inner">
-              {renderStepContent()}
-            </div>
-          </form>
+          <PerfectScrollbar className="stepper-content">
+            {renderStepContent()}
+          </PerfectScrollbar>
           <div className="stepper-actions">
             <div className="stepper-actions-inner">
               {step > 0 && (

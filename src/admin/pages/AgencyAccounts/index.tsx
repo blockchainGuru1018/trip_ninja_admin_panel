@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PerfectScrollbar from "react-perfect-scrollbar"
+import PerfectScrollbar from "react-perfect-scrollbar";
 import {
   Button,
   TextField,
