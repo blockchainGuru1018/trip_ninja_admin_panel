@@ -161,9 +161,9 @@ const Teams: React.FC = () => {
     }
     return (
       <div className="fourth-step">
-        <Typography variant="h3" component="h1" className="team-form-title">Create a new team</Typography>
+        <Typography variant="h3" component="h1" className="team-form-title">Create a new team!</Typography>
         <Typography className="team-form-description">
-          Add users to your team immediately to get started. You can modify team or individual permissions at any time..
+          Add users to your team immediately to get started. You can modify team or individual permissions at any time.
         </Typography>
       </div>
     )
