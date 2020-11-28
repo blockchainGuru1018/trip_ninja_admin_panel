@@ -10,7 +10,10 @@ import {
   TextField,
 } from '@material-ui/core';
 
-import { Select, UsernameField } from "../../components";
+import {
+  Currency,
+  UsernameField
+} from "../../components";
 
 import "./styles.css";
 
@@ -53,15 +56,7 @@ const BasicInfo: React.FC = () => {
         <Grid item sm={6} xs={12}>
           <FormLabel className="radio-label">Default Currency</FormLabel>
           <FormControl>
-            <Select
-              className="select"
-              options={[
-                { value: 'usd', label: 'USD' },
-                { value: 'eur', label: 'EUR' },
-              ]}
-              value="usd"
-              placeholder="Default currency"
-            />
+            <Currency />
           </FormControl>
         </Grid>
         <Grid item sm={6} xs={12}>
