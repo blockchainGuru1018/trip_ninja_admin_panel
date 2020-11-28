@@ -220,7 +220,7 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose }) => {
           <UsernameField value="Niloufar Mazloumpar" onChange={console.log} />
         </Drawer.Header>
         <Drawer.Body>
-          <Grid container spacing={3} className="page-row">
+          <Grid container spacing={3} style={{ marginBottom: 30 }}>
             <Grid item sm={6} xs={12}>
               <FormLabel className="radio-label">Team Members</FormLabel>
               <FormControl fullWidth>
