@@ -22,6 +22,11 @@ body .MuiOutlinedInput-input {
   padding-bottom: 12px;
 }
 
+body .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #0DBE7C;
+  border-width: 1px;
+}
+
 body .tooltip-content {
   position: absolute;
   display: none;

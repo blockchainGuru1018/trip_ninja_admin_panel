@@ -216,8 +216,7 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose }) => {
         <Drawer.Header>
           <UsernameField value="Bob Jones" onChange={console.log} />
         </Drawer.Header>
-        <Drawer.Body
-          className="user__Page__bulkAdd__drawer__body">
+        <Drawer.Body className="user__Page__bulkAdd__drawer__body">
           <Grid item xs={12}>
             <Tabs value={activeTab} tabs={["Personal Info", "Booking"]} onChange={(event: React.ChangeEvent<{}>, newValue: any) => setActiveTab(newValue)} />
             {activeTab === 0 ? (
@@ -258,9 +257,9 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose }) => {
               </div>
             )}
           </Grid>
-          <Button onClick={openReset}>
-            <FormLabel className="reset-label">Send password reset link?</FormLabel>
-          </Button>
+          <div className="reset-link">
+            <Button onClick={openReset}>Send password reset link?</Button>
+          </div>
         </Drawer.Body>
         <Drawer.Footer className="edit-form-buttons">
           <Button
