@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Paper,
@@ -23,15 +23,27 @@ const propTypes = {
     field: PropTypes.string.isRequired,
     headerName: PropTypes.string.isRequired,
     width: PropTypes.string,
-    sortable: PropTypes.bool
+    sortable: PropTypes.bool,
+    getValue: PropTypes.func,
   }).isRequired).isRequired,
   rows: PropTypes.arrayOf(PropTypes.any),
+  total: PropTypes.number,
+  page: PropTypes.number,
+  pageSize: PropTypes.number,
+  onPageChange: PropTypes.func,
+  onPageSizeChange: PropTypes.func,
 };
 
 type Props = PropTypes.InferProps<typeof propTypes>
 
-const DataTable:React.FC<Props> = ({ className, columns, rows }) => {
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+const DataTable:React.FC<Props> = ({ className, columns, rows, total, page, pageSize, onPageChange, onPageSizeChange }) => {
+  const handlePageChange = (ev: React.ChangeEvent<unknown>, val: number) => {
+    onPageChange && onPageChange(val);
+  }
+
+  const handlePageSizeChange = (size: number) => {
+    onPageSizeChange && onPageSizeChange(size)
+  }
 
   return (
     <div className={classNames("dataTable__Component", className)}>
@@ -59,7 +71,7 @@ const DataTable:React.FC<Props> = ({ className, columns, rows }) => {
                 <TableRow key={i}>
                   {columns.map((col, j) => (
                     <TableCell key={`${i}-${j}`} className="table-cell">
-                      {row[col.field]}
+                      {!col.getValue ? row[col.field] : col.getValue(row[col.field], row)}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -72,9 +84,9 @@ const DataTable:React.FC<Props> = ({ className, columns, rows }) => {
       </TableContainer>
 
       <div className="pagination">
-        <Pagination count={10} />
+        <Pagination count={Math.ceil((total || 0) / (pageSize || 10))} page={page || 1} onChange={handlePageChange} />
 
-        <RowsPerPage className="rows-per-page" value={rowsPerPage} onChange={setRowsPerPage} />
+        <RowsPerPage className="rows-per-page" value={pageSize || 10} onChange={handlePageSizeChange} />
       </div>
     </div>
   );

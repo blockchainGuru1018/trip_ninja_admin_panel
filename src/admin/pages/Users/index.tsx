@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from "react-redux";
 import {
   Button,
   TextField,
@@ -6,35 +7,66 @@ import {
   Typography,
 } from '@material-ui/core';
 import { SearchOutlined } from "@material-ui/icons";
+import moment from "moment";
+import PropTypes from 'prop-types';
+import { bindActionCreators, Dispatch } from "redux";
 
 import { DataTable } from '../../components';
 import SingleAddModal from "./SingleAddModal";
 import BulkAddModal from "./BulkAddModal";
 
+import { fetchUsers } from "../../store/users/actions";
+import { getUsers, getTotalCount } from "../../store/users/selectors";
+
 import "./styles.css";
 
 const columns = [
-  { field: 'name', headerName: 'Name', sortable: true },
-  { field: 'teams', headerName: 'Teams', sortable: true },
-  { field: 'status', headerName: 'Status', sortable: true },
+  { field: 'username', headerName: 'Name', sortable: true },
+  { field: 'team', headerName: 'Teams', sortable: true },
+  { field: 'status', headerName: 'Status', sortable: true, getValue: (val: boolean) => val ? 'Active' : 'Deactivated' },
   { field: 'role', headerName: 'Role', sortable: true },
-  { field: 'lastlogin', headerName: 'Last Login', sortable: true },
+  { field: 'last_login', headerName: 'Last Login', sortable: true, getValue: (val: string) => moment(val).fromNow() },
   { field: 'action', headerName: '' }
 ];
 
-const rows = [
-  { name: 'Danielle Lapierre',
-    teams: 'Islington Store, +1',
-    status: 'Active',
-    role: 'Team Lead',
-    lastlogin:'5 days ago',
-    action: 35
-  },
-];
+const propTypes = {
+  users: PropTypes.arrayOf(PropTypes.any).isRequired,
+  total: PropTypes.number.isRequired,
+  fetchUsers: PropTypes.func.isRequired,
+};
 
-const Users: React.FC = () => {
+type Props = PropTypes.InferProps<typeof propTypes>
+
+const Users: React.FC<Props> = ({ users, total, fetchUsers }) => {
   const [singleModalOpened, setSingleModalOpened] = useState(false);
   const [bulkModalOpened, setBulkModalOpened] = useState(false);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [keyword, setKeyword] = useState('');
+
+  useEffect(() => {
+    fetchUsers({ page: 1, per_page: 10, keyword: '' });
+  }, []);
+
+  const onPageChange = (val: number) => {
+    setPage(val);
+
+    fetchUsers({ page: val, per_page: pageSize, keyword });
+  };
+
+  const onPageSizeChange = (size: number) => {
+    setPage(1);
+    setPageSize(size);
+
+    fetchUsers({ page: 1, per_page: size, keyword });
+  }
+
+  const onKeywordChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    setKeyword(ev.target.value);
+    setPage(1);
+
+    fetchUsers({ page: 1, per_page: pageSize, keyword: ev.target.value });
+  }
 
   return (
     <div className="user__Page">
@@ -59,11 +91,22 @@ const Users: React.FC = () => {
             </InputAdornment>
           )
         }}
+        value={keyword}
         variant="outlined"
+        onChange={onKeywordChange}
       />
 
-      <Typography className="data-table-total">Active users: { rows ? rows.length : 0 }</Typography>
-      <DataTable className="table" rows={rows} columns={columns} />
+      <Typography className="data-table-total">Active users: { total || 0 }</Typography>
+      <DataTable
+        className="table"
+        rows={users}
+        columns={columns}
+        total={total}
+        page={page}
+        pageSize={pageSize}
+        onPageChange={onPageChange}
+        onPageSizeChange={onPageSizeChange}
+      />
 
       <SingleAddModal
         opened={singleModalOpened}
@@ -78,4 +121,18 @@ const Users: React.FC = () => {
   )
 };
 
-export default Users
+const mapStateToProps = (state: any) => {
+  return {
+    users: getUsers(state.users),
+    total: getTotalCount(state.users)
+  };
+};
+  
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  fetchUsers: bindActionCreators(fetchUsers, dispatch),
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Users);
