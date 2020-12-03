@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
+import {connect} from "react-redux";
 import {
   Button,
   TextField,
@@ -6,27 +7,62 @@ import {
   Typography,
 } from '@material-ui/core';
 import { SearchOutlined } from "@material-ui/icons";
+import PropTypes from "prop-types";
+import {bindActionCreators, Dispatch} from "redux";
 
 import { DataTable } from '../../components';
 import AgencyAddModal from "./AgencyAddModal";
 
+import { fetchAgency } from "../../store/agency/actions";
+import { getAgency, getTotalCount } from "../../store/agency/selectors";
+
 import "./styles.css";
 
 const columns = [
-  { field: 'accountName', headerName: 'Account Name', sortable: true },
-  { field: 'numberOfUsers', headerName: 'Number of Users', sortable: true },
+  { field: 'agency_name', headerName: 'Account Name', sortable: true },
+  { field: 'number_of_users', headerName: 'Number of Users', sortable: true },
   { field: 'dataSource', headerName: 'Data Source', sortable: true },
-  { field: 'status', headerName: 'Status', sortable: true },
+  { field: 'status', headerName: 'Status', sortable: true, getValue: (val: boolean) => val ? 'Active' : 'Archived' },
   { field: 'action', headerName: '' },
 ];
 
-const rows = [
-  { accountName: 'Company', numberOfUsers: 1500, dataSource: 'Travelport, +1', status: 'Active', action: 35 },
-  { accountName: 'Company', numberOfUsers: 1400, dataSource: 'Amadeus, +2', status: 'Archived', action: 35 },
-];
+const propTypes = {
+  agency: PropTypes.arrayOf(PropTypes.any).isRequired,
+  total: PropTypes.number.isRequired,
+  fetchAgency: PropTypes.func.isRequired,
+};
 
-const AgencyAccounts: React.FC = () => {
+type Props = PropTypes.InferProps<typeof propTypes>
+
+const AgencyAccounts: React.FC<Props> = ({ agency, total, fetchAgency }) => {
   const [modalOpened, setModalOpened] = useState(false);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [keyword, setKeyword] = useState('');
+
+  useEffect(() => {
+    fetchAgency({ page: 1, per_page: 10, keyword: '' });
+  }, []);
+
+  const onPageChange = (val: number) => {
+    setPage(val);
+
+    fetchAgency({ page: val, per_page: pageSize, keyword });
+  };
+
+  const onPageSizeChange = (size: number) => {
+    setPage(1);
+    setPageSize(size);
+
+    fetchAgency({ page: 1, per_page: size, keyword });
+  };
+
+  const onKeywordChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    setKeyword(ev.target.value);
+    setPage(1);
+
+    fetchAgency({ page: 1, per_page: pageSize, keyword: ev.target.value });
+  };
 
   return (
     <div className="agencyAccounts__Page">
@@ -46,11 +82,22 @@ const AgencyAccounts: React.FC = () => {
             </InputAdornment>
           )
         }}
+        value={keyword}
         variant="outlined"
+        onChange={onKeywordChange}
       />
 
-      <Typography className="data-table-total">Agencies: { rows ? rows.length : 0 }</Typography>
-      <DataTable className="table" rows={rows} columns={columns} />
+      <Typography className="data-table-total">Agencies: { total || 0 }</Typography>
+      <DataTable
+        className="table"
+        rows={agency}
+        columns={columns}
+        total={total}
+        page={page}
+        pageSize={pageSize}
+        onPageChange={onPageChange}
+        onPageSizeChange={onPageSizeChange}
+      />
 
       <AgencyAddModal
         opened={modalOpened}
@@ -60,4 +107,18 @@ const AgencyAccounts: React.FC = () => {
   )
 };
 
-export default AgencyAccounts;
+const mapStateToProps = (state: any) => {
+  return {
+    agency: getAgency(state.agency),
+    total: getTotalCount(state.agency)
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  fetchAgency: bindActionCreators(fetchAgency, dispatch),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AgencyAccounts);
