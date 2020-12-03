@@ -59,14 +59,14 @@ const Users: React.FC<Props> = ({ users, total, fetchUsers }) => {
     setPageSize(size);
 
     fetchUsers({ page: 1, per_page: size, keyword });
-  }
+  };
 
   const onKeywordChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(ev.target.value);
     setPage(1);
 
     fetchUsers({ page: 1, per_page: pageSize, keyword: ev.target.value });
-  }
+  };
 
   return (
     <div className="user__Page">
@@ -130,7 +130,7 @@ const mapStateToProps = (state: any) => {
   
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchUsers: bindActionCreators(fetchUsers, dispatch),
-})
+});
 
 export default connect(
   mapStateToProps,

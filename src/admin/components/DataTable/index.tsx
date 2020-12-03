@@ -39,11 +39,11 @@ type Props = PropTypes.InferProps<typeof propTypes>
 const DataTable:React.FC<Props> = ({ className, columns, rows, total, page, pageSize, onPageChange, onPageSizeChange }) => {
   const handlePageChange = (ev: React.ChangeEvent<unknown>, val: number) => {
     onPageChange && onPageChange(val);
-  }
+  };
 
   const handlePageSizeChange = (size: number) => {
     onPageSizeChange && onPageSizeChange(size)
-  }
+  };
 
   return (
     <div className={classNames("dataTable__Component", className)}>
