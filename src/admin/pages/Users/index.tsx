@@ -12,8 +12,8 @@ import PropTypes from 'prop-types';
 import { bindActionCreators, Dispatch } from "redux";
 
 import { DataTable } from '../../components';
-import SingleAddModal from "./SingleAddModal";
-import BulkAddModal from "./BulkAddModal";
+import SingleAddModal from "./components/SingleAddModal";
+import BulkAddModal from "./components/BulkAddModal";
 
 import { fetchUsers } from "../../store/users/actions";
 import { getUsers, getTotalCount } from "../../store/users/selectors";

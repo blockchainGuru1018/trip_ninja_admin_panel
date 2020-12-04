@@ -13,8 +13,8 @@ import {bindActionCreators, Dispatch} from "redux";
 import { DataTable } from '../../components';
 import AgencyAddModal from "./AgencyAddModal";
 
-import { fetchAgency } from "../../store/agency/actions";
-import { getAgency, getTotalCount } from "../../store/agency/selectors";
+import { fetchAgencies } from "../../store/agencies/actions";
+import { getAgencies, getTotalCount } from "../../store/agencies/selectors";
 
 import "./styles.css";
 
@@ -27,41 +27,41 @@ const columns = [
 ];
 
 const propTypes = {
-  agency: PropTypes.arrayOf(PropTypes.any).isRequired,
+  agencies: PropTypes.arrayOf(PropTypes.any).isRequired,
   total: PropTypes.number.isRequired,
-  fetchAgency: PropTypes.func.isRequired,
+  fetchAgencies: PropTypes.func.isRequired,
 };
 
 type Props = PropTypes.InferProps<typeof propTypes>
 
-const AgencyAccounts: React.FC<Props> = ({ agency, total, fetchAgency }) => {
+const AgencyAccounts: React.FC<Props> = ({ agencies, total, fetchAgencies }) => {
   const [modalOpened, setModalOpened] = useState(false);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [keyword, setKeyword] = useState('');
 
   useEffect(() => {
-    fetchAgency({ page: 1, per_page: 10, keyword: '' });
+    fetchAgencies({ page: 1, per_page: 10, keyword: '' });
   }, []);
 
   const onPageChange = (val: number) => {
     setPage(val);
 
-    fetchAgency({ page: val, per_page: pageSize, keyword });
+    fetchAgencies({ page: val, per_page: pageSize, keyword });
   };
 
   const onPageSizeChange = (size: number) => {
     setPage(1);
     setPageSize(size);
 
-    fetchAgency({ page: 1, per_page: size, keyword });
+    fetchAgencies({ page: 1, per_page: size, keyword });
   };
 
   const onKeywordChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(ev.target.value);
     setPage(1);
 
-    fetchAgency({ page: 1, per_page: pageSize, keyword: ev.target.value });
+    fetchAgencies({ page: 1, per_page: pageSize, keyword: ev.target.value });
   };
 
   return (
@@ -90,7 +90,7 @@ const AgencyAccounts: React.FC<Props> = ({ agency, total, fetchAgency }) => {
       <Typography className="data-table-total">Agencies: { total || 0 }</Typography>
       <DataTable
         className="table"
-        rows={agency}
+        rows={agencies}
         columns={columns}
         total={total}
         page={page}
@@ -109,13 +109,13 @@ const AgencyAccounts: React.FC<Props> = ({ agency, total, fetchAgency }) => {
 
 const mapStateToProps = (state: any) => {
   return {
-    agency: getAgency(state.agency),
-    total: getTotalCount(state.agency)
+    agencies: getAgencies(state.agencies),
+    total: getTotalCount(state.agencies)
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  fetchAgency: bindActionCreators(fetchAgency, dispatch),
+  fetchAgencies: bindActionCreators(fetchAgencies, dispatch),
 });
 
 export default connect(

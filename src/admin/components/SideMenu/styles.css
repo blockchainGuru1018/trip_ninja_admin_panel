@@ -6,6 +6,7 @@ body .sideMenu__Component {
   padding-bottom: 30px;
   background: #45565E;
   color: #fff;
+  box-sizing: border-box;
 }
 .sideMenu__Component .menuContainer {
   padding: 0 34px;

@@ -67,14 +67,13 @@ const useStyles = makeStyles((theme) => ({
   },
   pageContent: {
     display: 'flex',
-    height: `calc(100vh - ${144}px)`,
+    height: `calc(100vh - ${145}px)`,
     borderTop: '1px solid #ABB3B7',
   },
   container: {
-    paddingTop: theme.spacing(3),
-    paddingLeft: theme.spacing(6),
-    paddingRight: theme.spacing(6),
+    padding: '24px 48px',
     maxWidth: '100%',
+    overflow: 'auto'
   },
 }));
 

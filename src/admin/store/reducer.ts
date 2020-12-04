@@ -2,12 +2,12 @@ import { combineReducers } from "redux";
 
 import users from "./users/reducer";
 import teams from "./teams/reducer";
-import agency from "./agency/reducer";
+import agencies from "./agencies/reducer";
 
 const rootReducer = combineReducers({
   users,
   teams,
-  agency,
+  agencies,
 });
 
 export default rootReducer;

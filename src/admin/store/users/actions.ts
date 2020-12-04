@@ -5,6 +5,9 @@ import {
   FETCH_USERS_REQUEST,
   FETCH_USERS_SUCCESS,
   FETCH_USERS_FAILURE,
+  ADD_USER_REQUEST,
+  ADD_USER_SUCCESS,
+  ADD_USER_FAILURE,
 } from "./actionTypes";
 
 export interface IUser {
@@ -47,6 +50,34 @@ export function fetchUsers(params: {
       dispatch(fetchUsersSuccess(resp.data.data));
     } catch (err) {
       dispatch(fetchUsersFailure());
+    }
+  };
+}
+
+function addUserRequest() {
+  return { type: ADD_USER_REQUEST };
+}
+
+function addUserSuccess() {
+  return {
+    type: ADD_USER_SUCCESS,
+  };
+}
+
+function addUserFailure() {
+  return {
+    type: ADD_USER_FAILURE,
+  };
+}
+
+export function addUser(data: any) {
+  return async (dispatch: Dispatch) => {
+    dispatch(addUserRequest());
+    try {
+      await axios.post('/api/v1/users/single-add/', data);
+      dispatch(addUserSuccess());
+    } catch (err) {
+      dispatch(addUserFailure());
     }
   };
 }
