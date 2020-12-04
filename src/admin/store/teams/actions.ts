@@ -5,6 +5,9 @@ import {
   FETCH_TEAMS_REQUEST,
   FETCH_TEAMS_SUCCESS,
   FETCH_TEAMS_FAILURE,
+  ADD_TEAMS_REQUEST,
+  ADD_TEAMS_SUCCESS,
+  ADD_TEAMS_FAILURE,
 } from "./actionTypes";
 
 export interface ITeam {
@@ -48,3 +51,32 @@ export function fetchTeams(params: {
     }
   };
 }
+
+function addTeamRequest() {
+  return { type: ADD_TEAMS_REQUEST };
+}
+
+function addTeamSuccess() {
+  return {
+    type: ADD_TEAMS_SUCCESS,
+  };
+}
+
+function addTeamFailure() {
+  return {
+    type: ADD_TEAMS_FAILURE,
+  };
+}
+
+export function addTeam(data: any) {
+  return async (dispatch: Dispatch) => {
+    dispatch(addTeamRequest());
+    try {
+      await axios.post('/api/v1/teams/add/', data);
+      dispatch(addTeamSuccess());
+    } catch (err) {
+      dispatch(addTeamFailure());
+    }
+  };
+}
+

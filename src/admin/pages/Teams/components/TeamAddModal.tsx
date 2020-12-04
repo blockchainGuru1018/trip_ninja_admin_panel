@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import PerfectScrollbar from "react-perfect-scrollbar";
 import {
   Button,
@@ -13,28 +13,59 @@ import {
 } from '@material-ui/core';
 
 import {
-  Drawer,
   Modal,
   Select,
   Stepper,
   Switch,
   Tabs,
   ToolTip,
-  UsernameField
-} from '../../components';
+} from '../../../components';
 
 import PropTypes from "prop-types";
+import {bindActionCreators, Dispatch} from "redux";
+
+import {connect} from "react-redux";
+import { addTeam } from "../../../store/teams/actions";
+import {axios} from "../../../utils";
 
 const propTypes = {
   opened: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  addTeam: PropTypes.func.isRequired,
 };
 
 type Props = PropTypes.InferProps<typeof propTypes>
 
-const TeamAddModal: React.FC<Props> = ({ opened, onClose }) => {
-  const [drawerOpened, setDrawerOpened] = useState(false);
+const TeamAddModal: React.FC<Props> = ({ opened, onClose, addTeam }) => {
   const [step, setStep] = useState(0);
+  const [teamName, setTeamName] = useState('');
+  const [adminID, setAdminID] = useState(undefined);
+  const [adminOptions, setAdminOptions] = useState([]);
+  const [memberID, setMemberID] = useState([]);
+  const [memberOptions, setMemberOptions] = useState([]);
+  const [isActive, setIsActive] = useState("enabled");
+
+  useEffect(() => {
+    axios.get("/api/v1/users/list/").then(({ data }) => {
+      setAdminOptions(data.data.users.map((el: any) => ({
+        value: el.user_id,
+        label: el.username,
+      })))
+    }).catch(console.error);
+    axios.get("/api/v1/users/list/").then(({ data }) => {
+      setMemberOptions(data.data.users.map((el: any) => ({
+        value: el.user_id,
+        label: el.username,
+      })))
+    }).catch(console.error);
+  }, []);
+
+  const handleClose = () => {
+    setStep(0);
+    setTeamName('');
+    setIsActive("enabled");
+    onClose();
+  };
 
   const onNext = () => {
     setStep(Math.min(step + 1, 3));
@@ -45,8 +76,13 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose }) => {
   };
 
   const onFinal = () => {
-    onClose();
-    setDrawerOpened(true);
+    addTeam({
+      team_name: teamName,
+      is_booking: isActive === "enabled",
+      admin_id: adminID,
+      members: memberID,
+    });
+    handleClose();
   };
 
   const renderStepContent = () => {
@@ -58,7 +94,12 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose }) => {
             <Grid item xs={12}>
               <FormLabel className="label">Team Name</FormLabel>
               <FormControl fullWidth>
-                <TextField type="team_name" placeholder="What should we call your team" variant="outlined" required={true} />
+                <TextField
+                  placeholder="What should we call your team"
+                  value={teamName}
+                  variant="outlined"
+                  onChange={(ev) => setTeamName(ev.target.value)}
+                />
               </FormControl>
             </Grid>
           </Grid>
@@ -77,7 +118,7 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose }) => {
                 >
                   <img
                     className="icon"
-                    src={require('../../assets/info.svg')}
+                    src={require('../../../assets/info.svg')}
                     alt="svg"
                   />
                 </ToolTip>
@@ -89,16 +130,16 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose }) => {
               <div className="tab-content">
                 <FormLabel className="radio-label">Agents can create PNRs?</FormLabel>
                 <FormControl>
-                  <RadioGroup name="date" row defaultValue="Enabled">
+                  <RadioGroup row value={isActive} onChange={(ev) => setIsActive(ev.target.value)}>
                     <FormControlLabel
                       className="radio-radio"
-                      value="Enabled"
+                      value="enabled"
                       control={<Radio color="default" />}
                       label="Enabled"
                     />
                     <FormControlLabel
                       className="radio-radio"
-                      value="Disabled"
+                      value="disabled"
                       control={<Radio color="default" />}
                       label="Disabled"
                     />
@@ -119,14 +160,11 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose }) => {
               <FormControl fullWidth>
                 <Select
                   className="select"
-                  options={[
-                    { value: 'regina_george', label: 'Regina George' },
-                    { value: 'augustus', label: 'Augustus' },
-                    { value: 'selena_gomez', label: 'Selena Gomez' },
-                    { value: 'augustus', label: 'Augustus' },
-                  ]}
-                  value="regina_george"
+                  options={memberOptions}
+                  value={memberID}
                   placeholder="Add team members"
+                  onChange={setMemberID}
+                  multiple
                 />
               </FormControl>
             </Grid>
@@ -135,14 +173,10 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose }) => {
               <FormControl fullWidth>
                 <Select
                   className="select"
-                  options={[
-                    { value: 'regina_george', label: 'Regina George' },
-                    { value: 'augustus', label: 'Augustus' },
-                    { value: 'selena_gomez', label: 'Selena Gomez' },
-                    { value: 'augustus', label: 'Augustus' },
-                  ]}
-                  value="regina_george"
+                  options={adminOptions}
+                  value={adminID}
                   placeholder="Add Team Lead(s)"
+                  onChange={setAdminID}
                 />
               </FormControl>
             </Grid>
@@ -166,7 +200,7 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose }) => {
         className="team__Page__modal"
         title="Add Team"
         opened={opened}
-        onClose={onClose}
+        onClose={handleClose}
       >
         <Stepper
           steps={["Create Team", "Set Permissions", "Add Members", "Send Invites"]}
@@ -210,92 +244,15 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose }) => {
           </div>
         </Stepper>
       </Modal>
-
-      <Drawer
-        className="team__Page__modal"
-        opened={drawerOpened}
-        onClose={() => setDrawerOpened(false)}
-      >
-        <Drawer.Header>
-          <UsernameField value="Niloufar Mazloumpar" onChange={console.log} />
-        </Drawer.Header>
-        <Drawer.Body>
-          <Grid container spacing={3} style={{ marginBottom: 30 }}>
-            <Grid item sm={6} xs={12}>
-              <FormLabel className="radio-label">Team Members</FormLabel>
-              <FormControl fullWidth>
-                <Select
-                  className="select"
-                  options={[
-                    { value: 'regina_george', label: 'Regina George' },
-                    { value: 'augustus', label: 'Augustus' },
-                    { value: 'selena_gomez', label: 'Selena Gomez' },
-                    { value: 'augustus', label: 'Augustus' },
-                  ]}
-                  value="regina_george"
-                  placeholder="Edit Team Members"
-                />
-              </FormControl>
-            </Grid>
-            <Grid item sm={6} xs={12}>
-              <FormLabel className="radio-label">Team Lead(s)</FormLabel>
-              <FormControl fullWidth>
-                <Select
-                  className="select"
-                  options={[
-                    { value: 'regina_george', label: 'Regina George' },
-                    { value: 'augustus', label: 'Augustus' },
-                    { value: 'selena_gomez', label: 'Selena Gomez' },
-                    { value: 'augustus', label: 'Augustus' },
-                  ]}
-                  value="regina_george"
-                  placeholder="Team Lead(s)"
-                />
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <Tabs value={0} tabs={["Booking"]} />
-            <div className="tab-content">
-              <FormLabel className="radio-label">Agents can create PNRs?</FormLabel>
-              <FormControl>
-                <RadioGroup name="date" row defaultValue="Enabled">
-                  <FormControlLabel
-                    className="radio-radio"
-                    value="Enabled"
-                    control={<Radio color="default" />}
-                    label="Enabled"
-                  />
-                  <FormControlLabel
-                    className="radio-radio"
-                    value="Disabled"
-                    control={<Radio color="default" />}
-                    label="Disabled"
-                  />
-                </RadioGroup>
-              </FormControl>
-            </div>
-          </Grid>
-        </Drawer.Body>
-        <Drawer.Footer className="edit-form-buttons">
-          <Button
-            variant="outlined"
-            className="btn-primary"
-            onClick={() => setDrawerOpened(false)}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="contained"
-            className="btn-filled"
-            onClick={() => setDrawerOpened(false)}
-          >
-            Save
-          </Button>
-        </Drawer.Footer>
-      </Drawer>
     </>
   )
 };
 
-export default TeamAddModal;
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  addTeam: bindActionCreators(addTeam, dispatch),
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(TeamAddModal);

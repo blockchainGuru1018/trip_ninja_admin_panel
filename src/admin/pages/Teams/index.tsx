@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators, Dispatch } from "redux";
 
 import { DataTable } from '../../components';
-import TeamAddModal from "./TeamAddModal";
+import TeamAddModal from "./components/TeamAddModal";
 
 import { fetchTeams } from "../../store/teams/actions";
 import { getTeams, getTotalCount } from "../../store/teams/selectors";
