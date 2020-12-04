@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 
-import { axios } from "../../config";
+import { axios } from "../../utils";
 import {
   FETCH_USERS_REQUEST,
   FETCH_USERS_SUCCESS,
@@ -75,6 +75,18 @@ export function addUser(data: any) {
     dispatch(addUserRequest());
     try {
       await axios.post('/api/v1/users/single-add/', data);
+      dispatch(addUserSuccess());
+    } catch (err) {
+      dispatch(addUserFailure());
+    }
+  };
+}
+
+export function addBulkUsers(data: any) {
+  return async (dispatch: Dispatch) => {
+    dispatch(addUserRequest());
+    try {
+      await axios.post('/api/v1/users/bulk-add/', data);
       dispatch(addUserSuccess());
     } catch (err) {
       dispatch(addUserFailure());

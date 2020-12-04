@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from "react-redux";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import {
   Button,
@@ -12,26 +13,122 @@ import {
   Radio
 } from '@material-ui/core';
 import PropTypes from "prop-types";
+import { bindActionCreators, Dispatch } from "redux";
 
 import {
+  Dropdown,
   Modal,
   Stepper,
   ToolTip,
   Switch,
-  Tabs
+  Tabs,
+  Tag
 } from '../../../components';
+
+import { addBulkUsers } from "../../../store/users/actions";
+
+import { axios, validateEmail } from "../../../utils";
 
 const propTypes = {
   opened: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  addBulkUsers: PropTypes.func.isRequired,
 };
 
 type Props = PropTypes.InferProps<typeof propTypes>
 
-const BulkAddModal: React.FC<Props> = ({ opened, onClose }) => {
+const BulkAddModal: React.FC<Props> = ({ opened, onClose, addBulkUsers }) => {
   const [step, setStep] = useState(0);
+  const [email, setEmail] = useState('');
+  const [emails, setEmails] = useState<string[]>([]);
+  const [errors, setErrors] = useState<{ email?: string }>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [teamId, setTeamId] = useState(undefined);
+  const [teamOptions, setTeamOptions] = useState([]);
+  const [isActive, setIsActive] = useState("enabled");
+
+  useEffect(() => {
+    if (opened) {
+      axios.get("/api/v1/teams/list/").then(({ data }) => {
+        setTeamOptions(data.data.teams.map((el: any) => ({
+          value: el.team_id,
+          label: el.team_name,
+        })))
+      }).catch(console.error);
+    }
+  }, [opened]);
+
+  const handleClose = () => {
+    setStep(0);
+    setEmail('');
+    setEmails([]);
+    setErrors({});
+    setIsSubmitting(false);
+    setTeamId(undefined);
+    setIsActive("enabled");
+    onClose();
+  };
+
+  const onInputEmail = (ev: React.KeyboardEvent<HTMLDivElement>) => {
+    if (ev.key === "Enter") {
+      setIsSubmitting(true);
+
+      if (!validateEmail(email)) {
+        setErrors({
+          email: 'Invalid email'
+        });
+      } else {
+        if (emails.includes(email)) {
+          setErrors({
+            email: 'Email already taken'
+          });
+        } else {
+          axios.get('/api/v1/users/email-check/', {
+            params: { email }
+          }).then(({ data }) => {
+            if (data.result) {
+              setEmails([ ...emails, email ]);
+              setIsSubmitting(false);
+              setErrors({});
+              setEmail('');
+            } else {
+              setErrors({
+                email: 'This user already exists'
+              });
+            }
+          }).catch(console.error)
+        }
+      }
+    }
+  };
+
+  const onEmailChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(ev.target.value);
+
+    if (isSubmitting) {
+      if (validateEmail(ev.target.value)) {
+        setErrors({});
+      } else {
+        setErrors({
+          email: 'Invalid email'
+        });
+      }
+    }
+  };
+
+  const onEmailRemove = (e: string) => {
+    setEmails(emails.filter((el) => el !== e))
+  };
 
   const onNext = () => {
+    if (step === 0 && emails.length === 0) {
+      setIsSubmitting(true);
+
+      return setErrors({
+        email: 'You must add at least 1 email'
+      });
+    }
+
     setStep(Math.min(step + 1, 3));
   };
 
@@ -40,7 +137,12 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose }) => {
   };
 
   const onFinal = () => {
-    onClose();
+    addBulkUsers({
+      emails,
+      team_id: teamId,
+      is_active: isActive === "enabled"
+    })
+    handleClose();
   };
 
   const renderStepContent = () => {
@@ -67,9 +169,22 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose }) => {
                   </ToolTip>
                 </FormLabel>
                 <FormControl>
-                  <TextField type="email" placeholder="Agent emails" variant="outlined" />
+                  <TextField
+                    type="email"
+                    variant="outlined"
+                    error={isSubmitting && !!errors.email}
+                    helperText={errors.email}
+                    value={email}
+                    onChange={onEmailChange}
+                    onKeyPress={onInputEmail}
+                  />
                 </FormControl>
               </Grid>
+              <PerfectScrollbar className="email-list">
+                {emails.map((el) => (
+                  <Tag key={el} className="email-tag" text={el} onRemove={() => onEmailRemove(el)} />
+                ))}
+              </PerfectScrollbar>
             </Grid>
           </div>
         </>
@@ -79,13 +194,19 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose }) => {
         <div className="second-step">
           <Typography variant="h3" component="h1" className="second-title">Set Users Team</Typography>
           <Grid container spacing={3} className="row">
+            <Grid item xs={12} className="group-selector">
+              <label>Team: </label>
+              <Dropdown
+                options={teamOptions}
+                value={teamId}
+                placeholder="No team assigned"
+                onChange={setTeamId}
+              />
+            </Grid>
             <Grid item xs={12}>
-              <Typography variant="h3" component="h1" className="user-form-content">
-                Rod.dumont@tripninja.io | bob.jones@tripninja.io | Rob.dumont@tripninja.io |
-                Rod.dumont@tripninja.io | bob.jones@tripninja.io | Rob.dumont@tripninja.io |
-                Rod.dumont@tripninja.io | bob.jones@tripninja.io | Rob.dumont@tripninja.io |
-                Rod.dumont@tripninja.io | bob.jones@tripninja.io | Rob.dumont@tripninja.io
-              </Typography>
+              <PerfectScrollbar className="email-list">
+                {emails.join(' | ')}
+              </PerfectScrollbar>
             </Grid>
           </Grid>
         </div>
@@ -115,16 +236,16 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose }) => {
               <div className="tab-content">
                 <FormLabel className="radio-label">Agents can create PNRs?</FormLabel>
                 <FormControl>
-                  <RadioGroup name="date" row defaultValue="Enabled">
+                  <RadioGroup row value={isActive} onChange={(ev) => setIsActive(ev.target.value)}>
                     <FormControlLabel
                       className="radio-radio"
-                      value="Enabled"
+                      value="enabled"
                       control={<Radio color="default" />}
                       label="Enabled"
                     />
                     <FormControlLabel
                       className="radio-radio"
-                      value="Disabled"
+                      value="disabled"
                       control={<Radio color="default" />}
                       label="Disabled"
                     />
@@ -152,7 +273,7 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose }) => {
       className="user__Page__bulkAdd__modal"
       title="Bulk Add Users"
       opened={opened}
-      onClose={onClose}
+      onClose={handleClose}
     >
       <Stepper
         steps={["Create User", "Set Team", "Set Permissions", "Send Invite"]}
@@ -199,4 +320,11 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose }) => {
   )
 };
 
-export default BulkAddModal
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  addBulkUsers: bindActionCreators(addBulkUsers, dispatch),
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(BulkAddModal);

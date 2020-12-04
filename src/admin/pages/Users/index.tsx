@@ -25,7 +25,7 @@ const columns = [
   { field: 'team', headerName: 'Teams', sortable: true },
   { field: 'status', headerName: 'Status', sortable: true, getValue: (val: boolean) => val ? 'Active' : 'Deactivated' },
   { field: 'role', headerName: 'Role', sortable: true },
-  { field: 'last_login', headerName: 'Last Login', sortable: true, getValue: (val: string) => moment(val).fromNow() },
+  { field: 'last_login', headerName: 'Last Login', sortable: true, getValue: (val: string) => val ? moment(val).fromNow() : '' },
   { field: 'action', headerName: '' }
 ];
 

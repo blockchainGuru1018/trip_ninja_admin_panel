@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 300px;
+  height: 320px;
   padding: 30px 30px;
   border-top: 1px solid #CACDD6;
   box-sizing: border-box;
@@ -70,14 +70,6 @@
   font-family: NeuzitGrotesk, sans-serif;
   font-weight: lighter;
 }
-.user__Page__bulkAdd__modal .user-form-content {
-  font-size: 16px;
-  border: 1px solid #CFD2D5;
-  padding: 30px 15px;
-  max-height: 50px;
-  overflow-x: auto;
-  overflow-y: auto;
-}
 .user__Page__bulkAdd__modal .label {
   display: flex;
   font-size: 16px;
@@ -95,6 +87,23 @@
 .user__Page__bulkAdd__modal .first-title {
   text-align: center;
 }
+.user__Page__bulkAdd__modal .email-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.user__Page__bulkAdd__modal .first-step .email-tag {
+  margin: 8px 12px;
+}
+.user__Page__bulkAdd__modal .first-step .email-list {
+  max-height: 120px;
+}
+.user__Page__bulkAdd__modal .group-selector {
+  display: flex;
+  align-items: center;
+}
+.user__Page__bulkAdd__modal .group-selector label {
+  color: #00B4C3;
+}
 .user__Page__bulkAdd__modal .second-step {
   max-width: 600px;
   width: 100%;
@@ -106,7 +115,14 @@
   color: #45565E;
   font-family: NeuzitGrotesk, sans-serif;
   font-weight: lighter;
-  margin-bottom: 30px;
+}
+.user__Page__bulkAdd__modal .second-step .email-list {
+  font-size: 16px;
+  border: 1px solid #CFD2D5;
+  padding: 15px 30px;
+  max-height: 150px;
+  color: #45565E;
+  box-sizing: border-box;
 }
 .user__Page__bulkAdd__modal .third-step {
   max-width: 600px;

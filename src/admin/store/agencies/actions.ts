@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 
-import { axios } from "../../config";
+import { axios } from "../../utils";
 import {
   FETCH_AGENCIES_REQUEST,
   FETCH_AGENCIES_SUCCESS,

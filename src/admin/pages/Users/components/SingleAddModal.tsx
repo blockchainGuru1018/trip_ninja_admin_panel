@@ -26,7 +26,7 @@ import {
 
 import { addUser } from "../../../store/users/actions";
 
-import { axios } from "../../../config";
+import { axios } from "../../../utils";
 
 const propTypes = {
   opened: PropTypes.bool.isRequired,
@@ -46,13 +46,15 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
   const [isActive, setIsActive] = useState("enabled");
 
   useEffect(() => {
-    axios.get("/api/v1/teams/list/").then(({ data }) => {
-      setTeamOptions(data.data.teams.map((el: any) => ({
-        value: el.team_id,
-        label: el.team_name,
-      })))
-    }).catch(console.error);
-  }, []);
+    if (opened) {
+      axios.get("/api/v1/teams/list/").then(({ data }) => {
+        setTeamOptions(data.data.teams.map((el: any) => ({
+          value: el.team_id,
+          label: el.team_name,
+        })))
+      }).catch(console.error);
+    }
+  }, [opened]);
 
   const handleClose = () => {
     setStep(0);
@@ -62,7 +64,7 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
     setTeamId(undefined);
     setIsActive("enabled");
     onClose();
-  }
+  };
 
   const onNext = () => {
     setStep(Math.min(step + 1, 2));
