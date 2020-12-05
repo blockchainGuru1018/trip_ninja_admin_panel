@@ -71,14 +71,22 @@ const Select:React.FC<Props> = ({ className, value, options, multiple, placehold
   };
 
   const handleChange = (opt: any) => {
+    if (!onChange) return;
+
     if (!multiple) {
       setIsOpened(false);
-      onChange && onChange(opt.value)
+      onChange(opt.value)
     } else {
-      onChange && onChange([
-        ...selectedOptions.map((el: any) => el.value),
-        opt.value
-      ])
+      const isSelected = selectedOptions.find((el: any) => el.value === opt.value);
+
+      if (!isSelected) {
+        onChange([
+          ...selectedOptions.map((el: any) => el.value),
+          opt.value
+        ])
+      } else {
+        onChange(selectedOptions.filter((el: any) => el.value !== opt.value))
+      }
     }
   };
 

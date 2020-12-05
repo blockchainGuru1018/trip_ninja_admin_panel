@@ -1,9 +1,10 @@
 import * as React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Container from "@material-ui/core/Container";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { Container } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 
 import {
+  Login,
   BasicInfo,
   GeneralInfo,
   ContentSources,
@@ -18,35 +19,75 @@ import { Header, SideMenu } from './components';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import "./styles.css";
 
+const PrivateRoute = ({ component: Component, ...rest }: any) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      localStorage.getItem('authInfo') ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{
+            pathname: '/login',
+          }}
+        />
+      )
+    }
+  />
+);
+
+const PublicRoute = ({ component: Component, ...rest }: any) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      localStorage.getItem('authInfo') ? (
+        <Redirect
+          to={{
+            pathname: '/',
+          }}
+        />
+      ) : (
+        <Component {...props} />
+      )
+    }
+  />
+);
+
 const App: React.FC = () => {
   const classes = useStyles();
 
   return (
     <BrowserRouter>
-      <Header />
+      <Switch>
+        <PublicRoute path="/login" exact component={Login} />
 
-      <div className={classes.mainContent}>
-        <div className={classes.pageHeader}>
-          Settings
-        </div>
+        <React.Fragment>
+          <Header />
 
-        <div className={classes.pageContent}>
-          <SideMenu />
+          <div className={classes.mainContent}>
+            <div className={classes.pageHeader}>
+              Settings
+            </div>
 
-          <Container maxWidth="lg" className={classes.container}>
-            <Switch>
-              <Route path="/" exact component={BasicInfo} />
-              <Route path="/general-info" exact component={GeneralInfo} />
-              <Route path="/content-sources" exact component={ContentSources} />
-              <Route path="/search-booking-detail" exact component={SearchBookingDetail} />
-              <Route path="/billing-account-management" exact component={BillingAccountManagement} />
-              <Route path="/users" exact component={Users} />
-              <Route path="/teams" exact component={Teams} />
-              <Route path="/agency-accounts" exact component={AgencyAccounts} />
-            </Switch>
-          </Container>
-        </div>
-      </div>
+            <div className={classes.pageContent}>
+              <SideMenu />
+
+              <Container maxWidth="lg" className={classes.container}>
+                <Switch>
+                  <PrivateRoute path="/" exact component={BasicInfo} />
+                  <PrivateRoute path="/general-info" exact component={GeneralInfo} />
+                  <PrivateRoute path="/content-sources" exact component={ContentSources} />
+                  <PrivateRoute path="/search-booking-detail" exact component={SearchBookingDetail} />
+                  <PrivateRoute path="/billing-account-management" exact component={BillingAccountManagement} />
+                  <PrivateRoute path="/users" exact component={Users} />
+                  <PrivateRoute path="/teams" exact component={Teams} />
+                  <PrivateRoute path="/agency-accounts" exact component={AgencyAccounts} />
+                </Switch>
+              </Container>
+            </div>
+          </div>
+        </React.Fragment>
+      </Switch>
     </BrowserRouter>
   );
 };
