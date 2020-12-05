@@ -6,20 +6,20 @@ import { bindActionCreators, Dispatch } from "redux";
 
 import { Modal } from '../../../components';
 
-import { archiveUser } from "../../../store/users/actions";
+import {archiveTeam} from "../../../store/teams/actions";
 
 const propTypes = {
   opened: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  user: PropTypes.any,
-  archiveUser: PropTypes.func.isRequired,
+  team: PropTypes.any,
+  archiveTeam: PropTypes.func.isRequired,
 };
 
 type Props = PropTypes.InferProps<typeof propTypes>
 
-const ArchiveModal: React.FC<Props> = ({ opened, onClose, user, archiveUser }) => {
+const ArchiveModal: React.FC<Props> = ({ opened, onClose, team, archiveTeam }) => {
   const onArchive = () => {
-    archiveUser(user.user_id);
+    archiveTeam(team.team_id);
     onClose();
   };
 
@@ -30,10 +30,10 @@ const ArchiveModal: React.FC<Props> = ({ opened, onClose, user, archiveUser }) =
       onClose={onClose}
     >
       <Typography variant="h3" component="h3">
-        Are you sure you want to archive this user?
+        Are you sure you want to archive this team?
       </Typography>
       <Typography className="description">
-        You can reinstate them at any time from the users menu.
+        You can reinstate them at any time from the teams menu.
       </Typography>
       <div className="actions">
         <Button
@@ -48,7 +48,7 @@ const ArchiveModal: React.FC<Props> = ({ opened, onClose, user, archiveUser }) =
           className="btn-filled"
           onClick={onArchive}
         >
-          Archive User
+          Archive Team
         </Button>
       </div>
     </Modal>
@@ -56,7 +56,7 @@ const ArchiveModal: React.FC<Props> = ({ opened, onClose, user, archiveUser }) =
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  archiveUser: bindActionCreators(archiveUser, dispatch),
+  archiveTeam: bindActionCreators(archiveTeam, dispatch),
 });
 
 export default connect(

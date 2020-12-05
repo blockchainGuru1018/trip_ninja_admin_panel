@@ -12,15 +12,68 @@ import {
 import { Drawer, Select, Tabs, UsernameField } from '../../../components';
 
 import PropTypes from "prop-types";
+import {bindActionCreators, Dispatch} from "redux";
+import {useState} from "react";
+import {updateTeam} from "../../../store/teams/actions";
+import {connect} from "react-redux";
+import {useEffect} from "react";
+import {axios} from "../../../utils";
 
 const propTypes = {
   opened: PropTypes.bool.isRequired,
+  team: PropTypes.any,
   onClose: PropTypes.func.isRequired,
+  updateTeam: PropTypes.func.isRequired,
 };
 
 type Props = PropTypes.InferProps<typeof propTypes>
 
-const TeamEditDrawer: React.FC<Props> = ({ opened, onClose }) => {
+const TeamEditDrawer: React.FC<Props> = ({ opened, team, onClose, updateTeam }) => {
+  const [teamName, setTeamName] = useState('');
+  const [adminID, setAdminID] = useState(undefined);
+  const [adminOptions, setAdminOptions] = useState([]);
+  const [memberID, setMemberID] = useState([]);
+  const [memberOptions, setMemberOptions] = useState([]);
+  const [isActive, setIsActive] = useState("enabled");
+
+  useEffect(() => {
+    if (opened) {
+      axios.get(`/api/v1/users/list/${team.team_id}/`).then(({ data }) => {
+        setAdminOptions(data.data.users.map((el: any) => ({
+          value: el.user_id,
+          label: el.username,
+        })))
+      }).catch(console.error);
+      axios.get(`/api/v1/users/list/${team.team_id}/`).then(({ data }) => {
+        setMemberOptions(data.data.users.map((el: any) => ({
+          value: el.user_id,
+          label: el.username,
+        })))
+      }).catch(console.error);
+    }
+  }, [opened]);
+
+  useEffect(() => {
+    if (team) {
+      console.log(team.members);
+    }
+
+    setTeamName(team? team.team_name : '');
+    setAdminID(team ? team.leader_id : '');
+    setMemberID(team ? team.members : '');
+    setIsActive(team ? team.is_booking ? 'enabled' : 'disabled' : 'enabled');
+  }, [team]);
+
+  const onSave = () => {
+    updateTeam({
+      team_id: team.team_id,
+      team_name: teamName,
+      is_booking: isActive === 'enabled',
+      admin_id: adminID,
+      members: memberID
+    });
+    onClose();
+  };
 
   return (
     <Drawer
@@ -28,85 +81,89 @@ const TeamEditDrawer: React.FC<Props> = ({ opened, onClose }) => {
       opened={opened}
       onClose={onClose}
     >
-      <Drawer.Header>
-        <UsernameField value="Niloufar Mazloumpar" onChange={console.log} />
-      </Drawer.Header>
-      <Drawer.Body>
-        <Grid container spacing={3} style={{ marginBottom: 30 }}>
-          <Grid item sm={6} xs={12}>
-            <FormLabel className="radio-label">Team Members</FormLabel>
-            <FormControl fullWidth>
-              <Select
-                className="select"
-                options={[
-                  { value: 'regina_george', label: 'Regina George' },
-                  { value: 'augustus', label: 'Augustus' },
-                  { value: 'selena_gomez', label: 'Selena Gomez' },
-                  { value: 'augustus', label: 'Augustus' },
-                ]}
-                value="regina_george"
-                placeholder="Edit Team Members"
-              />
-            </FormControl>
-          </Grid>
-          <Grid item sm={6} xs={12}>
-            <FormLabel className="radio-label">Team Lead(s)</FormLabel>
-            <FormControl fullWidth>
-              <Select
-                className="select"
-                options={[
-                  { value: 'regina_george', label: 'Regina George' },
-                  { value: 'augustus', label: 'Augustus' },
-                  { value: 'selena_gomez', label: 'Selena Gomez' },
-                  { value: 'augustus', label: 'Augustus' },
-                ]}
-                value="regina_george"
-                placeholder="Team Lead(s)"
-              />
-            </FormControl>
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Tabs value={0} tabs={["Booking"]} />
-          <div className="tab-content">
-            <FormLabel className="radio-label">Agents can create PNRs?</FormLabel>
-            <FormControl>
-              <RadioGroup name="date" row defaultValue="Enabled">
-                <FormControlLabel
-                  className="radio-radio"
-                  value="Enabled"
-                  control={<Radio color="default" />}
-                  label="Enabled"
-                />
-                <FormControlLabel
-                  className="radio-radio"
-                  value="Disabled"
-                  control={<Radio color="default" />}
-                  label="Disabled"
-                />
-              </RadioGroup>
-            </FormControl>
-          </div>
-        </Grid>
-      </Drawer.Body>
-      <Drawer.Footer className="edit-form-buttons">
-        <Button
-          variant="outlined"
-          className="btn-primary"
-          onClick={onClose}
-        >
-          Cancel
-        </Button>
-        <Button
-          variant="contained"
-          className="btn-filled"
-          onClick={onClose}
-        >
-          Save
-        </Button>
-      </Drawer.Footer>
+      {team && (
+        <>
+          <Drawer.Header>
+            <UsernameField value={teamName} onChange={(ev) => setTeamName(ev.target.value)} />
+          </Drawer.Header>
+          <Drawer.Body>
+            <Grid container spacing={3} style={{ marginBottom: 30 }}>
+              <Grid item sm={6} xs={12}>
+                <FormLabel className="radio-label">Team Members</FormLabel>
+                <FormControl fullWidth>
+                  <Select
+                    className="select"
+                    options={memberOptions}
+                    value={memberID}
+                    placeholder="Add team members"
+                    onChange={setMemberID}
+                    multiple
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item sm={6} xs={12}>
+                <FormLabel className="radio-label">Team Lead(s)</FormLabel>
+                <FormControl fullWidth>
+                  <Select
+                    className="select"
+                    options={adminOptions}
+                    value={adminID}
+                    placeholder="Add Team Lead(s)"
+                    onChange={setAdminID}
+                  />
+                </FormControl>
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Tabs value={0} tabs={["Booking"]} />
+              <div className="tab-content">
+                <FormLabel className="radio-label">Agents can create PNRs?</FormLabel>
+                <FormControl>
+                  <RadioGroup row value={isActive} onChange={(ev) => setIsActive(ev.target.value)}>
+                    <FormControlLabel
+                      className="radio-radio"
+                      value="enabled"
+                      control={<Radio color="default" />}
+                      label="Enabled"
+                    />
+                    <FormControlLabel
+                      className="radio-radio"
+                      value="disabled"
+                      control={<Radio color="default" />}
+                      label="Disabled"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </div>
+            </Grid>
+          </Drawer.Body>
+          <Drawer.Footer className="edit-form-buttons">
+            <Button
+              variant="outlined"
+              className="btn-primary"
+              onClick={onClose}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              className="btn-filled"
+              onClick={onSave}
+            >
+              Save
+            </Button>
+          </Drawer.Footer>
+        </>
+      )}
     </Drawer>
   )
 };
 
-export default TeamEditDrawer;
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  updateTeam: bindActionCreators(updateTeam, dispatch),
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(TeamEditDrawer);

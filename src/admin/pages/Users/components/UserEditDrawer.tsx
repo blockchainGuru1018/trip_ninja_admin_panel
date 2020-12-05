@@ -74,7 +74,7 @@ const UserEditDrawer: React.FC<Props> = ({ opened, user, onClose, updateUser }) 
       team_id: teamId,
       phone_number: phone_number.length ? phone_number : undefined,
       is_active: isActive === "enabled"
-    })
+    });
     onClose();
   };
 
