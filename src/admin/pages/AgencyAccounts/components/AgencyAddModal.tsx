@@ -1,0 +1,258 @@
+import React, {useEffect, useState} from 'react';
+import PerfectScrollbar from "react-perfect-scrollbar";
+import {
+  Button,
+  TextField,
+  Typography,
+  Grid,
+  FormLabel,
+  FormControl,
+} from '@material-ui/core';
+
+import {
+  Modal,
+  Select,
+  Stepper,
+} from '../../../components';
+
+import PropTypes from "prop-types";
+import {bindActionCreators, Dispatch} from "redux";
+
+import {connect} from "react-redux";
+import {addAgency} from "../../../store/agencies/actions";
+import {axios} from "../../../utils";
+
+const propTypes = {
+  opened: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  addAgency: PropTypes.func.isRequired,
+};
+
+type Props = PropTypes.InferProps<typeof propTypes>
+
+const AgencyAddModal: React.FC<Props> = ({ opened, onClose, addAgency }) => {
+  const [step, setStep] = useState(0);
+  const [suppliers, setSuppliers] = useState<
+    {
+      id: string | undefined,
+      pcc: string
+    }[]
+  >([
+    { id: undefined, pcc: '' }
+  ]);
+  const [agencyName, setAgencyName] = useState('');
+  const [apiUserName, setApiUserName] = useState('');
+  const [apiPassword, setApiPassword] = useState('');
+  const [DataSourceOptions, setDataSourceOptions] = useState([]);
+  const [isActive, setIsActive] = useState("enabled");
+
+  useEffect(() => {
+    axios.get("/api/v1/teams/data_source/").then(({ data }) => {
+      setDataSourceOptions(data.data.data_source.map((el: any) => ({
+        value: el.id,
+        label: el.provider,
+      })))
+    }).catch(console.error);
+  }, []);
+
+  const handleClose = () => {
+    setStep(0);
+    setAgencyName('');
+    setApiUserName('');
+    setApiPassword('');
+    setIsActive("enabled");
+    setSuppliers([]);
+    onClose();
+  };
+
+  const onNext = () => {
+    setStep(Math.min(step + 1, 3));
+  };
+
+  const onBack = () => {
+    setStep(Math.max(step - 1, 0));
+  };
+
+  const onFinal = () => {
+    addAgency({
+      agency_name: agencyName,
+      api_username: apiUserName,
+      api_password: apiPassword,
+      data_source: suppliers
+    });
+    handleClose();
+  };
+
+  const addSupplier = () => {
+    setSuppliers([
+      ...suppliers,
+      { id: undefined, pcc: '' }
+    ])
+  };
+
+  const onChangeSupplier = (i: number, attr: 'id' | 'pcc', value: string) => {
+    const s = [...suppliers];
+    s[i][attr] = value;
+
+    setSuppliers(s);
+  };
+
+  const renderStepContent = () => {
+    if (step === 0) {
+      return (
+        <div className="first-step">
+          <Typography variant="h3" component="h1" className="agency-form-title first-title">Create a new agency</Typography>
+          <Grid container spacing={3} className="row">
+            <Grid item xs={12}>
+              <FormLabel className="label">Agency Name</FormLabel>
+              <FormControl fullWidth>
+                <TextField
+                  placeholder="What should we call your agency"
+                  value={agencyName}
+                  variant="outlined"
+                  onChange={(ev) => setAgencyName(ev.target.value)}
+                />
+              </FormControl>
+            </Grid>
+          </Grid>
+        </div>
+      )
+    } else if (step === 1) {
+      return (
+        <div className="second-step">
+          <Grid container spacing={3} className="row">
+            <Grid item sm={6} xs={12}>
+              <FormLabel className="label">API Username</FormLabel>
+              <FormControl fullWidth>
+                <TextField
+                  placeholder="API Username"
+                  value={apiUserName}
+                  variant="outlined"
+                  onChange={(ev) => setApiUserName(ev.target.value)}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item sm={6} xs={12}>
+              <FormLabel className="label">API Password</FormLabel>
+              <FormControl fullWidth>
+                <TextField
+                  placeholder="API Password"
+                  value={apiPassword}
+                  variant="outlined"
+                  onChange={(ev) => setApiPassword(ev.target.value)}
+                />
+              </FormControl>
+            </Grid>
+          </Grid>
+        </div>
+      )
+    } else if (step === 2) {
+      return (
+        <div className="third-step">
+          {suppliers.map((el, idx) => (
+            <Grid key={idx} container spacing={3} className="row">
+              <Grid item sm={6} xs={12}>
+                <FormLabel className="label">Supplier</FormLabel>
+                <FormControl fullWidth>
+                  <Select
+                    className="select"
+                    options={DataSourceOptions}
+                    value={el.id}
+                    placeholder="Select your data source"
+                    onChange={(val) => onChangeSupplier(idx, "id", val)}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item sm={6} xs={12}>
+                <FormLabel className="label">PCC/OID/ACCESS CREDS</FormLabel>
+                <FormControl fullWidth>
+                  <TextField
+                    placeholder="Your credentials"
+                    value={el.pcc}
+                    variant="outlined"
+                    onChange={(ev) => onChangeSupplier(idx, 'pcc', ev.target.value)}
+                  />
+                </FormControl>
+              </Grid>
+            </Grid>
+          ))}
+          <Grid container spacing={3} className="row">
+            <Grid item xs={12}>
+              <Button size="small" color="secondary" className="btn-text" onClick={addSupplier}>+ Supplier</Button>
+            </Grid>
+          </Grid>
+        </div>
+      )
+    }
+    return (
+      <div className="fourth-step">
+        <Typography variant="h3" component="h1" className="agency-form-title">Create your Agency</Typography>
+        <Typography className="agency-form-description">
+          Once your agency is created it can be edited or archived anytime from the overview panel.
+        </Typography>
+      </div>
+    )
+  };
+
+  return (
+    <>
+      <Modal
+        className="agencyAccounts__Page__modal"
+        title="Add Agency"
+        opened={opened}
+        onClose={handleClose}
+      >
+        <Stepper
+          steps={["Create Agency", "Set API Creds", "Add Data Sources", "Finalize Settings"]}
+          activeStep={step}
+        >
+          <PerfectScrollbar className="stepper-content">
+            {renderStepContent()}
+          </PerfectScrollbar>
+          <div className="stepper-actions">
+            <div className="stepper-actions-inner">
+              {step > 0 && (
+                <Button
+                  variant="outlined"
+                  className="btn-primary"
+                  style={{ marginRight: 'auto' }}
+                  onClick={onBack}
+                >
+                  Back
+                </Button>
+              )}
+              {step < 3 ? (
+                <Button
+                  variant="contained"
+                  className="btn-filled"
+                  style={{ marginLeft: 'auto' }}
+                  onClick={onNext}
+                >
+                  Next
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  className="btn-filled"
+                  style={{ marginLeft: 'auto' }}
+                  onClick={onFinal}
+                >
+                  Create Agency
+                </Button>
+              )}
+            </div>
+          </div>
+        </Stepper>
+      </Modal>
+    </>
+  )
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  addAgency: bindActionCreators(addAgency, dispatch),
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(AgencyAddModal);

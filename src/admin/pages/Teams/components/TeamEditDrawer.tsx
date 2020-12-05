@@ -51,13 +51,9 @@ const TeamEditDrawer: React.FC<Props> = ({ opened, team, onClose, updateTeam }) 
         })))
       }).catch(console.error);
     }
-  }, [opened]);
+  }, [opened, team]);
 
   useEffect(() => {
-    if (team) {
-      console.log(team.members);
-    }
-
     setTeamName(team? team.team_name : '');
     setAdminID(team ? team.leader_id : '');
     setMemberID(team ? team.members : '');

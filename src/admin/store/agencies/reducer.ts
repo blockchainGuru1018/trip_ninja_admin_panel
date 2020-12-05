@@ -2,6 +2,7 @@ import * as types from "./actionTypes";
 
 export const agenciesInitialState = {
   isFetching: false,
+  isSubmitting: false,
   agencies: [],
   total: 0,
 };
@@ -25,7 +26,63 @@ export default (state = agenciesInitialState, action: any) => {
         ...state,
         isFetching: false,
       };
+    case types.ADD_AGENCIES_REQUEST:
+      return {
+        ...state,
+        isSubmitting: true,
+      };
+    case types.ADD_AGENCIES_SUCCESS:
+      return {
+        ...state,
+        isSubmitting: false,
+      };
+    case types.ADD_AGENCIES_FAILURE:
+      return {
+        ...state,
+        isSubmitting: false,
+      };
+    case types.UPDATE_AGENCIES_REQUEST:
+      return {
+        ...state,
+        isSubmitting: true,
+      };
+    case types.UPDATE_AGENCIES_SUCCESS:
+      return {
+        ...state,
+        isSubmitting: false,
+        agencies: state.agencies.map((el: any) => {
+          if (el.agency_id === action.payload.agency_id) {
+            return {
+              ...el,
+              ...action.payload
+            }
+          }
+
+          return el;
+        })
+      };
+    case types.UPDATE_AGENCIES_FAILURE:
+      return {
+        ...state,
+        isSubmitting: false,
+      };
+    case types.ARCHIVE_AGENCIES_SUCCESS:
+      return {
+        ...state,
+        isSubmitting: false,
+        agencies: state.agencies.map((el: any) => {
+          if (el.agency_id === action.payload) {
+            return {
+              ...el,
+              is_active: !el.is_active,
+            }
+          }
+
+          return el;
+        })
+      };
     default:
       return state;
   }
 };
+

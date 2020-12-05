@@ -10,21 +10,15 @@ import { SearchOutlined } from "@material-ui/icons";
 import PropTypes from "prop-types";
 import {bindActionCreators, Dispatch} from "redux";
 
-import { DataTable } from '../../components';
-import AgencyAddModal from "./AgencyAddModal";
+import {DataTable, Dropdown} from '../../components';
+import AgencyAddModal from "./components/AgencyAddModal";
+import AgencyEditDrawer from "./components/AgencyEditDrawer";
+import ArchiveModal from "./components/ArchiveModal";
 
 import { fetchAgencies } from "../../store/agencies/actions";
 import { getAgencies, getTotalCount } from "../../store/agencies/selectors";
 
 import "./styles.css";
-
-const columns = [
-  { field: 'agency_name', headerName: 'Account Name', sortable: true },
-  { field: 'number_of_users', headerName: 'Number of Users', sortable: true },
-  { field: 'dataSource', headerName: 'Data Source', sortable: true },
-  { field: 'status', headerName: 'Status', sortable: true, getValue: (val: boolean) => val ? 'Active' : 'Archived' },
-  { field: 'action', headerName: '' },
-];
 
 const propTypes = {
   agencies: PropTypes.arrayOf(PropTypes.any).isRequired,
@@ -35,10 +29,44 @@ const propTypes = {
 type Props = PropTypes.InferProps<typeof propTypes>
 
 const AgencyAccounts: React.FC<Props> = ({ agencies, total, fetchAgencies }) => {
-  const [modalOpened, setModalOpened] = useState(false);
+  const [modalOpened, setModalOpened] = useState<number | null>(null);
+  const [drawerOpened, setDrawerOpened] = useState(false);
+  const [agencySelected, selectAgency] = useState<any | null>(null);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [keyword, setKeyword] = useState('');
+
+  const columns = [{
+    field: 'agency_name',
+    headerName: 'Account Name',
+    sortable: true,
+  }, {
+    field: 'number_of_users',
+    headerName: 'Number of Users',
+    sortable: true
+  }, {
+    field: 'dataSource',
+    headerName: 'Data Source',
+    sortable: true
+  }, {
+    field: 'is_active',
+    headerName: 'Status',
+    sortable: true,
+    getValue: (val: boolean) => val ? 'Active' : 'Deactivated'
+  }, {
+    field: 'is_booking',
+    headerName: '',
+    getValue: (val: any, row: any) => (
+      <Dropdown
+        options={[
+          { value: "edit", label: "Edit" },
+          { value: "archive", label: val ? "Archive" : "Recover" }
+        ]}
+        placeholder="Actions"
+        onChange={(value: string) => onSelectAction(value, row)}
+      />
+    )
+  }];
 
   useEffect(() => {
     fetchAgencies({ page: 1, per_page: 10, keyword: '' });
@@ -64,11 +92,26 @@ const AgencyAccounts: React.FC<Props> = ({ agencies, total, fetchAgencies }) => 
     fetchAgencies({ page: 1, per_page: pageSize, keyword: ev.target.value });
   };
 
+  const onSelectAction = (action: string, agency: any) => {
+    if (action === 'edit') {
+      selectAgency(agency);
+      setDrawerOpened(true);
+    } else if (action === 'archive') {
+      selectAgency(agency);
+      setModalOpened(2);
+    }
+  };
+
+  const onCloseDrawer = () => {
+    setDrawerOpened(false);
+    selectAgency(null);
+  };
+
   return (
     <div className="agencyAccounts__Page">
       <div className="page-header">
         <Typography variant="h3" component="h1" className="page-title">Agency Accounts</Typography>
-        <Button variant="outlined" className="btn-primary" onClick={() => setModalOpened(true)}>Add Agency account</Button>
+        <Button variant="outlined" className="btn-primary" onClick={() => setModalOpened(1)}>Add Agency account</Button>
       </div>
       <Typography className="page-description">
         Add, edit, and remove available agency accounts.
@@ -100,8 +143,21 @@ const AgencyAccounts: React.FC<Props> = ({ agencies, total, fetchAgencies }) => 
       />
 
       <AgencyAddModal
-        opened={modalOpened}
-        onClose={() => setModalOpened(false)}
+        opened={modalOpened === 1}
+        onClose={() => setModalOpened(null)}
+      />
+      <AgencyEditDrawer
+        opened={drawerOpened}
+        agency={agencySelected}
+        onClose={onCloseDrawer}
+      />
+      <ArchiveModal
+        opened={modalOpened === 2}
+        agency={agencySelected}
+        onClose={() => {
+          setModalOpened(null);
+          selectAgency(null);
+        }}
       />
     </div>
   )
