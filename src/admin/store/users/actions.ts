@@ -8,12 +8,20 @@ import {
   ADD_USER_REQUEST,
   ADD_USER_SUCCESS,
   ADD_USER_FAILURE,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAILURE,
+  ARCHIVE_USER_SUCCESS,
 } from "./actionTypes";
 
 export interface IUser {
-  name: string;
-  team?: string;
-  status: boolean;
+  user_id: number;
+  username: string;
+  email: string;
+  team_id?: string;
+  team_name?: string;
+  phone_number?: string;
+  is_active: boolean;
   role: string;
   last_login?: string;
 }
@@ -90,6 +98,56 @@ export function addBulkUsers(data: any) {
       dispatch(addUserSuccess());
     } catch (err) {
       dispatch(addUserFailure());
+    }
+  };
+}
+
+function updateUserRequest() {
+  return { type: UPDATE_USER_REQUEST };
+}
+
+function updateUserSuccess(data: IUser) {
+  return {
+    type: UPDATE_USER_SUCCESS,
+    payload: data,
+  };
+}
+
+function updateUserFailure() {
+  return {
+    type: UPDATE_USER_FAILURE,
+  };
+}
+
+export function updateUser(data: any) {
+  return async (dispatch: Dispatch) => {
+    dispatch(updateUserRequest());
+    try {
+      const resp = await axios.put('/api/v1/users/update/', data);
+      dispatch(updateUserSuccess(resp.data.data.user));
+    } catch (err) {
+      dispatch(updateUserFailure());
+    }
+  };
+}
+
+function archiveUserSuccess(id: number) {
+  return {
+    type: ARCHIVE_USER_SUCCESS,
+    payload: id,
+  };
+}
+
+export function archiveUser(id: number) {
+  return async (dispatch: Dispatch) => {
+    dispatch(updateUserRequest());
+    try {
+      const resp = await axios.get(`/api/v1/users/${id}/archive/`);
+      if (resp.data.result) {
+        dispatch(archiveUserSuccess(id));
+      }
+    } catch (err) {
+      dispatch(updateUserFailure());
     }
   };
 }

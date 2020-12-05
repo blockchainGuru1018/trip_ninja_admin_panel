@@ -34,12 +34,13 @@
     transform: translate(-50%, -50%) rotate(45deg);
   }
   .dropdown__Component .ddItem {
-    display: flex;
     padding: 8px 12px;
     font-size: 14px;
     color: #45565E;
     font-family: NeuzitGrotesk, sans-serif;
     cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .dropdown__Component .ddItem:hover {
     background: #45565E0D;

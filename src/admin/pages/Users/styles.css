@@ -1,6 +1,11 @@
 .user__Page .table {
   margin-top: 15px;
 }
+.user__Page .table .username {
+  font-size: 16px;
+  color: #4BAFD7;
+  font-weight: bold;
+}
 .user__Page .btn-group {
   display: flex;
 }
@@ -195,36 +200,40 @@
 .user__Page__singleAdd__modal .tab-content {
   margin-top: 30px;
 }
-.user__Page__singleAdd__drawer__body {
+.user__Page__drawer__body {
   display: flex;
   flex-direction: column;
 }
-.user__Page__singleAdd__drawer .phone-input-field {
+.user__Page__drawer .phone-input-field {
   flex-direction: row;
 }
-.user__Page__singleAdd__drawer .country-code-input {
+.user__Page__drawer .country-code-input {
   width: 60px;
 }
-.user__Page__singleAdd__drawer .phone-number-input {
+.user__Page__drawer .phone-number-input {
   flex: 1;
   margin-left: 16px;
 }
-.user__Page__singleAdd__drawer .edit-form-buttons {
+.user__Page__drawer .edit-form-buttons {
   display: flex;
   justify-content: space-between;
 }
-.user__Page__singleAdd__drawer .reset-link {
+.user__Page__drawer .reset-link {
   border-top: 1px solid #D0D4D6;
   margin: 0 -30px;
   padding: 24px 30px 0 30px;
 }
-.user__Page__singleAdd__drawer .reset-link button {
+.user__Page__drawer .reset-link button {
   text-transform: none;
   color: #00B4C3;
 }
-.user__Page__singleAdd__drawer .tab-content {
+.user__Page__drawer .tab-content {
   margin-top: 30px;
   display: flex;
+}
+.user__Page__drawer .group-selector {
+  display: flex;
+  align-items: center;
 }
 .user__Page__singleAdd__modal .user-form-title {
   font-size: 24px;
@@ -288,4 +297,37 @@
   font-family: NeuzitGrotesk, sans-serif;
   font-weight: lighter;
   margin: 30px 0;
+}
+
+.user__Page__archive__modal .modal-header {
+  background: white;
+}
+.user__Page__archive__modal .modal-header svg {
+  fill: #45565E;
+}
+.user__Page__archive__modal .modal-body {
+  text-align: center;
+  padding: 0 24px;
+}
+.user__Page__archive__modal h3 {
+  font-size: 22px;
+  color: #45565E;
+  font-weight: bold;
+  font-family: NeuzitGrotesk, sans-serif;
+}
+.user__Page__archive__modal .description {
+  margin-top: 15px;
+  color: #45565E;
+  font-size: 16px;
+  font-family: NeuzitGrotesk, sans-serif;
+}
+.user__Page__archive__modal .actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 16px 0;
+}
+.user__Page__archive__modal .actions button {
+  margin: 8px 24px;
 }

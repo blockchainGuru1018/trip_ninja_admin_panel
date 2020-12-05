@@ -41,6 +41,46 @@ export default (state = usersInitialState, action: any) => {
         ...state,
         isSubmitting: false,
       };
+    case types.UPDATE_USER_REQUEST:
+      return {
+        ...state,
+        isSubmitting: true,
+      };
+    case types.UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        isSubmitting: false,
+        users: state.users.map((el: any) => {
+          if (el.user_id === action.payload.user_id) {
+            return {
+              ...el,
+              ...action.payload
+            }
+          }
+
+          return el;
+        })
+      };
+    case types.UPDATE_USER_FAILURE:
+      return {
+        ...state,
+        isSubmitting: false,
+      };
+    case types.ARCHIVE_USER_SUCCESS:
+      return {
+        ...state,
+        isSubmitting: false,
+        users: state.users.map((el: any) => {
+          if (el.user_id === action.payload) {
+            return {
+              ...el,
+              is_active: !el.is_active,
+            }
+          }
+
+          return el;
+        })
+      };
     default:
       return state;
   }

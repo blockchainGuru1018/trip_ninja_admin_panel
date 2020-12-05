@@ -23,33 +23,28 @@ const Dropdown:React.FC<Props> = ({ className, value, options, placeholder, onCh
   const [isOpened, setIsOpened] = useState(false);
   const optionSelected = options.find((el) => el.value === value);
 
-  useEffect(() => {
-    if (isOpened) {
-      document.addEventListener('click', closeDropdown);
-    } else {
-      document.removeEventListener('click', closeDropdown);
-    }
+  const openDropdown = () => {
+    setIsOpened(true);
 
-    return () => {
-      if (isOpened) {
-        document.removeEventListener('click', closeDropdown);
-      }
-    }
-  }, [isOpened]);
+    setTimeout(() => {
+      document.addEventListener('click', closeDropdown);
+    }, 1);
+  }
 
   const closeDropdown = () => {
     setIsOpened(false);
+    document.removeEventListener('click', closeDropdown);
   };
 
   const onClickItem = (val: string) => {
-    setIsOpened(false);
+    closeDropdown();
 
     onChange && onChange(val);
   };
 
   return (
     <div className={classNames("dropdown__Component", className)}>
-      <Button className="ddSelected" onClick={() => setIsOpened(true)}>
+      <Button className="ddSelected" onClick={openDropdown}>
         {optionSelected ? optionSelected.label : placeholder ?  placeholder : 'Select'}
         <ArrowDropDown />
       </Button>

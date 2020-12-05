@@ -35,7 +35,9 @@ const Modal:React.FC<Props> = ({ title, className, opened, onClose, children }) 
       <Fade in={!!opened}>
         <div className="modal-content">
           <div className="modal-header">
-            <Typography variant="h3" component="h1" className="modal-title">{ title }</Typography>
+            {title && (
+              <Typography variant="h3" component="h1" className="modal-title">{ title }</Typography>
+            )}
 
             <CloseIcon className="modal-close" onClick={handleClose} />
           </div>

@@ -16,7 +16,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 75px;
+  min-height: 50px;
   background: #45565E;
 }
 .modal__Component .modal-title {
@@ -24,6 +24,7 @@
   color: white;
   font-family: NeuzitGrotesk, sans-serif;
   font-weight: bold;
+  padding: 24px;
 }
 .modal__Component .modal-close {
   position: absolute;
