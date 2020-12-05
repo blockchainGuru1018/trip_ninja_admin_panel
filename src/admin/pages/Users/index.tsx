@@ -113,12 +113,12 @@ const Users: React.FC<Props> = ({ users, total, fetchUsers }) => {
       selectUser(user);
       setModalOpened(3);
     }
-  }
+  };
 
   const onCloseDrawer = () => {
     setDrawerOpened(false);
     selectUser(null);
-  }
+  };
 
   return (
     <div className="user__Page">
