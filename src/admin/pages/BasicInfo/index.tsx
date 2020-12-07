@@ -20,9 +20,9 @@ import PropTypes from "prop-types";
 import {bindActionCreators, Dispatch} from "redux";
 
 import { fetchBasicInfo } from "../../store/users/actions";
+import {getBasicInfo} from "../../store/users/selectors";
 
 import "./styles.css";
-import {getBasicInfo} from "../../store/users/selectors";
 
 const propTypes = {
   basic_info: PropTypes.any.isRequired,
@@ -35,7 +35,7 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo }) => {
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
-  const [currency, setCurrency] = useState('');
+  const [currency, setCurrency] = useState(undefined);
   const [dateType, setDateType] = useState('dd/mm/yyyy');
 
   useEffect(() => { fetchBasicInfo(); }, []);
@@ -44,7 +44,7 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo }) => {
     setName(basic_info? basic_info.name : '');
     setPhoneNumber(basic_info? basic_info.phone_number : '');
     setEmail(basic_info? basic_info.email_address : '');
-    setCurrency(basic_info? basic_info.currency : '');
+    setCurrency(basic_info? basic_info.currency : undefined);
     setDateType(basic_info? basic_info.date_type : 'dd/mm/yyyy');
   }, [basic_info]);
 
@@ -75,7 +75,13 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo }) => {
           <FormLabel className="radio-label">Phone Number</FormLabel>
           <FormControl className="phone-input-field">
             <TextField className="country-code-input" placeholder="XXX" variant="outlined" />
-            <TextField className="phone-number-input" placeholder="XXX" variant="outlined" />
+            <TextField
+              className="phone-number-input"
+              placeholder="XXX"
+              variant="outlined"
+              value={phoneNumber}
+              onChange={(ev) => setPhoneNumber(ev.target.value)}
+            />
           </FormControl>
         </Grid>
         <Grid item sm={6} xs={12}>
@@ -94,7 +100,10 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo }) => {
         <Grid item sm={6} xs={12}>
           <FormLabel className="radio-label">Default Currency</FormLabel>
           <FormControl>
-            <Currency />
+            <Currency
+              value={currency}
+              onChange={setCurrency}
+            />
           </FormControl>
         </Grid>
         <Grid item sm={6} xs={12}>
