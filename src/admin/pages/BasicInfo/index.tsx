@@ -35,7 +35,7 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo }) => {
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
-  const [currency, setCurrency] = useState(undefined);
+  const [currency, setCurrency] = useState('');
   const [dateType, setDateType] = useState('dd/mm/yyyy');
 
   useEffect(() => { fetchBasicInfo(); }, []);
@@ -44,7 +44,7 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo }) => {
     setName(basic_info? basic_info.name : '');
     setPhoneNumber(basic_info? basic_info.phone_number : '');
     setEmail(basic_info? basic_info.email_address : '');
-    setCurrency(basic_info? basic_info.currency : undefined);
+    setCurrency(basic_info? basic_info.currency : '');
     setDateType(basic_info? basic_info.date_type : 'dd/mm/yyyy');
   }, [basic_info]);
 

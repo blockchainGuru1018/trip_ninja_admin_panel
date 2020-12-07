@@ -8,16 +8,16 @@ import "./styles.css";
 
 const propTypes = {
   className: PropTypes.string,
-  value: PropTypes.any.isRequired,
+  value: PropTypes.string.isRequired,
   onChange: PropTypes.func
 };
 
 type Props = PropTypes.InferProps<typeof propTypes>
 
 const Currency:React.FC<Props> = ({ className, value}) => {
-  let [currencyID , setCurrencyID] = useState(undefined);
+  let [currencyID , setCurrencyID] = useState('');
   useEffect ( () => {
-    setCurrencyID(value? currencyID = value : undefined);
+    setCurrencyID(value? currencyID = value : '');
   }, [value]);
 
   return (

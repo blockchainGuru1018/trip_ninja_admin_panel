@@ -29,13 +29,13 @@ const propTypes = {
 type Props = PropTypes.InferProps<typeof propTypes>
 
 const GeneralInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo }) => {
-  const [currency, setCurrency] = useState(undefined);
+  const [currency, setCurrency] = useState('');
   const [dateType, setDateType] = useState('dd/mm/yyyy');
 
   useEffect(() => { fetchBasicInfo(); }, []);
 
   useEffect ( () => {
-    setCurrency(basic_info? basic_info.currency : undefined);
+    setCurrency(basic_info? basic_info.currency : '');
     setDateType(basic_info? basic_info.date_type : 'dd/mm/yyyy');
   }, [basic_info]);
 
