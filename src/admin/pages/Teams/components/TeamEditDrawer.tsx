@@ -13,10 +13,9 @@ import { Drawer, Select, Tabs, UsernameField } from '../../../components';
 
 import PropTypes from "prop-types";
 import {bindActionCreators, Dispatch} from "redux";
-import {useState} from "react";
+import { useState, useEffect } from "react";
 import {updateTeam} from "../../../store/teams/actions";
 import {connect} from "react-redux";
-import {useEffect} from "react";
 import {axios} from "../../../utils";
 
 const propTypes = {

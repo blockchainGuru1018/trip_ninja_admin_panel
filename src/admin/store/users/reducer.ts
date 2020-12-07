@@ -4,6 +4,7 @@ export const usersInitialState = {
   isFetching: false,
   isSubmitting: false,
   users: [],
+  basic_info: {},
   total: 0,
 };
 
@@ -80,6 +81,22 @@ export default (state = usersInitialState, action: any) => {
 
           return el;
         })
+      };
+    case types.FETCH_BASIC_INFO_REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case types.FETCH_BASIC_INFO_SUCCESS:
+        return {
+        ...state,
+        basic_info: action.payload.user_info,
+        isFetching: false,
+        };
+    case types.FETCH_BASIC_INFO_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
       };
     default:
       return state;

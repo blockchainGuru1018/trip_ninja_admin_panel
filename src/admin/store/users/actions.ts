@@ -12,6 +12,9 @@ import {
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILURE,
   ARCHIVE_USER_SUCCESS,
+  FETCH_BASIC_INFO_REQUEST,
+  FETCH_BASIC_INFO_SUCCESS,
+  FETCH_BASIC_INFO_FAILURE,
 } from "./actionTypes";
 
 export interface IUser {
@@ -148,6 +151,37 @@ export function archiveUser(id: number) {
       }
     } catch (err) {
       dispatch(updateUserFailure());
+    }
+  };
+}
+
+function fetchBasicInfoRequest() {
+  return { type: FETCH_BASIC_INFO_REQUEST };
+}
+
+function fetchBasicInfoSuccess(data: {
+  user_info: any,
+}) {
+  return {
+    type: FETCH_BASIC_INFO_SUCCESS,
+    payload: data,
+  };
+}
+
+function fetchBasicInfoFailure() {
+  return {
+    type: FETCH_BASIC_INFO_FAILURE,
+  };
+}
+
+export function fetchBasicInfo() {
+  return async (dispatch: Dispatch) => {
+    dispatch(fetchBasicInfoRequest());
+    try {
+      const resp = await axios.get('/api/v1/users/basic/');
+      dispatch(fetchBasicInfoSuccess(resp.data.data));
+    } catch (err) {
+      dispatch(fetchBasicInfoFailure());
     }
   };
 }

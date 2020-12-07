@@ -15,3 +15,10 @@ export const getUsers = createSelector(getUsersState, (state: { users: any; }) =
 export const getTotalCount = createSelector(getUsersState, (state: { total: any; }) => {
   return state.total;
 });
+
+/**
+ *  get basic info
+ */
+export const getBasicInfo = createSelector(getUsersState, (state: { basic_info: any; }) => {
+  return state.basic_info;
+});

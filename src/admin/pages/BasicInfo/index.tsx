@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {connect} from "react-redux";
 import {
   Grid,
   RadioGroup,
@@ -14,10 +15,39 @@ import {
   Currency,
   UsernameField
 } from "../../components";
+import PropTypes from "prop-types";
+
+import {bindActionCreators, Dispatch} from "redux";
+
+import { fetchBasicInfo } from "../../store/users/actions";
 
 import "./styles.css";
+import {getBasicInfo} from "../../store/users/selectors";
 
-const BasicInfo: React.FC = () => {
+const propTypes = {
+  basic_info: PropTypes.any.isRequired,
+  fetchBasicInfo: PropTypes.func.isRequired,
+};
+
+type Props = PropTypes.InferProps<typeof propTypes>
+
+const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo }) => {
+  const [name, setName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [currency, setCurrency] = useState('');
+  const [dateType, setDateType] = useState('dd/mm/yyyy');
+
+  useEffect(() => { fetchBasicInfo(); }, []);
+
+  useEffect ( () => {
+    setName(basic_info? basic_info.name : '');
+    setPhoneNumber(basic_info? basic_info.phone_number : '');
+    setEmail(basic_info? basic_info.email_address : '');
+    setCurrency(basic_info? basic_info.currency : '');
+    setDateType(basic_info? basic_info.date_type : 'dd/mm/yyyy');
+  }, [basic_info]);
+
 
   return (
     <div className="basicInfo__Page">
@@ -35,7 +65,10 @@ const BasicInfo: React.FC = () => {
           <Typography className="name">NM</Typography>
         </div>
 
-        <UsernameField value="Niloufar Mazloumpar" onChange={console.log} />
+        <UsernameField
+          value={name}
+          onChange={(ev) => setName(ev.target.value)}
+        />
       </div>
       <Grid container spacing={3} className="page-row">
         <Grid item sm={6} xs={12}>
@@ -48,7 +81,12 @@ const BasicInfo: React.FC = () => {
         <Grid item sm={6} xs={12}>
           <FormLabel className="radio-label">Email Address</FormLabel>
           <FormControl>
-            <TextField type="email" placeholder="email@email.com" variant="outlined" />
+            <TextField
+              placeholder="email@email.com"
+              value={email}
+              variant="outlined"
+              onChange={(ev) => setEmail(ev.target.value)}
+            />
           </FormControl>
         </Grid>
       </Grid>
@@ -62,7 +100,7 @@ const BasicInfo: React.FC = () => {
         <Grid item sm={6} xs={12}>
           <FormLabel className="radio-label">Default Calendar layout</FormLabel>
           <FormControl>
-            <RadioGroup name="date" row defaultValue="mm/dd/yyyy">
+            <RadioGroup row value={dateType} onChange={(ev) => setDateType(ev.target.value)}>
               <FormControlLabel
                 className="radio-radio"
                 value="dd/mm/yyyy"
@@ -83,4 +121,17 @@ const BasicInfo: React.FC = () => {
   )
 };
 
-export default BasicInfo
+const mapStateToProps = (state: any) => {
+  return {
+    basic_info: getBasicInfo(state.users),
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  fetchBasicInfo: bindActionCreators(fetchBasicInfo, dispatch),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BasicInfo);
