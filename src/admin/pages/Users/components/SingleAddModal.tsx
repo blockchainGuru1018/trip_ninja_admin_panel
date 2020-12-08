@@ -70,32 +70,6 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
     onClose();
   };
 
-  const onInputEmail = (ev: React.KeyboardEvent<HTMLDivElement>) => {
-    if (ev.key === "Enter") {
-      setIsSubmitting(true);
-
-      if (!validateEmail(email)) {
-        setErrors({
-          email: 'Invalid email'
-        });
-      } else {
-          axios.get('/api/v1/users/email-check/', {
-            params: { email }
-          }).then(({ data }) => {
-            if (data.result) {
-              setEmail(email);
-              setIsSubmitting(false);
-              setErrors({});
-            } else {
-              setErrors({
-                email: 'This user already exists'
-              });
-            }
-          }).catch(console.error)
-        }
-      }
-    };
-
   const onEmailChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(ev.target.value);
 
@@ -104,42 +78,45 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
         setErrors({});
       } else {
         setErrors({
-          email: 'Invalid email'
+          email: 'Invalid Email'
         });
       }
     }
   };
 
   const onNext = async () => {
-    if (email) {
-      try {
-        const data = await axios.get('/api/v1/users/email-check/', {
-          params: {email}
-        });
-        const result = await data.data;
-        if (result.result) {
-          setEmail(email);
-          setIsSubmitting(false);
-          setErrors({});
-        } else {
-          setIsSubmitting(true);
-          return setErrors({
-            email: 'This user already exists'
-          });
-        }
-      } catch (err) {
-        console.error(err)
-      }
-    }
-    if ((step === 0 && errors.email) || !email) {
+    if (step === 0) {
       setIsSubmitting(true);
 
-      return setErrors({
-        email: 'Input valid data'
-      });
-    }
+      if (email) {
+        try {
+          const resp = await axios.get('/api/v1/users/email-check/', {
+            params: {email}
+          });
 
-    setStep(Math.min(step + 1, 2));
+          if (resp.data.result) {
+            setIsSubmitting(false);
+            setErrors({});
+            return setStep(1);
+          } else {
+            return setErrors({
+              email: 'This user already exists'
+            });
+          }
+        } catch (err) {
+          console.error(err);
+          return setErrors({
+            email: 'Response Error'
+          });
+        }
+      } else {
+        return setErrors({
+          email: 'Empty Email'
+        });
+      }
+    } else {
+      setStep(Math.min(step + 1, 2));
+    }
   };
 
   const onBack = () => {
@@ -198,7 +175,6 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
                   helperText={errors.email}
                   value={email}
                   onChange={onEmailChange}
-                  onKeyPress={onInputEmail}
                 />
               </FormControl>
             </Grid>

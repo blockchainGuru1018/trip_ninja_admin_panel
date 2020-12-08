@@ -71,32 +71,6 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose, addTeam }) => {
     onClose();
   };
 
-  const onInputTeamName = (ev: React.KeyboardEvent<HTMLDivElement>) => {
-    if (ev.key === "Enter") {
-      setIsSubmitting(true);
-
-      if (!teamName) {
-        setErrors({
-          teamName: 'Empty TeamName'
-        });
-      } else {
-        axios.get('/api/v1/teams/name-check/', {
-          params: { 'team_name': teamName }
-        }).then(({ data }) => {
-          if (data.result) {
-            setTeamName(teamName);
-            setIsSubmitting(false);
-            setErrors({});
-          } else {
-            setErrors({
-              teamName: 'This team already exists'
-            });
-          }
-        }).catch(console.error)
-      }
-    }
-  };
-
   const onTeamNameChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     setTeamName(ev.target.value);
 
@@ -112,35 +86,38 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose, addTeam }) => {
   };
 
   const onNext = async () => {
-    if (teamName) {
-      try {
-        const data = await axios.get('/api/v1/teams/name-check/', {
-          params: { 'team_name': teamName }
-        });
-        const result = await data.data;
-
-        if (result.result) {
-          setTeamName(teamName);
-          setIsSubmitting(false);
-          setErrors({});
-        } else {
-          setIsSubmitting(true);
-          return setErrors({
-            teamName: 'Input valid TeamName'
-          });
-        }
-      } catch (err) {
-        console.error(err)
-      }
-    }
-    if ((step === 0 && errors.teamName) || !teamName) {
+    if (step === 0) {
       setIsSubmitting(true);
 
-      return setErrors({
-        teamName: 'Input valid TeamName'
-      });
+      if (teamName) {
+        try {
+          const resp = await axios.get('/api/v1/teams/name-check/', {
+            params: { 'team_name': teamName }
+          });
+
+          if (resp.data.result) {
+            setIsSubmitting(false);
+            setErrors({});
+            return setStep(1);
+          } else {
+            return setErrors({
+              teamName: 'This team already exists'
+            });
+          }
+        } catch (err) {
+          console.error(err);
+          return setErrors({
+            teamName: 'Response Error'
+          });
+        }
+      } else {
+        return setErrors({
+          teamName: 'Empty TeamName'
+        });
+      }
+    } else {
+      setStep(Math.min(step + 1, 3));
     }
-    setStep(Math.min(step + 1, 3));
   };
 
   const onBack = () => {
@@ -172,7 +149,6 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose, addTeam }) => {
                   helperText={errors.teamName}
                   value={teamName}
                   onChange={onTeamNameChange}
-                  onKeyPress={onInputTeamName}
                 />
               </FormControl>
             </Grid>
