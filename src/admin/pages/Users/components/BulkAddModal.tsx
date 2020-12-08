@@ -141,7 +141,7 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose, addBulkUsers }) => {
       emails,
       team_id: teamId,
       is_active: isActive === "enabled"
-    })
+    });
     handleClose();
   };
 

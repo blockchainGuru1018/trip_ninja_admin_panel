@@ -39,6 +39,8 @@ type Props = PropTypes.InferProps<typeof propTypes>
 const TeamAddModal: React.FC<Props> = ({ opened, onClose, addTeam }) => {
   const [step, setStep] = useState(0);
   const [teamName, setTeamName] = useState('');
+  const [errors, setErrors] = useState<{ teamName?: string }>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [adminID, setAdminID] = useState(undefined);
   const [adminOptions, setAdminOptions] = useState([]);
   const [memberID, setMemberID] = useState([]);
@@ -63,11 +65,81 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose, addTeam }) => {
   const handleClose = () => {
     setStep(0);
     setTeamName('');
+    setErrors({});
+    setIsSubmitting(false);
     setIsActive("enabled");
     onClose();
   };
 
-  const onNext = () => {
+  const onInputTeamName = (ev: React.KeyboardEvent<HTMLDivElement>) => {
+    if (ev.key === "Enter") {
+      setIsSubmitting(true);
+
+      if (!teamName) {
+        setErrors({
+          teamName: 'Empty TeamName'
+        });
+      } else {
+        axios.get('/api/v1/teams/name-check/', {
+          params: { 'team_name': teamName }
+        }).then(({ data }) => {
+          if (data.result) {
+            setTeamName(teamName);
+            setIsSubmitting(false);
+            setErrors({});
+          } else {
+            setErrors({
+              teamName: 'This team already exists'
+            });
+          }
+        }).catch(console.error)
+      }
+    }
+  };
+
+  const onTeamNameChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    setTeamName(ev.target.value);
+
+    if (isSubmitting) {
+      if ((ev.target.value)) {
+        setErrors({});
+      } else {
+        setErrors({
+          teamName: 'Invalid TeamName'
+        });
+      }
+    }
+  };
+
+  const onNext = async () => {
+    if (teamName) {
+      try {
+        const data = await axios.get('/api/v1/teams/name-check/', {
+          params: { 'team_name': teamName }
+        });
+        const result = await data.data;
+
+        if (result.result) {
+          setTeamName(teamName);
+          setIsSubmitting(false);
+          setErrors({});
+        } else {
+          setIsSubmitting(true);
+          return setErrors({
+            teamName: 'Input valid TeamName'
+          });
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    if ((step === 0 && errors.teamName) || !teamName) {
+      setIsSubmitting(true);
+
+      return setErrors({
+        teamName: 'Input valid TeamName'
+      });
+    }
     setStep(Math.min(step + 1, 3));
   };
 
@@ -95,10 +167,12 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose, addTeam }) => {
               <FormLabel className="label">Team Name</FormLabel>
               <FormControl fullWidth>
                 <TextField
-                  placeholder="What should we call your team"
-                  value={teamName}
                   variant="outlined"
-                  onChange={(ev) => setTeamName(ev.target.value)}
+                  error={isSubmitting && !!errors.teamName}
+                  helperText={errors.teamName}
+                  value={teamName}
+                  onChange={onTeamNameChange}
+                  onKeyPress={onInputTeamName}
                 />
               </FormControl>
             </Grid>

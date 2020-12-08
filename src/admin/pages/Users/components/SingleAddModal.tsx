@@ -26,7 +26,7 @@ import {
 
 import { addUser } from "../../../store/users/actions";
 
-import { axios } from "../../../utils";
+import {axios, validateEmail} from "../../../utils";
 
 const propTypes = {
   opened: PropTypes.bool.isRequired,
@@ -41,6 +41,8 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [errors, setErrors] = useState<{ email?: string }>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [teamId, setTeamId] = useState(undefined);
   const [teamOptions, setTeamOptions] = useState([]);
   const [isActive, setIsActive] = useState("enabled");
@@ -61,12 +63,82 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
     setFirstName('');
     setLastName('');
     setEmail('');
+    setErrors({});
+    setIsSubmitting(false);
     setTeamId(undefined);
     setIsActive("enabled");
     onClose();
   };
 
-  const onNext = () => {
+  const onInputEmail = (ev: React.KeyboardEvent<HTMLDivElement>) => {
+    if (ev.key === "Enter") {
+      setIsSubmitting(true);
+
+      if (!validateEmail(email)) {
+        setErrors({
+          email: 'Invalid email'
+        });
+      } else {
+          axios.get('/api/v1/users/email-check/', {
+            params: { email }
+          }).then(({ data }) => {
+            if (data.result) {
+              setEmail(email);
+              setIsSubmitting(false);
+              setErrors({});
+            } else {
+              setErrors({
+                email: 'This user already exists'
+              });
+            }
+          }).catch(console.error)
+        }
+      }
+    };
+
+  const onEmailChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(ev.target.value);
+
+    if (isSubmitting) {
+      if (validateEmail(ev.target.value)) {
+        setErrors({});
+      } else {
+        setErrors({
+          email: 'Invalid email'
+        });
+      }
+    }
+  };
+
+  const onNext = async () => {
+    if (email) {
+      try {
+        const data = await axios.get('/api/v1/users/email-check/', {
+          params: {email}
+        });
+        const result = await data.data;
+        if (result.result) {
+          setEmail(email);
+          setIsSubmitting(false);
+          setErrors({});
+        } else {
+          setIsSubmitting(true);
+          return setErrors({
+            email: 'This user already exists'
+          });
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    if ((step === 0 && errors.email) || !email) {
+      setIsSubmitting(true);
+
+      return setErrors({
+        email: 'Input valid data'
+      });
+    }
+
     setStep(Math.min(step + 1, 2));
   };
 
@@ -81,7 +153,7 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
       last_name: lastName,
       team_id: teamId,
       is_active: isActive === "enabled"
-    })
+    });
     handleClose();
   };
 
@@ -121,10 +193,12 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
               <FormControl fullWidth>
                 <TextField
                   type="email"
-                  placeholder="User@user.com"
-                  value={email}
                   variant="outlined"
-                  onChange={(ev) => setEmail(ev.target.value)}
+                  error={isSubmitting && !!errors.email}
+                  helperText={errors.email}
+                  value={email}
+                  onChange={onEmailChange}
+                  onKeyPress={onInputEmail}
                 />
               </FormControl>
             </Grid>
