@@ -48,7 +48,7 @@ const ArchiveModal: React.FC<Props> = ({ opened, onClose, agency, archiveAgency 
           className="btn-filled"
           onClick={onArchive}
         >
-          Archive Agency
+          {agency && agency.status ? 'Archive Agency' : 'Recover Agency'}
         </Button>
       </div>
     </Modal>

@@ -49,7 +49,7 @@ const Teams: React.FC<Props> = ({ teams, total, fetchTeams }) => {
     headerName: 'Team Lead',
     sortable: true
   }, {
-    field: 'is_booking',
+    field: 'is_active',
     headerName: '',
     getValue: (val: any, row: any) => (
       <Dropdown

@@ -48,7 +48,7 @@ const ArchiveModal: React.FC<Props> = ({ opened, onClose, user, archiveUser }) =
           className="btn-filled"
           onClick={onArchive}
         >
-          Archive User
+          {user && user.is_active ? 'Archive User' : 'Recover User'}
         </Button>
       </div>
     </Modal>

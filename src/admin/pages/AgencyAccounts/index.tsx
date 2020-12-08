@@ -49,12 +49,12 @@ const AgencyAccounts: React.FC<Props> = ({ agencies, total, fetchAgencies }) => 
     headerName: 'Data Source',
     sortable: true
   }, {
-    field: 'is_active',
+    field: 'status',
     headerName: 'Status',
     sortable: true,
     getValue: (val: boolean) => val ? 'Active' : 'Deactivated'
   }, {
-    field: 'is_booking',
+    field: 'status',
     headerName: '',
     getValue: (val: any, row: any) => (
       <Dropdown

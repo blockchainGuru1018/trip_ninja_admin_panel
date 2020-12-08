@@ -74,7 +74,7 @@ export default (state = agenciesInitialState, action: any) => {
           if (el.agency_id === action.payload) {
             return {
               ...el,
-              is_active: !el.is_active,
+              status: !el.status,
             }
           }
 

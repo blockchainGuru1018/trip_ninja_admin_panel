@@ -48,7 +48,7 @@ const ArchiveModal: React.FC<Props> = ({ opened, onClose, team, archiveTeam }) =
           className="btn-filled"
           onClick={onArchive}
         >
-          Archive Team
+          {team && team.is_active ? 'Archive Team' : 'Recover Team'}
         </Button>
       </div>
     </Modal>
