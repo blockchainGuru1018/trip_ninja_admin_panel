@@ -10,16 +10,14 @@ import {
   FormLabel,
   TextField,
 } from '@material-ui/core';
-
+import PropTypes from "prop-types";
+import {bindActionCreators, Dispatch} from "redux";
 import {
   Currency,
   UsernameField
 } from "../../components";
-import PropTypes from "prop-types";
 
-import {bindActionCreators, Dispatch} from "redux";
-
-import { fetchBasicInfo } from "../../store/users/actions";
+import { fetchBasicInfo, updateBasicInfo } from "../../store/users/actions";
 import {getBasicInfo} from "../../store/users/selectors";
 
 import "./styles.css";
@@ -27,11 +25,12 @@ import "./styles.css";
 const propTypes = {
   basic_info: PropTypes.any.isRequired,
   fetchBasicInfo: PropTypes.func.isRequired,
+  updateBasicInfo: PropTypes.func.isRequired,
 };
 
 type Props = PropTypes.InferProps<typeof propTypes>
 
-const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo }) => {
+const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo, updateBasicInfo }) => {
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
@@ -47,6 +46,38 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo }) => {
     setCurrency(basic_info? basic_info.currency : '');
     setDateType(basic_info? basic_info.date_type : 'dd/mm/yyyy');
   }, [basic_info]);
+
+  const onInputChange = (attr: string, value: string) => {
+    if (attr === 'name') {
+      setName(value);
+    }
+    if (attr === 'phone_number') {
+      setPhoneNumber(value);
+    }
+    if (attr === 'email_address') {
+      setEmail(value);
+    }
+    if (attr === 'date_type') {
+      setDateType(value);
+    }
+    if (attr === 'currency') {
+      setCurrency(value);
+    }
+    onUpdate({
+      [attr]: value
+    });
+  };
+
+  const onUpdate = (data: any) => {
+    updateBasicInfo({
+      name,
+      phone_number: phoneNumber,
+      email_address: email,
+      currency,
+      date_type: dateType,
+      ...data
+    });
+  };
 
 
   return (
@@ -67,7 +98,7 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo }) => {
 
         <UsernameField
           value={name}
-          onChange={(ev) => setName(ev.target.value)}
+          onChange={(ev) => onInputChange('name', ev.target.value)}
         />
       </div>
       <Grid container spacing={3} className="page-row">
@@ -80,7 +111,7 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo }) => {
               placeholder="XXX"
               variant="outlined"
               value={phoneNumber}
-              onChange={(ev) => setPhoneNumber(ev.target.value)}
+              onChange={(ev) => onInputChange('phone_number', ev.target.value)}
             />
           </FormControl>
         </Grid>
@@ -91,7 +122,7 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo }) => {
               placeholder="email@email.com"
               value={email}
               variant="outlined"
-              onChange={(ev) => setEmail(ev.target.value)}
+              onChange={(ev) => onInputChange('email_address', ev.target.value)}
             />
           </FormControl>
         </Grid>
@@ -102,14 +133,17 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo }) => {
           <FormControl>
             <Currency
               value={currency}
-              onChange={setCurrency}
+              onChange={(value) => onInputChange('currency', value)}
             />
           </FormControl>
         </Grid>
         <Grid item sm={6} xs={12}>
           <FormLabel className="radio-label">Default Calendar layout</FormLabel>
           <FormControl>
-            <RadioGroup row value={dateType} onChange={(ev) => setDateType(ev.target.value)}>
+            <RadioGroup
+              row
+              value={dateType}
+              onChange={(ev) => onInputChange('date_type', ev.target.value)}>
               <FormControlLabel
                 className="radio-radio"
                 value="dd/mm/yyyy"
@@ -138,6 +172,7 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchBasicInfo: bindActionCreators(fetchBasicInfo, dispatch),
+  updateBasicInfo: bindActionCreators(updateBasicInfo, dispatch),
 });
 
 export default connect(

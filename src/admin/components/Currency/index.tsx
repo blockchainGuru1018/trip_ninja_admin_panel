@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -14,12 +14,7 @@ const propTypes = {
 
 type Props = PropTypes.InferProps<typeof propTypes>
 
-const Currency:React.FC<Props> = ({ className, value}) => {
-  let [currencyID , setCurrencyID] = useState('');
-  useEffect ( () => {
-    setCurrencyID(value? currencyID = value : '');
-  }, [value]);
-
+const Currency:React.FC<Props> = ({ className, value, onChange}) => {
   return (
     <div className={classNames(className, "currency__Component")}>
       <Select
@@ -29,9 +24,9 @@ const Currency:React.FC<Props> = ({ className, value}) => {
           { value: 'USD', label: 'USD' },
           { value: 'INR', label: 'INR' },
         ]}
-        value={currencyID}
+        value={value}
         placeholder="Default currency"
-        onChange={setCurrencyID}
+        onChange={onChange}
       />
     </div>
   );

@@ -15,6 +15,15 @@ import {
   FETCH_BASIC_INFO_REQUEST,
   FETCH_BASIC_INFO_SUCCESS,
   FETCH_BASIC_INFO_FAILURE,
+  UPDATE_BASIC_INFO_REQUEST,
+  UPDATE_BASIC_INFO_SUCCESS,
+  UPDATE_BASIC_INFO_FAILURE,
+  FETCH_GENERAL_INFO_REQUEST,
+  FETCH_GENERAL_INFO_SUCCESS,
+  FETCH_GENERAL_INFO_FAILURE,
+  UPDATE_GENERAL_INFO_REQUEST,
+  UPDATE_GENERAL_INFO_SUCCESS,
+  UPDATE_GENERAL_INFO_FAILURE,
 } from "./actionTypes";
 
 export interface IUser {
@@ -182,6 +191,99 @@ export function fetchBasicInfo() {
       dispatch(fetchBasicInfoSuccess(resp.data.data));
     } catch (err) {
       dispatch(fetchBasicInfoFailure());
+    }
+  };
+}
+
+function updateBasicInfoRequest() {
+  return { type: UPDATE_BASIC_INFO_REQUEST };
+}
+
+function updateBasicInfoSuccess(data: {
+  user_info: any,
+}) {
+  return {
+    type: UPDATE_BASIC_INFO_SUCCESS,
+    payload: data,
+  };
+}
+
+function updateBasicInfoFailure() {
+  return {
+    type: UPDATE_BASIC_INFO_FAILURE,
+  };
+}
+
+export function updateBasicInfo(data: any) {
+  return async (dispatch: Dispatch) => {
+    dispatch(updateBasicInfoRequest());
+    try {
+      const resp = await axios.put('/api/v1/users/basic/', data);
+      dispatch(updateBasicInfoSuccess(resp.data.data));
+    } catch (err) {
+      dispatch(updateBasicInfoFailure());
+    }
+  };
+}
+
+function fetchGeneralInfoRequest() {
+  return { type: FETCH_GENERAL_INFO_REQUEST };
+}
+
+function fetchGeneralInfoSuccess(data: {
+  user_info: any,
+}) {
+  return {
+    type: FETCH_GENERAL_INFO_SUCCESS,
+    payload: data,
+  };
+}
+
+function fetchGeneralInfoFailure() {
+  return {
+    type: FETCH_GENERAL_INFO_FAILURE,
+  };
+}
+
+export function fetchGeneralInfo() {
+  return async (dispatch: Dispatch) => {
+    dispatch(fetchGeneralInfoRequest());
+    try {
+      const resp = await axios.get('/api/v1/users/general/');
+      dispatch(fetchGeneralInfoSuccess(resp.data.data));
+    } catch (err) {
+      dispatch(fetchGeneralInfoFailure());
+    }
+  };
+}
+
+function updateGeneralInfoRequest() {
+  return { type: UPDATE_GENERAL_INFO_REQUEST };
+}
+
+function updateGeneralInfoSuccess(data: {
+  user_info: any,
+}) {
+  return {
+    type: UPDATE_GENERAL_INFO_SUCCESS,
+    payload: data,
+  };
+}
+
+function updateGeneralInfoFailure() {
+  return {
+    type: UPDATE_GENERAL_INFO_FAILURE,
+  };
+}
+
+export function updateGeneralInfo(data: any) {
+  return async (dispatch: Dispatch) => {
+    dispatch(updateGeneralInfoRequest());
+    try {
+      const resp = await axios.put('/api/v1/users/general/', data);
+      dispatch(updateGeneralInfoSuccess(resp.data.data));
+    } catch (err) {
+      dispatch(updateGeneralInfoFailure());
     }
   };
 }

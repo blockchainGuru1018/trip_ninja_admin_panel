@@ -88,15 +88,58 @@ export default (state = usersInitialState, action: any) => {
         isFetching: true,
       };
     case types.FETCH_BASIC_INFO_SUCCESS:
-        return {
+      return {
         ...state,
         basic_info: action.payload.user_info,
         isFetching: false,
-        };
+      };
     case types.FETCH_BASIC_INFO_FAILURE:
       return {
         ...state,
         isFetching: false,
+      };
+    case types.UPDATE_BASIC_INFO_REQUEST:
+      return {
+        ...state,
+      };
+    case types.UPDATE_BASIC_INFO_SUCCESS:
+      return {
+        ...state,
+        basic_info: action.payload.user_info,
+      };
+    case types.UPDATE_BASIC_INFO_FAILURE:
+      return {
+        ...state,
+      };
+
+    case types.FETCH_GENERAL_INFO_REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case types.FETCH_GENERAL_INFO_SUCCESS:
+      return {
+        ...state,
+        basic_info: action.payload.user_info,
+        isFetching: false,
+      };
+    case types.FETCH_GENERAL_INFO_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+      };
+    case types.UPDATE_GENERAL_INFO_REQUEST:
+      return {
+        ...state,
+      };
+    case types.UPDATE_GENERAL_INFO_SUCCESS:
+      return {
+        ...state,
+        basic_info: action.payload.user_info,
+      };
+    case types.UPDATE_GENERAL_INFO_FAILURE:
+      return {
+        ...state,
       };
     default:
       return state;
