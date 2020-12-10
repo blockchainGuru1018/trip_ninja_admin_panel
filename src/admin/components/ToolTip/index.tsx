@@ -12,7 +12,7 @@ type Props = PropTypes.InferProps<typeof propTypes>
 const ToolTip: React.FC<Props> = ({ text, children }) => {
 
   return (
-    <div className="tooltip__Component">
+    <div className="tooltip-Component">
       <div className="tooltip">
         {children}
         <div className="tooltip-content">

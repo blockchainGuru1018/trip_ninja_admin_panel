@@ -29,7 +29,7 @@ const Dropdown:React.FC<Props> = ({ className, value, options, placeholder, onCh
     setTimeout(() => {
       document.addEventListener('click', closeDropdown);
     }, 1);
-  }
+  };
 
   const closeDropdown = () => {
     setIsOpened(false);
@@ -43,7 +43,7 @@ const Dropdown:React.FC<Props> = ({ className, value, options, placeholder, onCh
   };
 
   return (
-    <div className={classNames("dropdown__Component", className)}>
+    <div className={classNames("dropdown-Component", className)}>
       <Button className="ddSelected" onClick={openDropdown}>
         {optionSelected ? optionSelected.label : placeholder ?  placeholder : 'Select'}
         <ArrowDropDown />

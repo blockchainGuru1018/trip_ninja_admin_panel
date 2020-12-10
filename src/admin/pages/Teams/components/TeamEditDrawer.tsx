@@ -72,7 +72,7 @@ const TeamEditDrawer: React.FC<Props> = ({ opened, team, onClose, updateTeam }) 
 
   return (
     <Drawer
-      className="team__Page__modal"
+      className="team-Page-modal"
       opened={opened}
       onClose={onClose}
     >

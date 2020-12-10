@@ -90,7 +90,7 @@ const AgencyEditDrawer: React.FC<Props> = ({ opened, agency, onClose, updateAgen
   return (
     <>
       <Drawer
-        className="agencyAccounts__Page__modal"
+        className="agency-Accounts-Page-modal"
         opened={opened}
         onClose={onClose}
       >

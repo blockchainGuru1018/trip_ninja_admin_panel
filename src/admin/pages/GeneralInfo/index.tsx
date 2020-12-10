@@ -67,7 +67,7 @@ const GeneralInfo: React.FC<Props> = ({ basic_info, fetchGeneralInfo, updateGene
   };
 
   return (
-    <div className="generalInfo__Page">
+    <div className="generalInfo-Page">
       <div className="page-header">
         <Typography variant="h3" component="h1" className="page-title">
           General Information

@@ -34,7 +34,7 @@ const Drawer:iDrawer = ({ className, opened, onClose, children }) => {
     <ReactDrawer
       anchor="right"
       PaperProps={{
-        className: classNames("drawer__Component", className)
+        className: classNames("drawer-Component", className)
       }}
       open={!!opened}
       onClose={handleClose}

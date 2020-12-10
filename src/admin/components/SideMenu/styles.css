@@ -1,4 +1,4 @@
-body .sideMenu__Component {
+body .sideMenu-Component {
   position: relative;
   white-space: nowrap;
   z-index: 0;
@@ -8,35 +8,35 @@ body .sideMenu__Component {
   color: #fff;
   box-sizing: border-box;
 }
-.sideMenu__Component .menuContainer {
+.sideMenu-Component .menuContainer {
   padding: 0 34px;
 }
-.sideMenu__Component .menuList {
+.sideMenu-Component .menuList {
   padding-bottom: 10px;
   border-top: 1px solid #ABB3B7;
 }
-.sideMenu__Component .menuList:first-child {
+.sideMenu-Component .menuList:first-child {
   border: none;
 }
-.sideMenu__Component .title {
+.sideMenu-Component .title {
   font-size: 16px;
   font-family: NeuzitGrotesk, sans-serif;
   font-weight: bold;
   padding: 24px 0 10px;
 }
-.sideMenu__Component .subMenuList {
+.sideMenu-Component .subMenuList {
   width: 100%;
 }
-.sideMenu__Component .menuItem {
+.sideMenu-Component .menuItem {
   padding: 0;
 }
-.sideMenu__Component .menuItem.active {
+.sideMenu-Component .menuItem.active {
   background: rgba(0, 0, 0, 0.08);
 }
-.sideMenu__Component .menuItem.active .MuiListItemIcon-root {
+.sideMenu-Component .menuItem.active .MuiListItemIcon-root {
   color: #fff;
 }
-.sideMenu__Component .menuText {
+.sideMenu-Component .menuText {
   font-size: 16px;
   font-family: NeuzitGrotesk, sans-serif;
   font-weight: lighter;

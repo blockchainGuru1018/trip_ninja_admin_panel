@@ -5,7 +5,7 @@ import "./styles.css";
 const Header: React.FC = () => {
 
   return (
-    <div className="header__Component">
+    <div className="header-Component">
       <div className="container">
         <div className="navItem">
           <img src={require('../../assets/Trip_Ninja_Logo.png')} className="logo" alt="logo png" />

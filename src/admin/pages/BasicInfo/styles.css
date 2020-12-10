@@ -1,9 +1,9 @@
-.basicInfo__Page .username-section {
+.basicInfo-Page .username-section {
   display: flex;
   align-items: center;
   margin: 40px 0;
 }
-.basicInfo__Page .avatar {
+.basicInfo-Page .avatar {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,22 +13,22 @@
   border-radius: 50%;
   margin-right: 30px;
 }
-.basicInfo__Page .name {
+.basicInfo-Page .name {
   font-size: 32px;
   color: #45565E;
   font-family: NeuzitGrotesk, sans-serif;
   font-weight: bolder;
 }
-.basicInfo__Page .phone-input-field {
+.basicInfo-Page .phone-input-field {
   flex-direction: row;
 }
-.basicInfo__Page .country-code-input {
+.basicInfo-Page .country-code-input {
   width: 60px;
 }
-.basicInfo__Page .phone-number-input {
+.basicInfo-Page .phone-number-input {
   flex: 1;
   margin-left: 16px;
 }
-.basicInfo__Page .select {
+.basicInfo-Page .select {
   width: 300px;
 }

@@ -81,7 +81,7 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo, updateBasicInf
 
 
   return (
-    <div className="basicInfo__Page">
+    <div className="basicInfo-Page">
       <div className="page-header">
         <Typography variant="h3" component="h1" className="page-title">
           Basic Information

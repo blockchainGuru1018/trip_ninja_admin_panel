@@ -46,9 +46,9 @@ const DataTable:React.FC<Props> = ({ className, columns, rows, total, page, page
   };
 
   return (
-    <div className={classNames("dataTable__Component", className)}>
+    <div className={classNames("dataTable-Component", className)}>
       <TableContainer component={Paper}>
-        <Table className="dataTable__Component__table">
+        <Table className="dataTable-Component-table">
           <TableHead className="table-header">
             <TableRow>
               {columns.map((el, idx) => (

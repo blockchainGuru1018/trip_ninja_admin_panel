@@ -6,7 +6,7 @@ import "./styles.css";
 const BillingAccountManagement: React.FC = () => {
 
   return (
-    <div className="billingAccountManagement__Page">
+    <div className="billing-Account-Management-Page">
       <div className="page-header">
         <Typography variant="h3" component="h1" className="page-title">
           Billing and Account Management

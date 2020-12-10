@@ -247,7 +247,7 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose, addTeam }) => {
   return (
     <>
       <Modal
-        className="team__Page__modal"
+        className="team-Page-modal"
         title="Add Team"
         opened={opened}
         onClose={handleClose}

@@ -108,7 +108,7 @@ const AgencyAccounts: React.FC<Props> = ({ agencies, total, fetchAgencies }) => 
   };
 
   return (
-    <div className="agencyAccounts__Page">
+    <div className="agency_Accounts-Page">
       <div className="page-header">
         <Typography variant="h3" component="h1" className="page-title">Agency Accounts</Typography>
         <Button variant="outlined" className="btn-primary" onClick={() => setModalOpened(1)}>Add Agency account</Button>

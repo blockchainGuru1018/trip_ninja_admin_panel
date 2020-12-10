@@ -1,12 +1,12 @@
-.generalInfo__Page .labelWithTooltip {
+.generalInfo-Page .labelWithTooltip {
   display: flex;
   align-items: center
 }
-.generalInfo__Page .icon {
+.generalInfo-Page .icon {
   cursor: pointer;
   width: 15px;
   margin-left: 15px;
 }
-.generalInfo__Page .select {
+.generalInfo-Page .select {
   width: 300px;
 }

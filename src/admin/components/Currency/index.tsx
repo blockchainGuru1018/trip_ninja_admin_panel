@@ -16,7 +16,7 @@ type Props = PropTypes.InferProps<typeof propTypes>
 
 const Currency:React.FC<Props> = ({ className, value, onChange}) => {
   return (
-    <div className={classNames(className, "currency__Component")}>
+    <div className={classNames(className, "currency-Component")}>
       <Select
         className="select"
         options={[

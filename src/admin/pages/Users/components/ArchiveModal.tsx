@@ -25,7 +25,7 @@ const ArchiveModal: React.FC<Props> = ({ opened, onClose, user, archiveUser }) =
 
   return (
     <Modal
-      className="user__Page__archive__modal"
+      className="user-Page-archive-modal"
       opened={opened}
       onClose={onClose}
     >

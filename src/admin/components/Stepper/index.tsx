@@ -16,7 +16,7 @@ type Props = PropTypes.InferProps<typeof propTypes>
 const Stepper:React.FC<Props> = ({ className, steps, activeStep, children }) => {
 
   return (
-    <div className={classNames("stepper__Component", className)}>
+    <div className={classNames("stepper-Component", className)}>
       <ReactStepper activeStep={activeStep || 0} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>

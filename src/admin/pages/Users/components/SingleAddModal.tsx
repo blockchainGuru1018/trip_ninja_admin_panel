@@ -250,7 +250,7 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
 
   return (
     <Modal
-      className="user__Page__singleAdd__modal"
+      className="user-Page-singleAdd-modal"
       title="Add User"
       opened={opened}
       onClose={handleClose}

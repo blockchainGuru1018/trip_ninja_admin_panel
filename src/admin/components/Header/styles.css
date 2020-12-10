@@ -1,4 +1,4 @@
-.header__Component .container {
+.header-Component .container {
   position: fixed;
   display: flex;
   top: 0;
@@ -9,7 +9,7 @@
   box-shadow: 0 3px 6px #00000029;
   z-index: 1;
 }
-.header__Component .navItem {
+.header-Component .navItem {
   display: flex;
   align-items: center;
   height: 100%;
@@ -20,6 +20,6 @@
   font-weight: bold;
   cursor: pointer;
 }
-.header__Component .logo {
+.header-Component .logo {
   height: 32px;
 }

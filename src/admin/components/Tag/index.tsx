@@ -14,7 +14,7 @@ const propTypes = {
 type Props = PropTypes.InferProps<typeof propTypes>
 
 const Stepper:React.FC<Props> = ({ className, text, onRemove }) => (
-  <div className={classNames("tag__Component", className)}>
+  <div className={classNames("tag-Component", className)}>
     <span>{text}</span>
     {onRemove && (
       <CloseIcon onClick={onRemove} />

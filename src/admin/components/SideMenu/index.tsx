@@ -12,7 +12,7 @@ const SideMenu: React.FC = () => {
     <Drawer
       variant="permanent"
       classes={{
-        paper: 'sideMenu__Component',
+        paper: 'sideMenu-Component',
       }}
     >
       <div className="menuContainer">

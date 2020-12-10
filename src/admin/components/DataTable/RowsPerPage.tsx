@@ -41,7 +41,7 @@ const DataTable:React.FC<Props> = ({ className, value, onChange }) => {
   };
 
   return (
-    <div className={classNames("dataTable__rowPerPage__Component", className)}>
+    <div className={classNames("dataTable-rowPerPage-Component", className)}>
       <Button className="ddSelected" onClick={() => setIsOpened(true)}>{value} per page</Button>
 
       {isOpened && (

@@ -1,14 +1,14 @@
-body .drawer__Component {
+body .drawer-Component {
   width: 100%;
   max-width: 720px;
 }
-.drawer__Component .content {
+.drawer-Component .content {
   position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
 }
-.drawer__Component .closeIcon {
+.drawer-Component .closeIcon {
   position: absolute;
   top: 24px;
   right: 24px;
@@ -16,16 +16,16 @@ body .drawer__Component {
   height: 30px;
   cursor: pointer;
 }
-.drawer__Component .drawer__header {
+.drawer-Component .drawer-header {
   margin: 0 30px;
   padding: 24px 36px 24px 0;
   border-bottom: 1px solid #CACDD6;
 }
-.drawer__Component .drawer__body {
+.drawer-Component .drawer-body {
   flex: 1;
   padding: 24px 30px;
 }
-.drawer__Component .drawer__footer {
+.drawer-Component .drawer-footer {
   padding: 30px;
   background: #F8F8F9;
   border-top: 1px solid #D1D6D8;

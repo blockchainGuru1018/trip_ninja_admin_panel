@@ -91,7 +91,7 @@ const Select:React.FC<Props> = ({ className, value, options, multiple, placehold
   };
 
   return (
-    <div className={classNames(className, "select__Component")}>
+    <div className={classNames(className, "select-Component")}>
       <TextField
         className={classNames("input", {
           "opened": isOpened

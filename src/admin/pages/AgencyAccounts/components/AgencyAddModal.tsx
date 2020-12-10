@@ -197,7 +197,7 @@ const AgencyAddModal: React.FC<Props> = ({ opened, onClose, addAgency }) => {
   return (
     <>
       <Modal
-        className="agencyAccounts__Page__modal"
+        className="agency-Accounts-Page-modal"
         title="Add Agency"
         opened={opened}
         onClose={handleClose}

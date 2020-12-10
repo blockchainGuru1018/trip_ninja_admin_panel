@@ -15,7 +15,7 @@ const UsernameField: React.FC<Props> = ({ value, onChange }) => {
   const [opened, setOpened] = useState(false);
 
   return (
-    <div className="userNameField__Component">
+    <div className="userNameField-Component">
       <div className="content">
         {opened ? (
           <TextField value={value} onChange={onChange} variant="outlined" />

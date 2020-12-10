@@ -1,19 +1,19 @@
-.select__Component {
+.select-Component {
   position: relative;
 }
-.select__Component .input {
+.select-Component .input {
   border: 1px solid #DEDEDF;
   box-sizing: border-box;
   width: 100%;
   cursor: pointer;
   border-radius: 4px;
 }
-.select__Component .input.opened {
+.select-Component .input.opened {
   border-bottom: none;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
-.select__Component .select-container {
+.select-Component .select-container {
   position: absolute;
   left: 0;
   right: 0;
@@ -24,13 +24,13 @@
   background-color: white;
   z-index: 999;
 }
-.select__Component .input input {
+.select-Component .input input {
   font-family: NeuzitGrotesk, sans-serif;
   font-size: 14px;
 }
-.select__Component .input .MuiOutlinedInput-notchedOutline {
+.select-Component .input .MuiOutlinedInput-notchedOutline {
   border: none;
 }
-.select__Component .input .Mui-disabled {
+.select-Component .input .Mui-disabled {
   cursor: pointer;
 }

@@ -80,7 +80,7 @@ const UserEditDrawer: React.FC<Props> = ({ opened, user, onClose, updateUser }) 
 
   return (
     <Drawer
-      className="user__Page__drawer"
+      className="user-Page-drawer"
       opened={opened}
       onClose={onClose}
     >
@@ -98,7 +98,7 @@ const UserEditDrawer: React.FC<Props> = ({ opened, user, onClose, updateUser }) 
               />
             </div>
           </Drawer.Header>
-          <Drawer.Body className="user__Page__drawer__body">
+          <Drawer.Body className="user-Page-drawer-body">
             <Grid item xs={12}>
               <Tabs value={activeTab} tabs={["Personal Info", "Booking"]} onChange={(event: React.ChangeEvent<{}>, newValue: any) => setActiveTab(newValue)} />
               {activeTab === 0 ? (

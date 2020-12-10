@@ -13,7 +13,7 @@ import "./styles.css";
 
 const SearchBookingDetail: React.FC = () => {
   return (
-    <div className="searchBookingDetail__Page">
+    <div className="searchBookingDetail-Page">
       <div className="page-header">
         <Typography variant="h3" component="h1" className="page-title">
           Search & Booking Defaults

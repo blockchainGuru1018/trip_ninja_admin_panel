@@ -11,7 +11,7 @@ export type Props = PropTypes.InferProps<typeof propTypes>
 const Footer: React.FC<Props> = ({ className, children }) => {
 
   return (
-    <div className={classNames("drawer__footer", className)}>
+    <div className={classNames("drawer-footer", className)}>
       {children}
     </div>
   );

@@ -1,7 +1,7 @@
-.agencyAccounts__Page .table {
+.agency-Accounts-Page .table {
   margin-top: 15px;
 }
-.agencyAccounts__Page__modal .stepper-content {
+.agency-Accounts-Page-modal .stepper-content {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,24 +11,24 @@
   border-top: 1px solid #CACDD6;
   box-sizing: border-box;
 }
-.agencyAccounts__Page__modal .step-title {
+.agency-Accounts-Page-modal .step-title {
   font-size: 24px;
   color: #45565E;
   font-family: NeuzitGrotesk, sans-serif;
 }
-.agencyAccounts__Page__modal .stepper-actions {
+.agency-Accounts-Page-modal .stepper-actions {
   display: flex;
   justify-content: center;
   border-top: 1px solid #CACDD6;
   padding: 25px 15px;
 }
-.agencyAccounts__Page__modal .stepper-actions-inner {
+.agency-Accounts-Page-modal .stepper-actions-inner {
   display: flex;
   justify-content: center;
   width: 100%;
   max-width: 600px;
 }
-.agencyAccounts__Page__modal .label {
+.agency-Accounts-Page-modal .label {
   display: block;
   font-size: 16px;
   color: #45565E;
@@ -36,59 +36,59 @@
   font-weight: bolder;
   margin-bottom: 12px
 }
-.agencyAccounts__Page__modal .edit-form-buttons {
+.agency-Accounts-Page-modal .edit-form-buttons {
   display: flex;
   justify-content: space-between;
 }
-.agencyAccounts__Page__modal .agency-form-title {
+.agency-Accounts-Page-modal .agency-form-title {
   font-size: 24px;
   color: #45565E;
   font-family: NeuzitGrotesk, sans-serif;
   font-weight: lighter;
 }
-.agencyAccounts__Page__modal .first-step {
+.agency-Accounts-Page-modal .first-step {
   width: 100%;
   max-width: 350px;
   margin: auto;
 }
-.agencyAccounts__Page__modal .first-title {
+.agency-Accounts-Page-modal .first-title {
   text-align: center;
   margin-bottom: 30px;
 }
-.agencyAccounts__Page__modal .label-with-tooltip {
+.agency-Accounts-Page-modal .label-with-tooltip {
   display: flex;
   align-items: center;
 }
-.agencyAccounts__Page__modal .icon {
+.agency-Accounts-Page-modal .icon {
   display: flex;
   cursor: pointer;
   width: 15px;
   margin-left: 15px
 }
-.agencyAccounts__Page__modal .second-step {
+.agency-Accounts-Page-modal .second-step {
   width: 100%;
   padding: 0 12px;
   margin: auto;
   box-sizing: border-box;
 }
-.agencyAccounts__Page__modal .third-step {
+.agency-Accounts-Page-modal .third-step {
   width: 100%;
   padding: 0 12px;
   margin: auto;
   box-sizing: border-box;
 }
-.agencyAccounts__Page__modal .fourth-step {
+.agency-Accounts-Page-modal .fourth-step {
   text-align: center;
   max-width: 500px;
   margin: auto;
 }
-.agencyAccounts__Page__modal .agency-form-description {
+.agency-Accounts-Page-modal .agency-form-description {
   font-size: 16px;
   color: #45565E;
   font-family: NeuzitGrotesk, sans-serif;
   font-weight: lighter;
   margin: 30px 0;
 }
-.agencyAccounts__Page__modal .select {
+.agency-Accounts-Page-modal .select {
   width: 100%;
 }

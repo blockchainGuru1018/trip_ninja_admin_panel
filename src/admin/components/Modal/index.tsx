@@ -23,7 +23,7 @@ const Modal:React.FC<Props> = ({ title, className, opened, onClose, children }) 
 
   return (
     <ReactModal
-      className={classNames("modal__Component", className)}
+      className={classNames("modal-Component", className)}
       open={!!opened}
       onClose={handleClose}
       closeAfterTransition

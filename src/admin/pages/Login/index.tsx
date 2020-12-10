@@ -30,10 +30,10 @@ const Login: React.FC<Props> = ({ login }) => {
     ev.preventDefault();
 
     login({ username: email, password })
-  }
+  };
 
   return (
-    <div className="login__Page">
+    <div className="login-Page">
       <Typography variant="h3" component="h3">
         Login
       </Typography>

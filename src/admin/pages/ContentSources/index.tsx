@@ -6,7 +6,7 @@ import "./styles.css";
 const ContentSources: React.FC = () => {
 
   return (
-    <div className="contentSources__Page">
+    <div className="content-Sources-Page">
       <div className="page-header">
         <Typography variant="h3" component="h1" className="page-title">
           Content Sources

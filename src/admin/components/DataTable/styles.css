@@ -1,42 +1,42 @@
-.dataTable__Component .dataTable__Component__table {
+.dataTable-Component .dataTable-Component-table {
   min-width: 650px;
 }
-.dataTable__Component .table-header {
+.dataTable-Component .table-header {
   background: #F5F8FA;
 }
-.dataTable__Component .table-header-cell {
+.dataTable-Component .table-header-cell {
   font-size: 16px;
   color: #45565E;
   font-family: NeuzitGrotesk, sans-serif;
   font-weight: bold;
 }
-.dataTable__Component .table-header-cell .sortable-column {
+.dataTable-Component .table-header-cell .sortable-column {
   display: flex;
 }
-.dataTable__Component .table-header-cell .sortable-column svg {
+.dataTable-Component .table-header-cell .sortable-column svg {
   margin-left: 8px;
   cursor: pointer;
 }
-.dataTable__Component .table-body {
+.dataTable-Component .table-body {
   height: 250px;
 }
-.dataTable__Component .table-cell {
+.dataTable-Component .table-cell {
   font-size: 14px;
   color: #45565E;
   font-family: NeuzitGrotesk, sans-serif;
 }
-.dataTable__Component .pagination {
+.dataTable-Component .pagination {
   display: flex;
   justify-content: center;
   margin-top: 30px;
 }
-.dataTable__Component .rows-per-page {
+.dataTable-Component .rows-per-page {
   margin-left: 30px;
 }
-.dataTable__rowPerPage__Component {
+.dataTable-rowPerPage-Component {
   position: relative;
 }
-.dataTable__rowPerPage__Component .ddSelected {
+.dataTable-rowPerPage-Component .ddSelected {
   color: #00B4C3;
   text-transform: none;
   font-family: NeuzitGrotesk, sans-serif;
@@ -46,7 +46,7 @@
   border-radius: 0;
   padding: 0 8px;
 }
-.dataTable__rowPerPage__Component .ddContainer {
+.dataTable-rowPerPage-Component .ddContainer {
   position: absolute;
   left: 0;
   bottom: 100%;
@@ -58,7 +58,7 @@
   margin-bottom: 12px;
   z-index: 999;
 }
-.dataTable__rowPerPage__Component .ddContainer:before {
+.dataTable-rowPerPage-Component .ddContainer:before {
   content: '';
   position: absolute;
   top: 100%;
@@ -70,7 +70,7 @@
   border-right: 1px solid #45565E41;
   transform: translate(-50%, -50%) rotate(45deg);
 }
-.dataTable__rowPerPage__Component .ddItem {
+.dataTable-rowPerPage-Component .ddItem {
   display: flex;
   padding: 8px 12px;
   font-size: 14px;
@@ -78,6 +78,6 @@
   font-family: NeuzitGrotesk, sans-serif;
   cursor: pointer;
 }
-.dataTable__rowPerPage__Component .ddItem:hover {
+.dataTable-rowPerPage-Component .ddItem:hover {
   background: #45565E0D;
 }

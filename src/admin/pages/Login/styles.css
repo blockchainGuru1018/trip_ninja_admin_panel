@@ -1,4 +1,4 @@
-.login__Page {
+.login-Page {
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -7,20 +7,20 @@
   justify-content: center;
 }
 
-.login__Page h3 {
+.login-Page h3 {
   color: #45565E;
   font-size: 48px;
   font-family: NeuzitGrotesk, sans-serif;
   margin-bottom: 30px;
 }
 
-.login__Page label {
+.login-Page label {
   display: block;
   color: #45565E;
   font-family: NeuzitGrotesk, sans-serif;
   margin-bottom: 8px;
 }
 
-.login__Page input {
+.login-Page input {
   font-family: NeuzitGrotesk, sans-serif;
 }

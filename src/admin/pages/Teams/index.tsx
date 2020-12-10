@@ -103,7 +103,7 @@ const Teams: React.FC<Props> = ({ teams, total, fetchTeams }) => {
   };
 
   return (
-    <div className="team__Page">
+    <div className="team-Page">
       <div className="page-header">
         <Typography variant="h3" component="h1" className="page-title">Teams</Typography>
         <Button variant="outlined" className="btn-primary" onClick={() => setModalOpened(1)}>Add Team</Button>

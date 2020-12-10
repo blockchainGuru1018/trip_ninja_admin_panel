@@ -121,7 +121,7 @@ const Users: React.FC<Props> = ({ users, total, fetchUsers }) => {
   };
 
   return (
-    <div className="user__Page">
+    <div className="user-Page">
       <div className="page-header">
         <Typography variant="h3" component="h1" className="page-title">
           Users

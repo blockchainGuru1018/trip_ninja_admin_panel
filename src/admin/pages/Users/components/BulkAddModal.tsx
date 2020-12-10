@@ -270,7 +270,7 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose, addBulkUsers }) => {
 
   return (
     <Modal
-      className="user__Page__bulkAdd__modal"
+      className="user-Page-bulkAdd-modal"
       title="Bulk Add Users"
       opened={opened}
       onClose={handleClose}
