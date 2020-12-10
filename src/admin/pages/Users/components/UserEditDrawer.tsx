@@ -55,9 +55,10 @@ const UserEditDrawer: React.FC<Props> = ({ opened, user, onClose, updateUser }) 
     setTeamId(user ? user.team_id : '');
     setEmail(user ? user.email : '');
     if (user && user.phone_number) {
-      const formattedNumber = user.phone_number.padStart(13, ' ');
-      setCountryCode(formattedNumber.substr(0, 3).trim());
-      setPhoneNumber(formattedNumber.substr(3).trim());
+      const arr = user.phone_number.split('-');
+      setCountryCode(arr[0]);
+      arr.splice(0, 1);
+      setPhoneNumber(arr.join());
     } else {
       setCountryCode('');
       setPhoneNumber('');
@@ -66,13 +67,17 @@ const UserEditDrawer: React.FC<Props> = ({ opened, user, onClose, updateUser }) 
   }, [user]);
 
   const onSave = () => {
-    const phone_number = countryCode + phoneNumber;
+    let phone_number = '';
+    if (countryCode || phoneNumber) {
+      phone_number = `${countryCode}-${phoneNumber}`;
+    }
+
     updateUser({
       user_id: user.user_id,
       username,
       email,
       team_id: teamId,
-      phone_number: phone_number.length ? phone_number : undefined,
+      phone_number, 
       is_active: isActive === "enabled"
     });
     onClose();
