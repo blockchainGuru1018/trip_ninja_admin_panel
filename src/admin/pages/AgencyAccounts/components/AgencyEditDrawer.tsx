@@ -8,7 +8,7 @@ import {
   FormControl,
 } from '@material-ui/core';
 
-import { Drawer, Select, Tabs, UsernameField } from '../../../components';
+import {Drawer, Select, Tabs, UsernameField} from '../../../components';
 
 import PropTypes from "prop-types";
 import {bindActionCreators, Dispatch} from "redux";
@@ -27,15 +27,13 @@ const propTypes = {
 
 type Props = PropTypes.InferProps<typeof propTypes>
 
-const AgencyEditDrawer: React.FC<Props> = ({ opened, agency, onClose, updateAgency }) => {
+const AgencyEditDrawer: React.FC<Props> = ({opened, agency, onClose, updateAgency}) => {
   const [activeTab, setActiveTab] = useState(0);
-  const [suppliers, setSuppliers] = useState<
-    {
-      id: string | undefined,
-      pcc: string
-    }[]
-    >([
-    { id: undefined, pcc: '' }
+  const [suppliers, setSuppliers] = useState<{
+    id: string | undefined,
+    pcc: string
+  }[]>([
+    {id: undefined, pcc: ''}
   ]);
   const [agencyName, setAgencyName] = useState('');
   const [apiUserName, setApiUserName] = useState('');
@@ -45,7 +43,7 @@ const AgencyEditDrawer: React.FC<Props> = ({ opened, agency, onClose, updateAgen
 
   useEffect(() => {
     if (opened) {
-      axios.get(`/api/v1/teams/data_source/${agency.agency_id}/`).then(({ data }) => {
+      axios.get(`/api/v1/teams/data_source/${agency.agency_id}/`).then(({data}) => {
         setDataSourceOptions(data.data.data_source.map((el: any) => ({
           value: el.id,
           label: el.provider,
@@ -55,10 +53,10 @@ const AgencyEditDrawer: React.FC<Props> = ({ opened, agency, onClose, updateAgen
   }, [opened, agency]);
 
   useEffect(() => {
-    setAgencyName(agency? agency.agency_name : '');
-    setApiUserName(agency? agency.api_username : '');
-    setApiPassword(agency? agency.api_password : '');
-    setSuppliers(agency? agency.data_source : []);
+    setAgencyName(agency ? agency.agency_name : '');
+    setApiUserName(agency ? agency.api_username : '');
+    setApiPassword(agency ? agency.api_password : '');
+    setSuppliers(agency ? agency.data_source : []);
     setIsActive(agency ? agency.status ? 'enabled' : 'disabled' : 'enabled');
   }, [agency]);
 
@@ -76,7 +74,7 @@ const AgencyEditDrawer: React.FC<Props> = ({ opened, agency, onClose, updateAgen
   const addSupplier = () => {
     setSuppliers([
       ...suppliers,
-      { id: undefined, pcc: '' }
+      {id: undefined, pcc: ''}
     ])
   };
 
@@ -97,7 +95,7 @@ const AgencyEditDrawer: React.FC<Props> = ({ opened, agency, onClose, updateAgen
         {agency && (
           <>
             <Drawer.Header>
-              <UsernameField value={agencyName} onChange={(ev) => setAgencyName(ev.target.value)} />
+              <UsernameField value={agencyName} onChange={(ev) => setAgencyName(ev.target.value)}/>
             </Drawer.Header>
             <PerfectScrollbar>
               <Drawer.Body>
@@ -106,7 +104,7 @@ const AgencyEditDrawer: React.FC<Props> = ({ opened, agency, onClose, updateAgen
                     value={activeTab}
                     tabs={["API Credentials", "Data Sources"]}
                     onChange={(event: React.ChangeEvent<{}>, newValue: any) => setActiveTab(newValue)}
-                    style={{ marginBottom: 30 }}
+                    style={{marginBottom: 30}}
                   />
                   {activeTab === 0 ? (
                     <Grid container spacing={3} className="row">
@@ -164,7 +162,8 @@ const AgencyEditDrawer: React.FC<Props> = ({ opened, agency, onClose, updateAgen
                       ))}
                       <Grid container spacing={3} className="row">
                         <Grid item xs={12}>
-                          <Button size="small" color="secondary" className="btn-text" onClick={addSupplier}>+ Supplier</Button>
+                          <Button size="small" color="secondary" className="btn-text" onClick={addSupplier}>+
+                            Supplier</Button>
                         </Grid>
                       </Grid>
                     </div>
