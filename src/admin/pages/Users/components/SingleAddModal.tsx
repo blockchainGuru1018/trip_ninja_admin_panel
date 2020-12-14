@@ -184,7 +184,7 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
     } else if (step === 1) {
       return (
         <div className="second-step">
-          <Typography variant="h3" component="h1" className="user-form-title">Rob.dumont@tripninja.io</Typography>
+          <Typography variant="h3" component="h1" className="user-form-title">{ email }</Typography>
 
           <Grid container spacing={3} className="row">
             <Grid item xs={12} className="group-selector">
