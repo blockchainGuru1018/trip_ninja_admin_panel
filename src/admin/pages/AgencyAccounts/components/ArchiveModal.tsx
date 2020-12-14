@@ -30,7 +30,7 @@ const ArchiveModal: React.FC<Props> = ({ opened, onClose, agency, archiveAgency 
       onClose={onClose}
     >
       <Typography variant="h3" component="h3">
-        Are you sure you want to archive this agency?
+        {agency && agency.status ? 'Are you sure you want to archive this agency?' : 'Are you sure you want to recover this agency?'}
       </Typography>
       <Typography className="description">
         You can reinstate them at any time from the agencies menu.
