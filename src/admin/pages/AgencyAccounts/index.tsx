@@ -29,6 +29,7 @@ const propTypes = {
 type Props = PropTypes.InferProps<typeof propTypes>
 
 const AgencyAccounts: React.FC<Props> = ({ agencies, total, fetchAgencies }) => {
+  const user = JSON.parse(localStorage.getItem('authInfo')!);
   const [modalOpened, setModalOpened] = useState<number | null>(null);
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [agencySelected, selectAgency] = useState<any | null>(null);
@@ -111,7 +112,12 @@ const AgencyAccounts: React.FC<Props> = ({ agencies, total, fetchAgencies }) => 
     <div className="agency_Accounts-Page">
       <div className="page-header">
         <Typography variant="h3" component="h1" className="page-title">Agency Accounts</Typography>
-        <Button variant="outlined" className="btn-primary" onClick={() => setModalOpened(1)}>Add Agency account</Button>
+        {user.user.is_superuser && (
+          <Button variant="outlined" className="btn-primary" onClick={() => setModalOpened(1)}>
+            Add Agency account
+          </Button>
+        )}
+
       </div>
       <Typography className="page-description">
         Add, edit, and remove available agency accounts.
