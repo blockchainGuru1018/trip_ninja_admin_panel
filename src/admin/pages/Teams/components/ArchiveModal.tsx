@@ -30,7 +30,7 @@ const ArchiveModal: React.FC<Props> = ({ opened, onClose, team, archiveTeam }) =
       onClose={onClose}
     >
       <Typography variant="h3" component="h3">
-        Are you sure you want to archive this team?
+        {team && team.is_active ? 'Are you sure you want to archive this team?' : 'Are you sure you want to recover this team?'}
       </Typography>
       <Typography className="description">
         You can reinstate them at any time from the teams menu.
