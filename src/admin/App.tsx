@@ -75,13 +75,18 @@ const App: React.FC = () => {
               <Container maxWidth="lg" className={classes.container}>
                 <Switch>
                   <PrivateRoute path="/" exact component={BasicInfo} />
-                  <PrivateRoute path="/general-info" exact component={GeneralInfo} />
-                  <PrivateRoute path="/content-sources" exact component={ContentSources} />
-                  <PrivateRoute path="/search-booking-detail" exact component={SearchBookingDetail} />
-                  <PrivateRoute path="/billing-account-management" exact component={BillingAccountManagement} />
-                  <PrivateRoute path="/users" exact component={Users} />
-                  <PrivateRoute path="/teams" exact component={Teams} />
-                  <PrivateRoute path="/agency-accounts" exact component={AgencyAccounts} />
+                  {!JSON.parse(localStorage.getItem('authInfo')!).user.is_agent && (
+                    <>
+                      <PrivateRoute path="/general-info" exact component={GeneralInfo} />
+                      <PrivateRoute path="/content-sources" exact component={ContentSources} />
+                      <PrivateRoute path="/search-booking-detail" exact component={SearchBookingDetail} />
+                      <PrivateRoute path="/billing-account-management" exact component={BillingAccountManagement} />
+                      <PrivateRoute path="/users" exact component={Users} />
+                      <PrivateRoute path="/teams" exact component={Teams} />
+                      <PrivateRoute path="/agency-accounts" exact component={AgencyAccounts} />
+                    </>
+                  )}
+
                 </Switch>
               </Container>
             </div>
