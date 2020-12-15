@@ -32,6 +32,7 @@ type Props = PropTypes.InferProps<typeof propTypes>
 
 const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo, updateBasicInfo }) => {
   const [name, setName] = useState('');
+  const [countryCode, setCountryCode] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
   const [currency, setCurrency] = useState('');
@@ -41,37 +42,65 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo, updateBasicInf
 
   useEffect ( () => {
     setName(basic_info? basic_info.name : '');
-    setPhoneNumber(basic_info? basic_info.phone_number : '');
+    if (basic_info && basic_info.phone_number) {
+      const arr = basic_info.phone_number.split('-');
+      setCountryCode(arr[0]);
+      arr.splice(0, 1);
+      setPhoneNumber(arr.join());
+    } else {
+      setCountryCode('');
+      setPhoneNumber('');
+    }
     setEmail(basic_info? basic_info.email_address : '');
     setCurrency(basic_info? basic_info.currency : '');
     setDateType(basic_info? basic_info.date_type : 'dd/mm/yyyy');
   }, [basic_info]);
 
   const onInputChange = (attr: string, value: string) => {
-    if (attr === 'name') {
-      setName(value);
+    let phone_number = phoneNumber;
+    let country_code = countryCode;
+
+    switch(attr) {
+      case 'name':
+        setName(value);
+        break;
+      case 'country_code':
+        country_code = value;
+        setCountryCode(value);
+        break;
+      case 'phone_number':
+        phone_number = value;
+        setPhoneNumber(value);
+        break;
+      case 'email_address':
+        setEmail(value);
+        break;
+      case 'date_type':
+        setDateType(value);
+        break;
+      case 'currency':
+        setCurrency(value);
+        break;
     }
-    if (attr === 'phone_number') {
-      setPhoneNumber(value);
+
+    if (country_code || phone_number) {
+      phone_number = `${country_code}-${phone_number}`;
+    } else {
+      phone_number = '';
     }
-    if (attr === 'email_address') {
-      setEmail(value);
+    if (['country_code', 'country_code'].includes(attr)) {
+      onUpdate({ phone_number });
+    } else {
+      onUpdate({
+        [attr]: value,
+        phone_number
+      });
     }
-    if (attr === 'date_type') {
-      setDateType(value);
-    }
-    if (attr === 'currency') {
-      setCurrency(value);
-    }
-    onUpdate({
-      [attr]: value
-    });
   };
 
   const onUpdate = (data: any) => {
     updateBasicInfo({
       name,
-      phone_number: phoneNumber,
       email_address: email,
       currency,
       date_type: dateType,
@@ -105,13 +134,21 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo, updateBasicInf
         <Grid item sm={6} xs={12}>
           <FormLabel className="radio-label">Phone Number</FormLabel>
           <FormControl className="phone-input-field">
-            <TextField className="country-code-input" placeholder="XXX" variant="outlined" />
+            <TextField
+              className="country-code-input"
+              placeholder="XXX"
+              variant="outlined"
+              value={countryCode}
+              onChange={(ev) => onInputChange('country_code', ev.target.value)}
+              inputProps={{ maxLength: 3 }}
+            />
             <TextField
               className="phone-number-input"
               placeholder="XXX"
               variant="outlined"
               value={phoneNumber}
               onChange={(ev) => onInputChange('phone_number', ev.target.value)}
+              inputProps={{ maxLength: 11 }}
             />
           </FormControl>
         </Grid>
