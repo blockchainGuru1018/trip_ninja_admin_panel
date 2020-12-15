@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core';
 
 import {
+  Dropdown,
   Modal,
   Select,
   Stepper,
@@ -37,14 +38,17 @@ const propTypes = {
 type Props = PropTypes.InferProps<typeof propTypes>
 
 const TeamAddModal: React.FC<Props> = ({ opened, onClose, addTeam }) => {
+  const user = JSON.parse(localStorage.getItem('authInfo')!);
   const [step, setStep] = useState(0);
   const [teamName, setTeamName] = useState('');
-  const [errors, setErrors] = useState<{ teamName?: string }>({});
+  const [errors, setErrors] = useState<{ teamName?: string, agency?: boolean }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [adminID, setAdminID] = useState(undefined);
   const [adminOptions, setAdminOptions] = useState([]);
   const [memberID, setMemberID] = useState([]);
   const [memberOptions, setMemberOptions] = useState([]);
+  const [agencyId, setAgencyId] = useState(undefined);
+  const [agencyOptions, setAgencyOptions] = useState([]);
   const [isActive, setIsActive] = useState("enabled");
 
   useEffect(() => {
@@ -60,6 +64,12 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose, addTeam }) => {
         label: el.username,
       })))
     }).catch(console.error);
+    axios.get("/api/v1/teams/agency/list/").then(({ data }) => {
+      setAgencyOptions(data.data.agency.map((el: any) => ({
+        value: el.agency_id,
+        label: el.agency_name,
+      })))
+    }).catch(console.error);
   }, []);
 
   const handleClose = () => {
@@ -68,6 +78,7 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose, addTeam }) => {
     setErrors({});
     setIsSubmitting(false);
     setIsActive("enabled");
+    setAgencyId(undefined);
     onClose();
   };
 
@@ -85,6 +96,20 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose, addTeam }) => {
     }
   };
 
+  const onAgencyChange = (val: any) => {
+    setAgencyId(val);
+
+    if (isSubmitting) {
+      if (agencyId) {
+        setErrors({});
+      } else {
+        setErrors({
+          agency: true
+        });
+      }
+    }
+  };
+
   const onNext = async () => {
     if (step === 0) {
       setIsSubmitting(true);
@@ -96,9 +121,21 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose, addTeam }) => {
           });
 
           if (resp.data.result) {
-            setIsSubmitting(false);
-            setErrors({});
-            return setStep(1);
+            if (user.user.is_superuser && agencyId) {
+              setIsSubmitting(false);
+              setErrors({});
+              return setStep(1);
+            }
+            else if (!user.user.is_superuser && !agencyId) {
+              setIsSubmitting(false);
+              setErrors({});
+              return setStep(1);
+            }
+            else {
+              return setErrors({
+                agency: true
+              });
+            }
           } else {
             return setErrors({
               teamName: 'This team already exists'
@@ -152,6 +189,18 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose, addTeam }) => {
                 />
               </FormControl>
             </Grid>
+            {user.user.is_superuser && (
+              <Grid item xs={12} className="group-selector">
+                <label>Agency: </label>
+                <Dropdown
+                  options={agencyOptions}
+                  value={agencyId}
+                  error={isSubmitting && !!errors.agency}
+                  placeholder="No agency assigned"
+                  onChange={onAgencyChange}
+                />
+              </Grid>
+            )}
           </Grid>
         </div>
       )
