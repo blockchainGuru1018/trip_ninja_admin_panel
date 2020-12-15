@@ -55,6 +55,11 @@ const PublicRoute = ({ component: Component, ...rest }: any) => (
 
 const App: React.FC = () => {
   const classes = useStyles();
+  const authInfo = localStorage.getItem('authInfo');
+  let user = null;
+  if (authInfo) {
+    user = JSON.parse(authInfo);
+  }
 
   return (
     <BrowserRouter>
@@ -75,7 +80,7 @@ const App: React.FC = () => {
               <Container maxWidth="lg" className={classes.container}>
                 <Switch>
                   <PrivateRoute path="/" exact component={BasicInfo} />
-                  {!JSON.parse(localStorage.getItem('authInfo')!).user.is_agent && (
+                  {user && user.user && !user.user.is_agent && (
                     <>
                       <PrivateRoute path="/general-info" exact component={GeneralInfo} />
                       <PrivateRoute path="/content-sources" exact component={ContentSources} />
@@ -86,11 +91,10 @@ const App: React.FC = () => {
                       <PrivateRoute path="/agency-accounts" exact component={AgencyAccounts} />
                     </>
                   )}
-
                 </Switch>
               </Container>
             </div>
-          </div>
+          </div>a
         </React.Fragment>
       </Switch>
     </BrowserRouter>
