@@ -38,13 +38,16 @@ const propTypes = {
 type Props = PropTypes.InferProps<typeof propTypes>
 
 const BulkAddModal: React.FC<Props> = ({ opened, onClose, addBulkUsers }) => {
+  const user = JSON.parse(localStorage.getItem('authInfo')!);
   const [step, setStep] = useState(0);
   const [email, setEmail] = useState('');
   const [emails, setEmails] = useState<string[]>([]);
-  const [errors, setErrors] = useState<{ email?: string }>({});
+  const [errors, setErrors] = useState<{ email?: string, agency?: boolean }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [teamId, setTeamId] = useState(undefined);
   const [teamOptions, setTeamOptions] = useState([]);
+  const [agencyId, setAgencyId] = useState(undefined);
+  const [agencyOptions, setAgencyOptions] = useState([]);
   const [isActive, setIsActive] = useState("enabled");
 
   useEffect(() => {
@@ -53,6 +56,14 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose, addBulkUsers }) => {
         setTeamOptions(data.data.teams.map((el: any) => ({
           value: el.team_id,
           label: el.team_name,
+        })))
+      }).catch(console.error);
+    }
+    if (opened) {
+      axios.get("/api/v1/teams/agency/list/").then(({ data }) => {
+        setAgencyOptions(data.data.agency.map((el: any) => ({
+          value: el.agency_id,
+          label: el.agency_name,
         })))
       }).catch(console.error);
     }
@@ -65,6 +76,7 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose, addBulkUsers }) => {
     setErrors({});
     setIsSubmitting(false);
     setTeamId(undefined);
+    setAgencyId(undefined);
     setIsActive("enabled");
     onClose();
   };
@@ -116,19 +128,56 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose, addBulkUsers }) => {
     }
   };
 
+  const onAgencyChange = (val: any) => {
+    setAgencyId(val);
+    axios.get(`/api/v1/teams/list/${val}/`).then(({ data }) => {
+      console.log(data);
+      setTeamOptions(data.data.teams.map((el: any) => ({
+        value: el.team_id,
+        label: el.team_name,
+      })))
+    }).catch(console.error);
+
+    if (isSubmitting) {
+      if (agencyId) {
+        setErrors({});
+      } else {
+        setErrors({
+          agency: true
+        });
+      }
+    }
+  };
+
   const onEmailRemove = (e: string) => {
     setEmails(emails.filter((el) => el !== e))
   };
 
   const onNext = () => {
-    if (step === 0 && emails.length === 0) {
+    if (step === 0) {
       setIsSubmitting(true);
-
-      return setErrors({
-        email: 'You must add at least 1 email'
-      });
+      if (emails.length) {
+        if (user.user.is_superuser && agencyId) {
+          setIsSubmitting(false);
+          setErrors({});
+          return setStep(1);
+        }
+        else if (!user.user.is_superuser && !agencyId) {
+          setIsSubmitting(false);
+          setErrors({});
+          return setStep(1);
+        }
+        else {
+          return setErrors({
+            agency: true
+          });
+        }
+      } else {
+        return setErrors({
+          email: 'You must add at least 1 email'
+        });
+      }
     }
-
     setStep(Math.min(step + 1, 3));
   };
 
@@ -140,6 +189,7 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose, addBulkUsers }) => {
     addBulkUsers({
       emails,
       team_id: teamId,
+      agency_id: agencyId,
       is_active: isActive === "enabled"
     });
     handleClose();
@@ -180,6 +230,18 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose, addBulkUsers }) => {
                   />
                 </FormControl>
               </Grid>
+              {user.user.is_superuser && (
+                <Grid item xs={12} className="group-selector">
+                  <label>Agency: </label>
+                  <Dropdown
+                    options={agencyOptions}
+                    value={agencyId}
+                    error={isSubmitting && !!errors.agency}
+                    placeholder="No agency assigned"
+                    onChange={onAgencyChange}
+                  />
+                </Grid>
+              )}
               <PerfectScrollbar className="email-list">
                 {emails.map((el) => (
                   <Tag key={el} className="email-tag" text={el} onRemove={() => onEmailRemove(el)} />
@@ -194,15 +256,17 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose, addBulkUsers }) => {
         <div className="second-step">
           <Typography variant="h3" component="h1" className="second-title">Set Users Team</Typography>
           <Grid container spacing={3} className="row">
-            <Grid item xs={12} className="group-selector">
-              <label>Team: </label>
-              <Dropdown
-                options={teamOptions}
-                value={teamId}
-                placeholder="No team assigned"
-                onChange={setTeamId}
-              />
-            </Grid>
+            {!user.user.is_team_lead && (
+              <Grid item xs={12} className="group-selector">
+                <label>Team: </label>
+                <Dropdown
+                  options={teamOptions}
+                  value={teamId}
+                  placeholder="No team assigned"
+                  onChange={setTeamId}
+                />
+              </Grid>
+            )}
             <Grid item xs={12}>
               <PerfectScrollbar className="email-list">
                 {emails.join(' | ')}

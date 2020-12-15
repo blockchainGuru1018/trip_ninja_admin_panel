@@ -15,11 +15,12 @@ const propTypes = {
   }).isRequired).isRequired,
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
+  error: PropTypes.bool,
 };
 
 type Props = PropTypes.InferProps<typeof propTypes>
 
-const Dropdown:React.FC<Props> = ({ className, value, options, placeholder, onChange }) => {
+const Dropdown:React.FC<Props> = ({ className, value, options, placeholder, onChange, error }) => {
   const [isOpened, setIsOpened] = useState(false);
   const optionSelected = options.find((el) => el.value === value);
 
@@ -44,7 +45,7 @@ const Dropdown:React.FC<Props> = ({ className, value, options, placeholder, onCh
 
   return (
     <div className={classNames("dropdown-Component", className)}>
-      <Button className="ddSelected" onClick={openDropdown}>
+      <Button className={error? "noSelected" : "ddSelected"} onClick={openDropdown}>
         {optionSelected ? optionSelected.label : placeholder ?  placeholder : 'Select'}
         <ArrowDropDown />
       </Button>

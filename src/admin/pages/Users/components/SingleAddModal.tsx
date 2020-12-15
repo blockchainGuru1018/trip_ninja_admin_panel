@@ -37,14 +37,17 @@ const propTypes = {
 type Props = PropTypes.InferProps<typeof propTypes>
 
 const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
+  const user = JSON.parse(localStorage.getItem('authInfo')!);
   const [step, setStep] = useState(0);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [errors, setErrors] = useState<{ email?: string }>({});
+  const [errors, setErrors] = useState<{ email?: string, agency?: boolean }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [teamId, setTeamId] = useState(undefined);
   const [teamOptions, setTeamOptions] = useState([]);
+  const [agencyId, setAgencyId] = useState(undefined);
+  const [agencyOptions, setAgencyOptions] = useState([]);
   const [isActive, setIsActive] = useState("enabled");
 
   useEffect(() => {
@@ -53,6 +56,14 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
         setTeamOptions(data.data.teams.map((el: any) => ({
           value: el.team_id,
           label: el.team_name,
+        })))
+      }).catch(console.error);
+    }
+    if (opened) {
+      axios.get("/api/v1/teams/agency/list/").then(({ data }) => {
+        setAgencyOptions(data.data.agency.map((el: any) => ({
+          value: el.agency_id,
+          label: el.agency_name,
         })))
       }).catch(console.error);
     }
@@ -66,6 +77,7 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
     setErrors({});
     setIsSubmitting(false);
     setTeamId(undefined);
+    setAgencyId(undefined);
     setIsActive("enabled");
     onClose();
   };
@@ -84,6 +96,27 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
     }
   };
 
+  const onAgencyChange = (val: any) => {
+    setAgencyId(val);
+    axios.get(`/api/v1/teams/list/${val}/`).then(({ data }) => {
+      console.log(data);
+      setTeamOptions(data.data.teams.map((el: any) => ({
+        value: el.team_id,
+        label: el.team_name,
+      })))
+    }).catch(console.error);
+
+    if (isSubmitting) {
+      if (agencyId) {
+        setErrors({});
+      } else {
+        setErrors({
+          agency: true
+        });
+      }
+    }
+  };
+
   const onNext = async () => {
     if (step === 0) {
       setIsSubmitting(true);
@@ -95,9 +128,21 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
           });
 
           if (resp.data.result) {
-            setIsSubmitting(false);
-            setErrors({});
-            return setStep(1);
+            if (user.user.is_superuser && agencyId) {
+              setIsSubmitting(false);
+              setErrors({});
+              return setStep(1);
+            }
+            else if (!user.user.is_superuser && !agencyId) {
+              setIsSubmitting(false);
+              setErrors({});
+              return setStep(1);
+            }
+            else {
+              return setErrors({
+                agency: true
+              });
+            }
           } else {
             return setErrors({
               email: 'This user already exists'
@@ -129,6 +174,7 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
       first_name: firstName,
       last_name: lastName,
       team_id: teamId,
+      agency_id: agencyId,
       is_active: isActive === "enabled"
     });
     handleClose();
@@ -178,6 +224,18 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
                 />
               </FormControl>
             </Grid>
+            {user.user.is_superuser && (
+              <Grid item xs={12} className="group-selector">
+                <label>Agency: </label>
+                <Dropdown
+                  options={agencyOptions}
+                  value={agencyId}
+                  error={isSubmitting && !!errors.agency}
+                  placeholder="No agency assigned"
+                  onChange={onAgencyChange}
+                />
+              </Grid>
+            )}
           </Grid>
         </div>
       )
@@ -185,17 +243,18 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
       return (
         <div className="second-step">
           <Typography variant="h3" component="h1" className="user-form-title">{ email }</Typography>
-
           <Grid container spacing={3} className="row">
-            <Grid item xs={12} className="group-selector">
-              <label>Team: </label>
-              <Dropdown
-                options={teamOptions}
-                value={teamId}
-                placeholder="No team assigned"
-                onChange={setTeamId}
-              />
-            </Grid>
+            {!user.user.is_team_lead && (
+              <Grid item xs={12} className="group-selector">
+                <label>Team: </label>
+                <Dropdown
+                  options={teamOptions}
+                  value={teamId}
+                  placeholder="No team assigned"
+                  onChange={setTeamId}
+                />
+              </Grid>
+            )}
             <Grid item xs={12}>
               <FormLabel className="label-with-tooltip">
                 <label>Inherit global default permissions</label>
