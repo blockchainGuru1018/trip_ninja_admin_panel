@@ -5,6 +5,7 @@ export default [
       {
         name: 'Basic Information',
         link: '/',
+        access_level: 0,
       },
     ]
   },
@@ -14,18 +15,22 @@ export default [
       {
         name: 'General Info',
         link: '/general-info',
+        access_level: 1,
       },
       {
         name: 'Content Sources',
         link: '/content-sources',
+        access_level: 1,
       },
       {
         name: 'Search/ Booking Details',
         link: '/search-booking-detail',
+        access_level: 1,
       },
       {
         name: 'Billing and Account Management',
         link: '/billing-account-management',
+        access_level: 1,
       },
     ]
   },
@@ -35,14 +40,17 @@ export default [
       {
         name: 'Users',
         link: '/users',
+        access_level: 1,
       },
       {
         name: 'Teams',
         link: '/teams',
+        access_level: 1,
       },
       {
         name: 'Agency Accounts',
         link: '/agency-accounts',
+        access_level: 2,
       },
     ]
   },

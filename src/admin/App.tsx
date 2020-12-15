@@ -13,6 +13,7 @@ import {
   Users,
   Teams,
   AgencyAccounts,
+  NotFound,
 } from "./pages";
 import { Header, SideMenu } from './components';
 
@@ -91,6 +92,7 @@ const App: React.FC = () => {
                       <PrivateRoute path="/agency-accounts" exact component={AgencyAccounts} />
                     </>
                   )}
+                  <PrivateRoute path="" component={NotFound} />
                 </Switch>
               </Container>
             </div>

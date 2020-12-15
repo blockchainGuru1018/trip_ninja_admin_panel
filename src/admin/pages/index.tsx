@@ -7,3 +7,4 @@ export { default as Users } from './Users';
 export { default as Teams } from './Teams';
 export { default as AgencyAccounts } from './AgencyAccounts';
 export { default as Login } from './Login';
+export { default as NotFound } from './NotFound';
