@@ -8,7 +8,7 @@ import {
   FormControl,
 } from '@material-ui/core';
 
-import {Drawer, Select, Tabs, UsernameField} from '../../../components';
+import {Drawer, Select, Tabs, NameField} from '../../../components';
 
 import PropTypes from "prop-types";
 import {bindActionCreators, Dispatch} from "redux";
@@ -95,7 +95,7 @@ const AgencyEditDrawer: React.FC<Props> = ({opened, agency, onClose, updateAgenc
         {agency && (
           <>
             <Drawer.Header>
-              <UsernameField value={agencyName} onChange={(ev) => setAgencyName(ev.target.value)}/>
+              <NameField value={agencyName} onChange={(ev) => setAgencyName(ev.target.value)}/>
             </Drawer.Header>
             <PerfectScrollbar>
               <Drawer.Body>

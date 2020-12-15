@@ -29,7 +29,8 @@ type Props = PropTypes.InferProps<typeof propTypes>
 
 const UserEditDrawer: React.FC<Props> = ({ opened, user, onClose, updateUser }) => {
   const [activeTab, setActiveTab] = useState(0);
-  const [username, setUsername] = useState('');
+  const [first_name, setFirstName] = useState('');
+  const [last_name, setLastName] = useState('');
   const [teamId, setTeamId] = useState(undefined);
   const [teamOptions, setTeamOptions] = useState([]);
   const [email, setEmail] = useState('');
@@ -51,7 +52,8 @@ const UserEditDrawer: React.FC<Props> = ({ opened, user, onClose, updateUser }) 
   }, [opened]);
 
   useEffect(() => {
-    setUsername(user ? user.username : '');
+    setFirstName(user ? user.first_name : '');
+    setLastName(user ? user.last_name : '');
     setTeamId(user ? user.team_id : '');
     setEmail(user ? user.email : '');
     if (user && user.phone_number) {
@@ -66,6 +68,14 @@ const UserEditDrawer: React.FC<Props> = ({ opened, user, onClose, updateUser }) 
     setIsActive(user ? user.is_active ? 'enabled' : 'disabled' : 'enabled');
   }, [user]);
 
+  const onUsernameChange = (ev: React.ChangeEvent<HTMLInputElement>, attr: string) => {
+    if (attr === 'first_name') {
+      setFirstName(ev.target.value);
+    } else {
+      setLastName(ev.target.value);
+    }
+  };
+
   const onSave = () => {
     let phone_number = '';
     if (countryCode || phoneNumber) {
@@ -74,7 +84,8 @@ const UserEditDrawer: React.FC<Props> = ({ opened, user, onClose, updateUser }) 
 
     updateUser({
       user_id: user.user_id,
-      username,
+      first_name,
+      last_name,
       email,
       team_id: teamId,
       phone_number, 
@@ -92,7 +103,11 @@ const UserEditDrawer: React.FC<Props> = ({ opened, user, onClose, updateUser }) 
       {user && (
         <>
           <Drawer.Header>
-            <UsernameField value={username} onChange={(ev) => setUsername(ev.target.value)} />
+            <UsernameField
+              first_name={first_name}
+              last_name={last_name}
+              onChange={onUsernameChange}
+            />
             <div className="group-selector">
               <label>Team: </label>
               <Dropdown

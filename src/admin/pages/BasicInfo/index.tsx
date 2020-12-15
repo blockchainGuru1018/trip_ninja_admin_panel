@@ -31,7 +31,8 @@ const propTypes = {
 type Props = PropTypes.InferProps<typeof propTypes>
 
 const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo, updateBasicInfo }) => {
-  const [name, setName] = useState('');
+  const [first_name, setFirstName] = useState('');
+  const [last_name, setLastName] = useState('');
   const [countryCode, setCountryCode] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
@@ -41,7 +42,8 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo, updateBasicInf
   useEffect(() => { fetchBasicInfo(); }, []);
 
   useEffect ( () => {
-    setName(basic_info? basic_info.name : '');
+    setFirstName(basic_info? basic_info.first_name : '');
+    setLastName(basic_info? basic_info.last_name : '');
     if (basic_info && basic_info.phone_number) {
       const arr = basic_info.phone_number.split('-');
       setCountryCode(arr[0]);
@@ -61,8 +63,11 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo, updateBasicInf
     let country_code = countryCode;
 
     switch(attr) {
-      case 'name':
-        setName(value);
+      case 'first_name':
+        setFirstName(value);
+        break;
+      case 'last_name':
+        setLastName(value);
         break;
       case 'country_code':
         country_code = value;
@@ -100,7 +105,8 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo, updateBasicInf
 
   const onUpdate = (data: any) => {
     updateBasicInfo({
-      name,
+      first_name,
+      last_name,
       email_address: email,
       currency,
       date_type: dateType,
@@ -126,8 +132,9 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo, updateBasicInf
         </div>
 
         <UsernameField
-          value={name}
-          onChange={(ev) => onInputChange('name', ev.target.value)}
+          first_name={first_name}
+          last_name={last_name}
+          onChange={(ev, attr) => onInputChange(attr, ev.target.value)}
         />
       </div>
       <Grid container spacing={3} className="page-row">

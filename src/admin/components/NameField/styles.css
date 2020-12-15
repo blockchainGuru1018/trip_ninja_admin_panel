@@ -1,0 +1,18 @@
+body .userNameField-Component .content {
+  display: flex;
+  align-items: center;
+  flex-direction: unset;
+}
+body .userNameField-Component .label {
+  font-size: 24px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: lighter;
+  margin-bottom: 0;
+}
+body .userNameField-Component .icon {
+  margin-left: 13px;
+  margin-top: 5px;
+  cursor: pointer;
+  width: 18px;
+}

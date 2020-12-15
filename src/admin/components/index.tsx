@@ -10,5 +10,6 @@ export { default as Switch } from './Switch';
 export { default as Tabs } from './Tabs';
 export { default as ToolTip } from './ToolTip';
 export { default as UsernameField } from './UsernameField';
+export { default as NameField } from './NameField';
 export { default as Currency } from './Currency';
 export { default as Tag } from './Tag';

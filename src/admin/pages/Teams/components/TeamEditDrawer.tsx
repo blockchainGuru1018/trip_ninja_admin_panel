@@ -9,7 +9,7 @@ import {
   Radio,
 } from '@material-ui/core';
 
-import { Drawer, Select, Tabs, UsernameField } from '../../../components';
+import { Drawer, Select, Tabs, NameField } from '../../../components';
 
 import PropTypes from "prop-types";
 import {bindActionCreators, Dispatch} from "redux";
@@ -79,7 +79,7 @@ const TeamEditDrawer: React.FC<Props> = ({ opened, team, onClose, updateTeam }) 
       {team && (
         <>
           <Drawer.Header>
-            <UsernameField value={teamName} onChange={(ev) => setTeamName(ev.target.value)} />
+            <NameField value={teamName} onChange={(ev) => setTeamName(ev.target.value)} />
           </Drawer.Header>
           <Drawer.Body>
             <Grid container spacing={3} style={{ marginBottom: 30 }}>
