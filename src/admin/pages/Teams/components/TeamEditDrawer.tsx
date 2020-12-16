@@ -54,8 +54,8 @@ const TeamEditDrawer: React.FC<Props> = ({ opened, team, onClose, updateTeam }) 
 
   useEffect(() => {
     setTeamName(team? team.team_name : '');
-    setAdminID(team ? team.leader_id : '');
-    setMemberID(team ? team.members : '');
+    setAdminID(team ? team.leader_id : undefined);
+    setMemberID(team ? team.members : []);
     setIsActive(team ? team.is_booking ? 'enabled' : 'disabled' : 'enabled');
   }, [team]);
 

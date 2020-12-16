@@ -55,10 +55,10 @@ const Select:React.FC<Props> = ({ className, value, options, multiple, placehold
         return val;
       }
 
-      return null;
+      return "";
     }
 
-    return selectedOptions ? selectedOptions.label : null;
+    return selectedOptions ? selectedOptions.label : "";
   };
 
   const onClick = (e: React.MouseEvent<HTMLInputElement>) => {
@@ -75,7 +75,11 @@ const Select:React.FC<Props> = ({ className, value, options, multiple, placehold
 
     if (!multiple) {
       setIsOpened(false);
-      onChange(opt.value)
+      if (value === opt.value) {
+        onChange(undefined);
+      } else {
+        onChange(opt.value)
+      }
     } else {
       const isSelected = selectedOptions.find((el: any) => el.value === opt.value);
 
@@ -85,7 +89,7 @@ const Select:React.FC<Props> = ({ className, value, options, multiple, placehold
           opt.value
         ])
       } else {
-        onChange(selectedOptions.filter((el: any) => el.value !== opt.value))
+        onChange(selectedOptions.filter((el: any) => el.value !== opt.value).map((el: any) => el.value))
       }
     }
   };

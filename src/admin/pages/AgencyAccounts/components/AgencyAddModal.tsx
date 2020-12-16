@@ -43,6 +43,8 @@ const AgencyAddModal: React.FC<Props> = ({ opened, onClose, addAgency }) => {
   const [agencyName, setAgencyName] = useState('');
   const [apiUserName, setApiUserName] = useState('');
   const [apiPassword, setApiPassword] = useState('');
+  const [adminID, setAdminID] = useState(undefined);
+  const [adminOptions, setAdminOptions] = useState([]);
   const [DataSourceOptions, setDataSourceOptions] = useState([]);
   const [isActive, setIsActive] = useState("enabled");
 
@@ -51,6 +53,12 @@ const AgencyAddModal: React.FC<Props> = ({ opened, onClose, addAgency }) => {
       setDataSourceOptions(data.data.data_source.map((el: any) => ({
         value: el.id,
         label: el.provider,
+      })))
+    }).catch(console.error);
+    axios.get("/api/v1/users/list/").then(({ data }) => {
+      setAdminOptions(data.data.users.map((el: any) => ({
+        value: el.user_id,
+        label: el.username,
       })))
     }).catch(console.error);
   }, []);
@@ -76,6 +84,7 @@ const AgencyAddModal: React.FC<Props> = ({ opened, onClose, addAgency }) => {
   const onFinal = () => {
     addAgency({
       agency_name: agencyName,
+      admin_id: adminID,
       api_username: apiUserName,
       api_password: apiPassword,
       data_source: suppliers
@@ -111,6 +120,18 @@ const AgencyAddModal: React.FC<Props> = ({ opened, onClose, addAgency }) => {
                   value={agencyName}
                   variant="outlined"
                   onChange={(ev) => setAgencyName(ev.target.value)}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <FormLabel className="label">Add Agency Admin</FormLabel>
+              <FormControl fullWidth>
+                <Select
+                  className="select"
+                  options={adminOptions}
+                  value={adminID}
+                  placeholder="Add Agency Admin"
+                  onChange={setAdminID}
                 />
               </FormControl>
             </Grid>

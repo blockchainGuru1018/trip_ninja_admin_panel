@@ -211,7 +211,7 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
           </Grid>
 
           <Grid container spacing={3} className="row">
-            <Grid item xs={12}>
+            <Grid sm={6} item xs={12}>
               <FormLabel className="label">Email Address</FormLabel>
               <FormControl fullWidth>
                 <TextField
@@ -221,6 +221,17 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
                   helperText={errors.email}
                   value={email}
                   onChange={onEmailChange}
+                />
+              </FormControl>
+            </Grid>
+            <Grid sm={6} item xs={12}>
+              <FormLabel className="label">Password</FormLabel>
+              <FormControl fullWidth>
+                <TextField
+                  placeholder="First Name"
+                  value={firstName}
+                  variant="outlined"
+                  onChange={(ev) => setFirstName(ev.target.value)}
                 />
               </FormControl>
             </Grid>

@@ -38,11 +38,19 @@ const AgencyEditDrawer: React.FC<Props> = ({opened, agency, onClose, updateAgenc
   const [agencyName, setAgencyName] = useState('');
   const [apiUserName, setApiUserName] = useState('');
   const [apiPassword, setApiPassword] = useState('');
+  const [adminID, setAdminID] = useState(undefined);
+  const [adminOptions, setAdminOptions] = useState([]);
   const [DataSourceOptions, setDataSourceOptions] = useState([]);
   const [isActive, setIsActive] = useState("enabled");
 
   useEffect(() => {
     if (opened) {
+        axios.get(`/api/v1/users/list/agency/${agency.agency_id}/`).then(({ data }) => {
+          setAdminOptions(data.data.users.map((el: any) => ({
+            value: el.user_id,
+            label: el.username,
+          })))
+        }).catch(console.error);
       axios.get(`/api/v1/teams/data_source/${agency.agency_id}/`).then(({data}) => {
         setDataSourceOptions(data.data.data_source.map((el: any) => ({
           value: el.id,
@@ -54,6 +62,7 @@ const AgencyEditDrawer: React.FC<Props> = ({opened, agency, onClose, updateAgenc
 
   useEffect(() => {
     setAgencyName(agency ? agency.agency_name : '');
+    setAdminID(agency ? agency.admin_id : '');
     setApiUserName(agency ? agency.api_username : '');
     setApiPassword(agency ? agency.api_password : '');
     setSuppliers(agency ? agency.data_source : []);
@@ -63,6 +72,7 @@ const AgencyEditDrawer: React.FC<Props> = ({opened, agency, onClose, updateAgenc
   const onSave = () => {
     updateAgency({
       agency_id: agency.agency_id,
+      admin_id: adminID,
       agency_name: agencyName,
       api_username: apiUserName,
       api_password: apiPassword,
@@ -127,6 +137,18 @@ const AgencyEditDrawer: React.FC<Props> = ({opened, agency, onClose, updateAgenc
                             value={apiPassword}
                             variant="outlined"
                             onChange={(ev) => setApiPassword(ev.target.value)}
+                          />
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FormLabel className="radio-label">Agency Admin</FormLabel>
+                        <FormControl fullWidth>
+                          <Select
+                            className="select"
+                            options={adminOptions}
+                            value={adminID}
+                            placeholder="Add Agency Admin"
+                            onChange={setAdminID}
                           />
                         </FormControl>
                       </Grid>
