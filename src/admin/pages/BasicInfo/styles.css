@@ -32,3 +32,15 @@
 .basicInfo-Page .select {
   width: 300px;
 }
+.basicInfo-Page .password-row {
+  margin-top: 20px;
+  display: block;
+
+}
+.basicInfo-Page .password-input {
+  flex: 1;
+}
+.basicInfo-Page .btn-group {
+  padding: 12px;
+  margin-top: auto;
+}

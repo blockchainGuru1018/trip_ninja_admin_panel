@@ -141,6 +141,22 @@ export default (state = usersInitialState, action: any) => {
       return {
         ...state,
       };
+
+    case types.CHANGE_PASSWORD_REQUEST:
+      return {
+        ...state,
+        isSubmitting: true,
+      };
+    case types.CHANGE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        isSubmitting: false,
+      };
+    case types.CHANGE_PASSWORD_FAILURE:
+      return {
+        ...state,
+        isSubmitting: false,
+      };
     default:
       return state;
   }

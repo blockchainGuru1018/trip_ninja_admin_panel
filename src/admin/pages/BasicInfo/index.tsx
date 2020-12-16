@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
 import {
+  Button,
   Grid,
   RadioGroup,
   FormControlLabel,
@@ -12,12 +13,13 @@ import {
 } from '@material-ui/core';
 import PropTypes from "prop-types";
 import {bindActionCreators, Dispatch} from "redux";
+
 import {
   Currency,
   UsernameField
 } from "../../components";
 
-import { fetchBasicInfo, updateBasicInfo } from "../../store/users/actions";
+import { fetchBasicInfo, updateBasicInfo, changePassword } from "../../store/users/actions";
 import {getBasicInfo} from "../../store/users/selectors";
 
 import "./styles.css";
@@ -26,16 +28,19 @@ const propTypes = {
   basic_info: PropTypes.any.isRequired,
   fetchBasicInfo: PropTypes.func.isRequired,
   updateBasicInfo: PropTypes.func.isRequired,
+  changePassword: PropTypes.func.isRequired,
 };
 
 type Props = PropTypes.InferProps<typeof propTypes>
 
-const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo, updateBasicInfo }) => {
+const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo, updateBasicInfo, changePassword }) => {
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [countryCode, setCountryCode] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
+  const [current_password, setCurrentPassword] = useState('');
+  const [new_password, setNewPassword] = useState('');
   const [currency, setCurrency] = useState('');
   const [dateType, setDateType] = useState('dd/mm/yyyy');
 
@@ -112,6 +117,13 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo, updateBasicInf
       date_type: dateType,
       ...data
     });
+  };
+
+  const onChangePassword =() => {
+    changePassword({
+      current_password,
+      new_password
+    })
   };
 
 
@@ -204,6 +216,44 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo, updateBasicInf
           </FormControl>
         </Grid>
       </Grid>
+
+      <Grid container spacing={3}>
+        <Grid item sm={3} xs={12}>
+          <FormLabel className="current-password">Current Password</FormLabel>
+          <FormControl>
+            <TextField
+              className="password-input"
+              placeholder="Current Password"
+              variant="outlined"
+              value={current_password}
+              onChange={(ev) => setCurrentPassword(ev.target.value)}
+            />
+          </FormControl>
+        </Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item sm={3} xs={12}>
+          <FormLabel className="new-password">New Password</FormLabel>
+          <FormControl>
+            <TextField
+              className="password-input"
+              placeholder="New Password"
+              variant="outlined"
+              value={new_password}
+              onChange={(ev) => setNewPassword(ev.target.value)}
+            />
+          </FormControl>
+        </Grid>
+        <div className="btn-group">
+          <Button
+            variant="outlined"
+            className="btn-primary"
+            onClick={onChangePassword}
+          >
+            Change Password
+          </Button>
+        </div>
+      </Grid>
     </div>
   )
 };
@@ -217,6 +267,7 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchBasicInfo: bindActionCreators(fetchBasicInfo, dispatch),
   updateBasicInfo: bindActionCreators(updateBasicInfo, dispatch),
+  changePassword: bindActionCreators(changePassword, dispatch),
 });
 
 export default connect(

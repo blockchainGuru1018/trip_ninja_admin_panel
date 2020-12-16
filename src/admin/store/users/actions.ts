@@ -24,6 +24,9 @@ import {
   UPDATE_GENERAL_INFO_REQUEST,
   UPDATE_GENERAL_INFO_SUCCESS,
   UPDATE_GENERAL_INFO_FAILURE,
+  CHANGE_PASSWORD_REQUEST,
+  CHANGE_PASSWORD_SUCCESS,
+  CHANGE_PASSWORD_FAILURE,
 } from "./actionTypes";
 
 export interface IUser {
@@ -284,6 +287,35 @@ export function updateGeneralInfo(data: any) {
       dispatch(updateGeneralInfoSuccess(resp.data.data));
     } catch (err) {
       dispatch(updateGeneralInfoFailure());
+    }
+  };
+}
+
+
+function changePasswordRequest() {
+  return { type: CHANGE_PASSWORD_REQUEST };
+}
+
+function changePasswordSuccess() {
+  return {
+    type: CHANGE_PASSWORD_SUCCESS,
+  };
+}
+
+function changePasswordFailure() {
+  return {
+    type: CHANGE_PASSWORD_FAILURE,
+  };
+}
+
+export function changePassword(data: any) {
+  return async (dispatch: Dispatch) => {
+    dispatch(changePasswordRequest());
+    try {
+      const resp = await axios.post('/api/v1/change-password/', data);
+      dispatch(changePasswordSuccess());
+    } catch (err) {
+      dispatch(changePasswordFailure());
     }
   };
 }
