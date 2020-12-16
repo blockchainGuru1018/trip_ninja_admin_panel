@@ -42,6 +42,7 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose, addBulkUsers }) => {
   const [step, setStep] = useState(0);
   const [email, setEmail] = useState('');
   const [emails, setEmails] = useState<string[]>([]);
+  const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{ email?: string, agency?: boolean }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [teamId, setTeamId] = useState(undefined);
@@ -73,6 +74,7 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose, addBulkUsers }) => {
     setStep(0);
     setEmail('');
     setEmails([]);
+    setPassword('');
     setErrors({});
     setIsSubmitting(false);
     setTeamId(undefined);
@@ -190,6 +192,7 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose, addBulkUsers }) => {
       emails,
       team_id: teamId,
       agency_id: agencyId,
+      password,
       is_active: isActive === "enabled"
     });
     handleClose();
@@ -205,7 +208,7 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose, addBulkUsers }) => {
               Add new users to your QuickTrip account
             </Typography>
             <Grid container spacing={3} className="row">
-              <Grid item xs={12}>
+              <Grid sm={6} item xs={12}>
                 <FormLabel className="label label-with-tooltip">
                   Email Address
                   <ToolTip
@@ -227,6 +230,18 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose, addBulkUsers }) => {
                     value={email}
                     onChange={onEmailChange}
                     onKeyPress={onInputEmail}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid sm={6} item xs={12}>
+                <FormLabel className="label">Password</FormLabel>
+                <FormControl fullWidth>
+                  <TextField
+                    type="password"
+                    placeholder="password"
+                    value={password}
+                    variant="outlined"
+                    onChange={(ev) => setPassword(ev.target.value)}
                   />
                 </FormControl>
               </Grid>

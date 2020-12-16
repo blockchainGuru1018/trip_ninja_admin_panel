@@ -42,6 +42,7 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{ email?: string, agency?: boolean }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [teamId, setTeamId] = useState(undefined);
@@ -74,6 +75,7 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
     setFirstName('');
     setLastName('');
     setEmail('');
+    setPassword('');
     setErrors({});
     setIsSubmitting(false);
     setTeamId(undefined);
@@ -175,6 +177,7 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
       last_name: lastName,
       team_id: teamId,
       agency_id: agencyId,
+      password,
       is_active: isActive === "enabled"
     });
     handleClose();
@@ -228,10 +231,11 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
               <FormLabel className="label">Password</FormLabel>
               <FormControl fullWidth>
                 <TextField
-                  placeholder="First Name"
-                  value={firstName}
+                  type="password"
+                  placeholder="password"
+                  value={password}
                   variant="outlined"
-                  onChange={(ev) => setFirstName(ev.target.value)}
+                  onChange={(ev) => setPassword(ev.target.value)}
                 />
               </FormControl>
             </Grid>
