@@ -32,10 +32,13 @@
 .basicInfo-Page .select {
   width: 300px;
 }
-.basicInfo-Page .password-row {
+.basicInfo-Page .current-password {
   margin-top: 20px;
   display: block;
-
+}
+.basicInfo-Page .new-password {
+  margin-top: 20px;
+  display: block;
 }
 .basicInfo-Page .password-input {
   flex: 1;
