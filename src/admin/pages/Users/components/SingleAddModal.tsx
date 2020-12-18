@@ -283,7 +283,7 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, onSuccess, addUser }
                     alt="svg"
                   />
                 </ToolTip>
-                <Switch inputProps={{ 'aria-label': 'primary checkbox' }} className="custom-switch" />
+                <Switch defaultChecked={true} inputProps={{ 'aria-label': 'primary checkbox' }} className="custom-switch" />
               </FormLabel>
             </Grid>
             <Grid item xs={12}>
