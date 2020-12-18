@@ -208,7 +208,7 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose, onSuccess, addTeam }) 
     } else if (step === 1) {
       return (
         <div className="second-step">
-          <Typography variant="h3" component="h1" className="team-form-title">Islington Store</Typography>
+          <Typography variant="h3" component="h1" className="team-form-title">{ teamName }</Typography>
           <Grid container spacing={3} className="row">
             <Grid item xs={12}>
               <FormLabel className="{label labelWithTooltip">
