@@ -93,24 +93,26 @@ function addUserFailure() {
   };
 }
 
-export function addUser(data: any) {
+export function addUser(data: any, onSuccess: () => void) {
   return async (dispatch: Dispatch) => {
     dispatch(addUserRequest());
     try {
       await axios.post('/api/v1/users/single-add/', data);
       dispatch(addUserSuccess());
+      onSuccess();
     } catch (err) {
       dispatch(addUserFailure());
     }
   };
 }
 
-export function addBulkUsers(data: any) {
+export function addBulkUsers(data: any, onSuccess: () => void) {
   return async (dispatch: Dispatch) => {
     dispatch(addUserRequest());
     try {
       await axios.post('/api/v1/users/bulk-add/', data);
       dispatch(addUserSuccess());
+      onSuccess();
     } catch (err) {
       dispatch(addUserFailure());
     }
@@ -312,7 +314,7 @@ export function changePassword(data: any) {
   return async (dispatch: Dispatch) => {
     dispatch(changePasswordRequest());
     try {
-      const resp = await axios.post('/api/v1/change-password/', data);
+      await axios.post('/api/v1/change-password/', data);
       dispatch(changePasswordSuccess());
     } catch (err) {
       dispatch(changePasswordFailure());

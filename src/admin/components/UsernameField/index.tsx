@@ -24,7 +24,7 @@ const UsernameField: React.FC<Props> = ({ first_name, last_name, onChange }) => 
             <TextField value={last_name} onChange={(ev) => onChange(ev, 'last_name')} variant="outlined" />
           </>
         ) : (
-          <Typography variant="h3" component="h1" className="label">{first_name + last_name }</Typography>
+          <Typography variant="h3" component="h1" className="label">{`${first_name} ${last_name}`}</Typography>
         )}
         <span>
         <img

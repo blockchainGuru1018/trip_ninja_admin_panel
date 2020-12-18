@@ -41,7 +41,6 @@ const AgencyEditDrawer: React.FC<Props> = ({opened, agency, onClose, updateAgenc
   const [adminID, setAdminID] = useState(undefined);
   const [adminOptions, setAdminOptions] = useState([]);
   const [DataSourceOptions, setDataSourceOptions] = useState([]);
-  const [isActive, setIsActive] = useState("enabled");
 
   useEffect(() => {
     if (opened) {
@@ -66,7 +65,6 @@ const AgencyEditDrawer: React.FC<Props> = ({opened, agency, onClose, updateAgenc
     setApiUserName(agency ? agency.api_username : '');
     setApiPassword(agency ? agency.api_password : '');
     setSuppliers(agency ? agency.data_source : []);
-    setIsActive(agency ? agency.status ? 'enabled' : 'disabled' : 'enabled');
   }, [agency]);
 
   const onSave = () => {

@@ -31,12 +31,13 @@ import {axios, validateEmail} from "../../../utils";
 const propTypes = {
   opened: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  onSuccess: PropTypes.func.isRequired,
   addUser: PropTypes.func.isRequired,
 };
 
 type Props = PropTypes.InferProps<typeof propTypes>
 
-const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
+const SingleAddModal: React.FC<Props> = ({ opened, onClose, onSuccess, addUser }) => {
   const user = JSON.parse(localStorage.getItem('authInfo')!);
   const [step, setStep] = useState(0);
   const [firstName, setFirstName] = useState('');
@@ -179,7 +180,7 @@ const SingleAddModal: React.FC<Props> = ({ opened, onClose, addUser }) => {
       agency_id: agencyId,
       password,
       is_active: isActive === "enabled"
-    });
+    }, onSuccess);
     handleClose();
   };
 

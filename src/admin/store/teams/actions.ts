@@ -74,12 +74,13 @@ function addTeamFailure() {
   };
 }
 
-export function addTeam(data: any) {
+export function addTeam(data: any, onSuccess: () => void) {
   return async (dispatch: Dispatch) => {
     dispatch(addTeamRequest());
     try {
       await axios.post('/api/v1/teams/add/', data);
       dispatch(addTeamSuccess());
+      onSuccess();
     } catch (err) {
       dispatch(addTeamFailure());
     }

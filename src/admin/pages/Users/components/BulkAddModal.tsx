@@ -32,12 +32,13 @@ import { axios, validateEmail } from "../../../utils";
 const propTypes = {
   opened: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  onSuccess: PropTypes.func.isRequired,
   addBulkUsers: PropTypes.func.isRequired,
 };
 
 type Props = PropTypes.InferProps<typeof propTypes>
 
-const BulkAddModal: React.FC<Props> = ({ opened, onClose, addBulkUsers }) => {
+const BulkAddModal: React.FC<Props> = ({ opened, onClose, onSuccess, addBulkUsers }) => {
   const user = JSON.parse(localStorage.getItem('authInfo')!);
   const [step, setStep] = useState(0);
   const [email, setEmail] = useState('');
@@ -194,7 +195,7 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose, addBulkUsers }) => {
       agency_id: agencyId,
       password,
       is_active: isActive === "enabled"
-    });
+    }, onSuccess);
     handleClose();
   };
 

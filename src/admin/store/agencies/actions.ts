@@ -75,12 +75,13 @@ function addAgencyFailure() {
   };
 }
 
-export function addAgency(data: any) {
+export function addAgency(data: any, onSuccess: () => void) {
   return async (dispatch: Dispatch) => {
     dispatch(addAgencyRequest());
     try {
       await axios.post('/api/v1/teams/agency/add/', data);
       dispatch(addAgencySuccess());
+      onSuccess();
     } catch (err) {
       dispatch(addAgencyFailure());
     }

@@ -71,7 +71,7 @@ const AgencyAccounts: React.FC<Props> = ({ agencies, total, fetchAgencies }) => 
 
   useEffect(() => {
     fetchAgencies({ page: 1, per_page: 10, keyword: '' });
-  }, []);
+  }, [fetchAgencies]);
 
   const onPageChange = (val: number) => {
     setPage(val);
@@ -151,6 +151,7 @@ const AgencyAccounts: React.FC<Props> = ({ agencies, total, fetchAgencies }) => 
       <AgencyAddModal
         opened={modalOpened === 1}
         onClose={() => setModalOpened(null)}
+        onSuccess={() => onPageChange(1)}
       />
       <AgencyEditDrawer
         opened={drawerOpened}

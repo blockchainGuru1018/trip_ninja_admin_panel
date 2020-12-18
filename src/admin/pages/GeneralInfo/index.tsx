@@ -34,12 +34,12 @@ const GeneralInfo: React.FC<Props> = ({ basic_info, fetchGeneralInfo, updateGene
   const [currency, setCurrency] = useState('');
   const [dateType, setDateType] = useState('dd/mm/yyyy');
 
-  useEffect(() => { fetchGeneralInfo(); }, []);
+  useEffect(() => { fetchGeneralInfo(); }, [fetchGeneralInfo]);
 
   useEffect ( () => {
-    setName(basic_info? basic_info.name : '');
-    setCurrency(basic_info? basic_info.currency : '');
-    setDateType(basic_info? basic_info.date_type : 'dd/mm/yyyy');
+    setName(basic_info && basic_info.name ? basic_info.name : '');
+    setCurrency(basic_info && basic_info.currency ? basic_info.currency : '');
+    setDateType(basic_info && basic_info.date_type ? basic_info.date_type : 'dd/mm/yyyy');
   }, [basic_info]);
 
   const onInputChange = (attr: string, value: string) => {

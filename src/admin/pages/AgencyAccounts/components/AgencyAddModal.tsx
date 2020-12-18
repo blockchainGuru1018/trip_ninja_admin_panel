@@ -25,12 +25,13 @@ import {axios} from "../../../utils";
 const propTypes = {
   opened: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  onSuccess: PropTypes.func.isRequired,
   addAgency: PropTypes.func.isRequired,
 };
 
 type Props = PropTypes.InferProps<typeof propTypes>
 
-const AgencyAddModal: React.FC<Props> = ({ opened, onClose, addAgency }) => {
+const AgencyAddModal: React.FC<Props> = ({ opened, onClose, onSuccess, addAgency }) => {
   const [step, setStep] = useState(0);
   const [suppliers, setSuppliers] = useState<
     {
@@ -46,7 +47,6 @@ const AgencyAddModal: React.FC<Props> = ({ opened, onClose, addAgency }) => {
   const [adminID, setAdminID] = useState(undefined);
   const [adminOptions, setAdminOptions] = useState([]);
   const [DataSourceOptions, setDataSourceOptions] = useState([]);
-  const [isActive, setIsActive] = useState("enabled");
 
   useEffect(() => {
     axios.get("/api/v1/teams/data_source/").then(({ data }) => {
@@ -68,7 +68,6 @@ const AgencyAddModal: React.FC<Props> = ({ opened, onClose, addAgency }) => {
     setAgencyName('');
     setApiUserName('');
     setApiPassword('');
-    setIsActive("enabled");
     setSuppliers([]);
     onClose();
   };
@@ -88,7 +87,7 @@ const AgencyAddModal: React.FC<Props> = ({ opened, onClose, addAgency }) => {
       api_username: apiUserName,
       api_password: apiPassword,
       data_source: suppliers
-    });
+    }, onSuccess);
     handleClose();
   };
 

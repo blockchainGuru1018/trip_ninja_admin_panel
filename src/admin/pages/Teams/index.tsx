@@ -65,7 +65,7 @@ const Teams: React.FC<Props> = ({ teams, total, fetchTeams }) => {
 
   useEffect(() => {
     fetchTeams({ page: 1, per_page: 10, keyword: '' });
-  }, []);
+  }, [fetchTeams]);
 
   const onPageChange = (val: number) => {
     setPage(val);
@@ -140,6 +140,7 @@ const Teams: React.FC<Props> = ({ teams, total, fetchTeams }) => {
       <TeamAddModal
         opened={modalOpened === 1}
         onClose={() => setModalOpened(null)}
+        onSuccess={() => onPageChange(1)}
       />
       <TeamEditDrawer
         opened={drawerOpened}

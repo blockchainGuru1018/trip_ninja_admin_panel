@@ -32,12 +32,13 @@ import {axios} from "../../../utils";
 const propTypes = {
   opened: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  onSuccess: PropTypes.func.isRequired,
   addTeam: PropTypes.func.isRequired,
 };
 
 type Props = PropTypes.InferProps<typeof propTypes>
 
-const TeamAddModal: React.FC<Props> = ({ opened, onClose, addTeam }) => {
+const TeamAddModal: React.FC<Props> = ({ opened, onClose, onSuccess, addTeam }) => {
   const user = JSON.parse(localStorage.getItem('authInfo')!);
   const [step, setStep] = useState(0);
   const [teamName, setTeamName] = useState('');
@@ -167,7 +168,7 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose, addTeam }) => {
       is_booking: isActive === "enabled",
       admin_id: adminID,
       members: memberID,
-    });
+    }, onSuccess);
     handleClose();
   };
 

@@ -83,7 +83,7 @@ const Users: React.FC<Props> = ({ users, total, fetchUsers }) => {
 
   useEffect(() => {
     fetchUsers({ page: 1, per_page: 10, keyword: '' });
-  }, []);
+  }, [fetchUsers]);
 
   const onPageChange = (val: number) => {
     setPage(val);
@@ -163,10 +163,12 @@ const Users: React.FC<Props> = ({ users, total, fetchUsers }) => {
       <SingleAddModal
         opened={modalOpened === 1}
         onClose={() => setModalOpened(null)}
+        onSuccess={() => onPageChange(1)}
       />
       <BulkAddModal
         opened={modalOpened === 2}
         onClose={() => setModalOpened(null)}
+        onSuccess={() => onPageChange(1)}
       />
       <UserEditDrawer
         opened={drawerOpened}
