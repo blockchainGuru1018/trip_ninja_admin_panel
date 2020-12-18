@@ -46,6 +46,8 @@ const AgencyAddModal: React.FC<Props> = ({ opened, onClose, onSuccess, addAgency
   const [apiPassword, setApiPassword] = useState('');
   const [adminID, setAdminID] = useState(undefined);
   const [adminOptions, setAdminOptions] = useState([]);
+  const [errors, setErrors] = useState<{ password?: string, username?: string }>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [DataSourceOptions, setDataSourceOptions] = useState([]);
 
   useEffect(() => {
@@ -72,7 +74,58 @@ const AgencyAddModal: React.FC<Props> = ({ opened, onClose, onSuccess, addAgency
     onClose();
   };
 
+  const onAPIPasswordChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    setApiPassword(ev.target.value);
+
+    if (isSubmitting) {
+      if (!apiPassword) {
+        setErrors({
+          password: 'Empty APIPassword'
+        })
+      }
+    }
+  };
+
+  const onAPIUserNameChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    setApiUserName(ev.target.value);
+
+    if (isSubmitting) {
+      if (!apiUserName) {
+        setErrors({
+          username: 'Empty APIUserName'
+        })
+      }
+    }
+  };
+
   const onNext = () => {
+    if (step === 1) {
+      setIsSubmitting(true);
+      if (apiUserName && apiPassword) {
+        setIsSubmitting(false);
+        setErrors({});
+        return setStep(2);
+      }
+      else if (!apiPassword && !apiUserName) {
+        setErrors({
+          username: 'Empty APIUserName',
+          password: 'Empty APIPassword'
+        });
+        return setStep(1)
+      }
+      else if (!apiPassword) {
+        setErrors({
+          password: 'Empty APIPassword'
+        });
+        return setStep(1)
+      }
+      else if (!apiUserName) {
+        setErrors({
+          username: 'Empty APIUserName'
+        });
+        return setStep(1)
+      }
+    }
     setStep(Math.min(step + 1, 3));
   };
 
@@ -147,8 +200,10 @@ const AgencyAddModal: React.FC<Props> = ({ opened, onClose, onSuccess, addAgency
                 <TextField
                   placeholder="API Username"
                   value={apiUserName}
+                  error={isSubmitting && !!errors.username}
+                  helperText={errors.username}
                   variant="outlined"
-                  onChange={(ev) => setApiUserName(ev.target.value)}
+                  onChange={onAPIUserNameChange}
                 />
               </FormControl>
             </Grid>
@@ -158,8 +213,10 @@ const AgencyAddModal: React.FC<Props> = ({ opened, onClose, onSuccess, addAgency
                 <TextField
                   placeholder="API Password"
                   value={apiPassword}
+                  error={isSubmitting && !!errors.password}
+                  helperText={errors.password}
                   variant="outlined"
-                  onChange={(ev) => setApiPassword(ev.target.value)}
+                  onChange={onAPIPasswordChange}
                 />
               </FormControl>
             </Grid>
