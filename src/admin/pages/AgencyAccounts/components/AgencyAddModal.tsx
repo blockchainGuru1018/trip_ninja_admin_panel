@@ -36,10 +36,10 @@ const AgencyAddModal: React.FC<Props> = ({ opened, onClose, onSuccess, addAgency
   const [suppliers, setSuppliers] = useState<
     {
       id: string | undefined,
-      pcc: string
+      pcc: string | undefined
     }[]
   >([
-    { id: undefined, pcc: '' }
+    { id: undefined, pcc: undefined }
   ]);
   const [agencyName, setAgencyName] = useState('');
   const [apiUserName, setApiUserName] = useState('');
@@ -94,7 +94,7 @@ const AgencyAddModal: React.FC<Props> = ({ opened, onClose, onSuccess, addAgency
   const addSupplier = () => {
     setSuppliers([
       ...suppliers,
-      { id: undefined, pcc: '' }
+      { id: undefined, pcc: undefined }
     ])
   };
 
