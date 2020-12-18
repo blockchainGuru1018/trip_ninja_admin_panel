@@ -222,6 +222,7 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo, updateBasicInf
           <FormLabel className="current-password">Current Password</FormLabel>
           <FormControl>
             <TextField
+              type="password"
               className="password-input"
               placeholder="Current Password"
               variant="outlined"
@@ -236,6 +237,7 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo, updateBasicInf
           <FormLabel className="new-password">New Password</FormLabel>
           <FormControl>
             <TextField
+              type="password"
               className="password-input"
               placeholder="New Password"
               variant="outlined"
