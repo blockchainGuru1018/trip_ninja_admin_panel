@@ -1,6 +1,9 @@
 .dataTable-Component .dataTable-Component-table {
   min-width: 650px;
 }
+.dataTable-Component .MuiPaper-root {
+  overflow: visible;
+}
 .dataTable-Component .table-header {
   background: #F5F8FA;
 }

@@ -96,7 +96,7 @@ const App: React.FC = () => {
                 </Switch>
               </Container>
             </div>
-          </div>a
+          </div>
         </React.Fragment>
       </Switch>
     </BrowserRouter>

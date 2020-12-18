@@ -1,11 +1,11 @@
 import React from 'react';
-import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Paper,
   TableContainer,
   Table,
   TableCell,
   TableHead,
+  TableBody,
   TableRow
 } from '@material-ui/core';
 import { Sort as SortIcon } from '@material-ui/icons';
@@ -65,7 +65,7 @@ const DataTable:React.FC<Props> = ({ className, columns, rows, total, page, page
               ))}
             </TableRow>
           </TableHead>
-          <PerfectScrollbar className="table-body" component="tbody">
+          <TableBody>
             {rows && rows.length > 0 ? (
               rows.map((row, i) => (
                 <TableRow key={i}>
@@ -79,7 +79,7 @@ const DataTable:React.FC<Props> = ({ className, columns, rows, total, page, page
             ) : (
               <></>
             )}
-          </PerfectScrollbar>
+          </TableBody>
         </Table>
       </TableContainer>
 
