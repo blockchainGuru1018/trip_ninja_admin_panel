@@ -41,6 +41,8 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo, updateBasicInf
   const [email, setEmail] = useState('');
   const [current_password, setCurrentPassword] = useState('');
   const [new_password, setNewPassword] = useState('');
+  const [confirm_password, setConfirmPassword] = useState('');
+  const [errors, setErrors] = useState<{ password?: string }>({});
   const [currency, setCurrency] = useState('');
   const [dateType, setDateType] = useState('dd/mm/yyyy');
 
@@ -120,10 +122,21 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo, updateBasicInf
   };
 
   const onChangePassword =() => {
-    changePassword({
-      current_password,
-      new_password
-    })
+    if (new_password === confirm_password) {
+      changePassword({
+        current_password,
+        new_password
+      });
+      setNewPassword('');
+      setConfirmPassword('');
+      setCurrentPassword('');
+      setErrors({})
+    }
+    else {
+      setErrors({
+        password: 'Does not match password'
+      })
+    }
   };
 
 
@@ -246,16 +259,31 @@ const BasicInfo: React.FC<Props> = ({ basic_info, fetchBasicInfo, updateBasicInf
             />
           </FormControl>
         </Grid>
-        <div className="btn-group">
-          <Button
-            variant="outlined"
-            className="btn-primary"
-            onClick={onChangePassword}
-          >
-            Change Password
-          </Button>
-        </div>
+        <Grid item sm={3} xs={12}>
+          <FormLabel className="confirm-password">Confirm Password</FormLabel>
+          <FormControl>
+            <TextField
+              type="password"
+              className="password-input"
+              placeholder="New Password"
+              variant="outlined"
+              error={!!errors.password}
+              helperText={errors.password}
+              value={confirm_password}
+              onChange={(ev) => setConfirmPassword(ev.target.value)}
+            />
+          </FormControl>
+        </Grid>
       </Grid>
+      <div className="btn-group">
+        <Button
+          variant="outlined"
+          className="btn-primary"
+          onClick={onChangePassword}
+        >
+          Change Password
+        </Button>
+      </div>
     </div>
   )
 };

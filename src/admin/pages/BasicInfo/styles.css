@@ -40,10 +40,14 @@
   margin-top: 20px;
   display: block;
 }
+.basicInfo-Page .confirm-password {
+  margin-top: 20px;
+  display: block;
+}
 .basicInfo-Page .password-input {
-  flex: 1;
+  flex: 2;
 }
 .basicInfo-Page .btn-group {
-  padding: 12px;
-  margin-top: auto;
+  display: block;
+  margin-top: 20px;
 }
