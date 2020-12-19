@@ -231,7 +231,11 @@
   margin-top: 30px;
   display: flex;
 }
-.user-Page-drawer .group-selector {
+.user-Page-drawer .group-box {
+  display: flex;
+  align-items: center;
+}
+.user-Page-drawer .group-box .group-selector {
   display: flex;
   align-items: center;
 }

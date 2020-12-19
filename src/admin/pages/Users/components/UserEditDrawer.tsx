@@ -28,11 +28,14 @@ const propTypes = {
 type Props = PropTypes.InferProps<typeof propTypes>
 
 const UserEditDrawer: React.FC<Props> = ({ opened, user, onClose, updateUser }) => {
+  const logged_user = JSON.parse(localStorage.getItem('authInfo')!);
   const [activeTab, setActiveTab] = useState(0);
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [teamId, setTeamId] = useState(undefined);
   const [teamOptions, setTeamOptions] = useState([]);
+  const [agencyId, setAgencyId] = useState(undefined);
+  const [agencyOptions, setAgencyOptions] = useState([]);
   const [email, setEmail] = useState('');
   const [countryCode, setCountryCode] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -40,12 +43,20 @@ const UserEditDrawer: React.FC<Props> = ({ opened, user, onClose, updateUser }) 
 
   useEffect(() => {
     if (opened) {
-      axios.get("/api/v1/teams/list/").then(({ data }) => {
-        setTeamOptions(data.data.teams.map((el: any) => ({
-          value: el.team_id,
-          label: el.team_name,
+      axios.get("/api/v1/teams/agency/list/").then(({ data }) => {
+        setAgencyOptions(data.data.agency.map((el: any) => ({
+          value: el.agency_id,
+          label: el.agency_name,
         })))
       }).catch(console.error);
+      if (user.agency_id) {
+        axios.get(`/api/v1/teams/list/${user.agency_id}/`).then(({ data }) => {
+          setTeamOptions(data.data.teams.map((el: any) => ({
+            value: el.team_id,
+            label: el.team_name,
+          })))
+        }).catch(console.error);
+      }
     } else {
       setActiveTab(0);
     }
@@ -55,6 +66,7 @@ const UserEditDrawer: React.FC<Props> = ({ opened, user, onClose, updateUser }) 
     setFirstName(user ? user.first_name : '');
     setLastName(user ? user.last_name : '');
     setTeamId(user ? user.team_id : '');
+    setAgencyId(user ? user.agency_id : '');
     setEmail(user ? user.email : '');
     if (user && user.phone_number) {
       const arr = user.phone_number.split('-');
@@ -76,6 +88,17 @@ const UserEditDrawer: React.FC<Props> = ({ opened, user, onClose, updateUser }) 
     }
   };
 
+  const onAgencyChange = (val: any) => {
+    setAgencyId(val);
+    axios.get(`/api/v1/teams/list/${val}/`).then(({ data }) => {
+      console.log(data);
+      setTeamOptions(data.data.teams.map((el: any) => ({
+        value: el.team_id,
+        label: el.team_name,
+      })))
+    }).catch(console.error);
+  };
+
   const onSave = () => {
     let phone_number = '';
     if (countryCode || phoneNumber) {
@@ -88,6 +111,7 @@ const UserEditDrawer: React.FC<Props> = ({ opened, user, onClose, updateUser }) 
       last_name,
       email,
       team_id: teamId,
+      agency_id: agencyId,
       phone_number, 
       is_active: isActive === "enabled"
     });
@@ -108,15 +132,32 @@ const UserEditDrawer: React.FC<Props> = ({ opened, user, onClose, updateUser }) 
               last_name={last_name}
               onChange={onUsernameChange}
             />
-            <div className="group-selector">
-              <label>Team: </label>
-              <Dropdown
-                options={teamOptions}
-                value={teamId}
-                placeholder="No team assigned"
-                onChange={setTeamId}
-              />
-            </div>
+            {(logged_user.user.is_superuser || logged_user.user.is_agency_admin) &&(
+              <div className='group-box'>
+                {logged_user.user.is_superuser && (
+                  <div className="group-selector">
+                    <label>Agency: </label>
+                    <Dropdown
+                      options={agencyOptions}
+                      value={agencyId}
+                      placeholder="No agency assigned"
+                      onChange={onAgencyChange}
+                    />
+                  </div>
+                )}
+                {(agencyId || logged_user.user.is_agency_admin) && (
+                  <div className="group-selector">
+                    <label>Team: </label>
+                    <Dropdown
+                      options={teamOptions}
+                      value={teamId}
+                      placeholder="No team assigned"
+                      onChange={setTeamId}
+                    />
+                  </div>
+                )}
+              </div>
+            )}
           </Drawer.Header>
           <Drawer.Body className="user-Page-drawer-body">
             <Grid item xs={12}>
