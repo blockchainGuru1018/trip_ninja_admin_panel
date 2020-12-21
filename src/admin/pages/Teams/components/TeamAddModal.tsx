@@ -198,6 +198,7 @@ const TeamAddModal: React.FC<Props> = ({ opened, onClose, onSuccess, addTeam }) 
                   value={agencyId}
                   error={isSubmitting && !!errors.agency}
                   placeholder="No agency assigned"
+                  position="top"
                   onChange={onAgencyChange}
                 />
               </Grid>

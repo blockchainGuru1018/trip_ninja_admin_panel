@@ -254,6 +254,7 @@ const BulkAddModal: React.FC<Props> = ({ opened, onClose, onSuccess, addBulkUser
                     value={agencyId}
                     error={isSubmitting && !!errors.agency}
                     placeholder="No agency assigned"
+                    position="top"
                     onChange={onAgencyChange}
                   />
                 </Grid>
