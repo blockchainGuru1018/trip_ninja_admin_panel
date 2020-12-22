@@ -17,6 +17,7 @@ import {
 export interface ITeam {
   team_name: string;
   team_leader: string;
+  agency_name: string;
   number_of_users: number;
   is_active: boolean;
   is_booking: boolean;

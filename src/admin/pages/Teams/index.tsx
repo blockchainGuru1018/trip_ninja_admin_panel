@@ -29,6 +29,7 @@ const propTypes = {
 type Props = PropTypes.InferProps<typeof propTypes>
 
 const Teams: React.FC<Props> = ({ teams, total, fetchTeams }) => {
+  const user = JSON.parse(localStorage.getItem('authInfo')!);
   const [modalOpened, setModalOpened] = useState<number | null>(null);
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [teamSelected, selectTeam] = useState<any | null>(null);
@@ -62,6 +63,14 @@ const Teams: React.FC<Props> = ({ teams, total, fetchTeams }) => {
       />
     )
   }];
+
+  if (user.user.is_superuser) {
+    columns.splice(2, 0, {
+        field: 'agency_name',
+        headerName: 'Agency Name',
+        sortable: true
+    });
+  }
 
   useEffect(() => {
     fetchTeams({ page: 1, per_page: 10, keyword: '' });
