@@ -1,0 +1,32 @@
+body .drawer-Component {
+  width: 100%;
+  max-width: 720px;
+}
+.drawer-Component .content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.drawer-Component .closeIcon {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+.drawer-Component .drawer-header {
+  margin: 0 30px;
+  padding: 24px 36px 24px 0;
+  border-bottom: 1px solid #CACDD6;
+}
+.drawer-Component .drawer-body {
+  flex: 1;
+  padding: 24px 30px;
+}
+.drawer-Component .drawer-footer {
+  padding: 30px;
+  background: #F8F8F9;
+  border-top: 1px solid #D1D6D8;
+}

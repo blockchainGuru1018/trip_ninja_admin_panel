@@ -1,0 +1,46 @@
+body .sideMenu-Component {
+  position: relative;
+  white-space: nowrap;
+  z-index: 0;
+  width: 240px;
+  padding-bottom: 30px;
+  background: #45565E;
+  color: #fff;
+  box-sizing: border-box;
+}
+.sideMenu-Component .menuContainer {
+  padding: 0 34px;
+}
+.sideMenu-Component .menuList {
+  padding-bottom: 10px;
+  border-top: 1px solid #ABB3B7;
+}
+.sideMenu-Component .menuList:first-child {
+  border: none;
+}
+.sideMenu-Component .title {
+  font-size: 16px;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: bold;
+  padding: 24px 0 10px;
+}
+.sideMenu-Component .subMenuList {
+  width: 100%;
+}
+.sideMenu-Component .menuItem {
+  padding: 0;
+}
+.sideMenu-Component .menuItem.active {
+  background: rgba(0, 0, 0, 0.08);
+}
+.sideMenu-Component .menuItem.active .MuiListItemIcon-root {
+  color: #fff;
+}
+.sideMenu-Component .menuText {
+  font-size: 16px;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: lighter;
+  padding: 10px 0;
+  white-space: pre-line;
+  margin: 0;
+}

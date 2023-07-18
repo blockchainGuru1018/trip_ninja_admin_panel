@@ -1,0 +1,25 @@
+.header-Component .container {
+  position: fixed;
+  display: flex;
+  top: 0;
+  left: 0;
+  height: 54px;
+  width: 100%;
+  background: #FFFFFF 0 0 no-repeat padding-box;
+  box-shadow: 0 3px 6px #00000029;
+  z-index: 1;
+}
+.header-Component .navItem {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin: 0 15px;
+  color: #45565E;
+  font-size: 16px;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-Component .logo {
+  height: 32px;
+}

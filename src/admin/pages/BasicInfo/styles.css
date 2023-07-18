@@ -1,0 +1,53 @@
+.basicInfo-Page .username-section {
+  display: flex;
+  align-items: center;
+  margin: 40px 0;
+}
+.basicInfo-Page .avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  border: 3px solid #45565E;
+  border-radius: 50%;
+  margin-right: 30px;
+}
+.basicInfo-Page .name {
+  font-size: 32px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: bolder;
+}
+.basicInfo-Page .phone-input-field {
+  flex-direction: row;
+}
+.basicInfo-Page .country-code-input {
+  width: 60px;
+}
+.basicInfo-Page .phone-number-input {
+  flex: 1;
+  margin-left: 16px;
+}
+.basicInfo-Page .select {
+  width: 300px;
+}
+.basicInfo-Page .current-password {
+  margin-top: 20px;
+  display: block;
+}
+.basicInfo-Page .new-password {
+  margin-top: 20px;
+  display: block;
+}
+.basicInfo-Page .confirm-password {
+  margin-top: 20px;
+  display: block;
+}
+.basicInfo-Page .password-input {
+  flex: 2;
+}
+.basicInfo-Page .btn-group {
+  display: block;
+  margin-top: 20px;
+}

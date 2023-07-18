@@ -1,0 +1,17 @@
+.tag-Component {
+  display: flex;
+  align-items: center;
+  border: 2px solid #0DBE7C;
+  padding: 8px 12px;
+}
+
+.tag-Component span {
+  color: #45565E;
+  font-size: 16px;
+  font-family: NeuzitGrotesk, sans-serif;
+}
+
+.tag-Component svg {
+  margin-left: 15px;
+  cursor: pointer;
+}

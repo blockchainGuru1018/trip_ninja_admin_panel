@@ -1,0 +1,6 @@
+.tooltip-Component .tooltip {
+  position: relative;
+}
+.tooltip-Component .tooltip:hover .tooltip-content {
+  display: block;
+}

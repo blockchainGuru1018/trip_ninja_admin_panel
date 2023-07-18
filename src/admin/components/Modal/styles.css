@@ -1,0 +1,40 @@
+.modal-Component {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 15px;
+}
+.modal-Component .modal-content {
+  border: 1px solid #B1BBC0;
+  box-shadow: 0 3px 6px #45565E29;
+  width: 100%;
+  max-width: 720px;
+  outline: none !important;
+}
+.modal-Component .modal-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  background: #45565E;
+}
+.modal-Component .modal-title {
+  font-size: 24px;
+  color: white;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: bold;
+  padding: 24px;
+}
+.modal-Component .modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  fill: white;
+  cursor: pointer;
+}
+.modal-Component .modal-body {
+  background: white;
+}

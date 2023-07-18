@@ -1,0 +1,337 @@
+.user-Page .table {
+  margin-top: 15px;
+}
+.user-Page .table .username {
+  font-size: 16px;
+  color: #4BAFD7;
+  font-weight: bold;
+}
+.user-Page .btn-group {
+  display: flex;
+}
+.user-Page-bulkAdd-modal .stepper-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 320px;
+  padding: 30px 30px;
+  border-top: 1px solid #CACDD6;
+  box-sizing: border-box;
+}
+.user-Page-bulkAdd-modal .step-title {
+  font-size: 24px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+}
+.user-Page-bulkAdd-modal .stepper-actions {
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid #CACDD6;
+  padding: 25px 15px;
+}
+.user-Page-bulkAdd-modal .stepper-actions-inner {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 600px;
+}
+.user-Page-bulkAdd-modal .tab-content {
+  margin-top: 30px;
+}
+.user-Page-bulkAdd-drawer-body {
+  display: flex;
+  flex-direction: column;
+}
+.user-Page-bulkAdd-drawer .phone-input-field {
+  flex-direction: row;
+}
+.user-Page-bulkAdd-drawer .country-code-input {
+  width: 60px;
+}
+.user-Page-bulkAdd-drawer .phone-number-input {
+  flex: 1;
+  margin-left: 16px;
+}
+.user-Page-bulkAdd-drawer .edit-form-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.user-Page-bulkAdd-drawer .reset-link {
+  border-top: 1px solid #D0D4D6;
+  margin: 0 -30px;
+  padding: 24px 30px 0 30px;
+}
+.user-Page-bulkAdd-drawer .reset-link button {
+  text-transform: none;
+  color: #00B4C3;
+}
+.user-Page-bulkAdd-drawer .tab-content {
+  margin-top: 30px;
+  display: flex;
+}
+.user-Page-bulkAdd-modal .user-form-title {
+  font-size: 24px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: lighter;
+}
+.user-Page-bulkAdd-modal .label {
+  display: flex;
+  font-size: 16px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: bolder;
+  margin-bottom: 12px;
+}
+.user-Page-bulkAdd-modal .first-step {
+  max-width: 600px;
+  width: 100%;
+  margin: auto;
+  padding: 0 12px;
+}
+.user-Page-bulkAdd-modal .first-title {
+  text-align: center;
+}
+.user-Page-bulkAdd-modal .email-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.user-Page-bulkAdd-modal .first-step .email-tag {
+  margin: 8px 12px;
+}
+.user-Page-bulkAdd-modal .first-step .email-list {
+  max-height: 120px;
+}
+.user-Page-bulkAdd-modal .group-selector {
+  display: flex;
+  align-items: center;
+}
+.user-Page-bulkAdd-modal .group-selector label {
+  color: #00B4C3;
+}
+.user-Page-bulkAdd-modal .second-step {
+  max-width: 600px;
+  width: 100%;
+  margin: auto;
+  padding: 0 12px;
+}
+.user-Page-bulkAdd-modal .second-title {
+  font-size: 24px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: lighter;
+}
+.user-Page-bulkAdd-modal .second-step .email-list {
+  font-size: 16px;
+  border: 1px solid #CFD2D5;
+  padding: 15px 30px;
+  max-height: 150px;
+  color: #45565E;
+  box-sizing: border-box;
+}
+.user-Page-bulkAdd-modal .third-step {
+  max-width: 600px;
+  width: 100%;
+  margin: auto;
+}
+.user-Page-bulkAdd-modal .label-with-tooltip {
+  display: flex;
+  align-items: center;
+}
+.user-Page-bulkAdd-modal .icon {
+  display: flex;
+  cursor: pointer;
+  width: 15px;
+  margin-left: 15px;
+}
+.user-Page-bulkAdd-modal .fourth-step {
+  text-align: center;
+  max-width: 600px;
+  margin: auto;
+}
+.user-Page-bulkAdd-modal .fourth-title {
+  font-size: 24px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: lighter;
+  margin-bottom: 30px;
+}
+.user-Page-bulkAdd-modal .custom-switch {
+  margin-left: 15px;
+}
+.user-Page-bulkAdd-modal .team-form-description {
+  font-size: 16px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: lighter;
+  margin-bottom: 15px;
+}
+
+.user-Page-singleAdd-modal .stepper-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 350px;
+  padding: 30px 30px;
+  border-top: 1px solid #CACDD6;
+  box-sizing: border-box;
+}
+.user-Page-singleAdd-modal .stepper-content-inner {
+  width: 100%;
+  max-width: 600px;
+}
+.user-Page-singleAdd-modal .step-title {
+  font-size: 24px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+}
+.user-Page-singleAdd-modal .stepper-actions {
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid #CACDD6;
+  padding: 25px 15px;
+}
+.user-Page-singleAdd-modal .stepper-actions-inner {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 600px;
+}
+.user-Page-singleAdd-modal .tab-content {
+  margin-top: 30px;
+}
+.user-Page-drawer-body {
+  display: flex;
+  flex-direction: column;
+}
+.user-Page-drawer .phone-input-field {
+  flex-direction: row;
+}
+.user-Page-drawer .country-code-input {
+  width: 60px;
+}
+.user-Page-drawer .phone-number-input {
+  flex: 1;
+  margin-left: 16px;
+}
+.user-Page-drawer .edit-form-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.user-Page-drawer .reset-link {
+  border-top: 1px solid #D0D4D6;
+  margin: 0 -30px;
+  padding: 24px 30px 0 30px;
+}
+.user-Page-drawer .reset-link button {
+  text-transform: none;
+  color: #00B4C3;
+}
+.user-Page-drawer .tab-content {
+  margin-top: 30px;
+  display: flex;
+}
+.user-Page-drawer .group-box {
+  display: flex;
+  align-items: center;
+}
+.user-Page-drawer .group-box .group-selector {
+  display: flex;
+  align-items: center;
+}
+.user-Page-singleAdd-modal .user-form-title {
+  font-size: 24px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: lighter;
+}
+.user-Page-singleAdd-modal .label {
+  display: block;
+  font-size: 16px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: bolder;
+  margin-bottom: 12px;
+}
+.user-Page-singleAdd-modal .first_step {
+  max-width: 500px;
+  padding: 12px;
+  margin: auto;
+}
+.user-Page-singleAdd-modal .first-title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.user-Page-singleAdd-modal .second_step {
+  max-width: 600px;
+  padding: 12px;
+  margin: auto;
+}
+.user-Page-singleAdd-modal .group-selector {
+  display: flex;
+  align-items: center;
+}
+.user-Page-singleAdd-modal .group-selector label {
+  color: #00B4C3;
+}
+.user-Page-singleAdd-modal label {
+  font-size: 16px;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: bold;
+  color: #45565E;
+}
+.user-Page-singleAdd-modal .label-with-tooltip {
+  display: flex;
+  align-items: center;
+}
+.user-Page-singleAdd-modal .icon {
+  display: flex;
+  cursor: pointer;
+  width: 15px;
+  margin-left: 15px;
+}
+.user-Page-singleAdd-modal .third-step {
+  text-align: center;
+  max-width: 600px;
+  margin: auto;
+}
+.user-Page-singleAdd-modal .team-form-description {
+  font-size: 16px;
+  color: #45565E;
+  font-family: NeuzitGrotesk, sans-serif;
+  font-weight: lighter;
+  margin: 30px 0;
+}
+
+.user-Page-archive-modal .modal-header {
+  background: white;
+}
+.user-Page-archive-modal .modal-header svg {
+  fill: #45565E;
+}
+.user-Page-archive-modal .modal-body {
+  text-align: center;
+  padding: 0 24px;
+}
+.user-Page-archive-modal h3 {
+  font-size: 22px;
+  color: #45565E;
+  font-weight: bold;
+  font-family: NeuzitGrotesk, sans-serif;
+}
+.user-Page-archive-modal .description {
+  margin-top: 15px;
+  color: #45565E;
+  font-size: 16px;
+  font-family: NeuzitGrotesk, sans-serif;
+}
+.user-Page-archive-modal .actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 16px 0;
+}
+.user-Page-archive-modal .actions button {
+  margin: 8px 24px;
+}
